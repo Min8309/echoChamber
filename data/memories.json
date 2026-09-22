@@ -1,0 +1,1185 @@
+[
+  {
+    "memory_type": "observation",
+    "description": "나는 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 열기로 했다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [],
+    "confidence": 1.0,
+    "memory_id": "69e1d2d0-d509-42a6-8e5f-823fb42dc751",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-18T06:18:30.137731Z",
+    "last_accessed_at": "2026-09-18T06:18:30.137731Z"
+  },
+  {
+    "memory_type": "observation",
+    "description": "나는 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 열기로 했다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [],
+    "confidence": 1.0,
+    "memory_id": "7a2a8e3c-3a71-42a2-96c5-65c2e4b1efcc",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-18T06:18:31.704294Z",
+    "last_accessed_at": "2026-09-18T06:18:31.704294Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Maria, 마을 선거랑 Sam의 최근 행동에 대해 어떻게 생각해? 금요일 저녁에 내가 Hobbs Cafe에서 발렌타인 데이 파티를 열 건데, 와서 같이 얘기 나누자!",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751"
+    ],
+    "confidence": 0.9,
+    "memory_id": "37396d97-bb83-42e5-8e85-b023bd7f9f0b",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-18T06:54:42.044276Z",
+    "last_accessed_at": "2026-09-18T06:54:42.044276Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Klaus, 금요일 저녁에 Hobbs Cafe에서 내가 발렌타인 데이 파티를 여는데, 데이트할 겸 누군가와 함께 와도 좋고 혼자 와도 좋으니 놀러 올래?",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751"
+    ],
+    "confidence": 0.9,
+    "memory_id": "4ed8a860-51cc-4fce-8b05-3bc262813b97",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-18T06:59:02.253407Z",
+    "last_accessed_at": "2026-09-18T06:59:02.253407Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Klaus, 금요일 저녁에 내가 Hobbs Cafe에서 발렌타인 데이 파티를 열 건데, 너도 와 줄래?",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751"
+    ],
+    "confidence": 0.9,
+    "memory_id": "4ac15512-6e27-443e-ad37-c1e2d7e3a26b",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-18T07:05:29.133592Z",
+    "last_accessed_at": "2026-09-18T07:05:29.133592Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Isabella가 금요일 저녁에 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 초대했는데, 준비를 제대로 못 하고 있다는 소문에 대해 들은 거 있어",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "37396d97-bb83-42e5-8e85-b023bd7f9f0b"
+    ],
+    "confidence": 0.81,
+    "memory_id": "760c4061-90f9-4821-be06-11ef45c38507",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T01:44:13.866596Z",
+    "last_accessed_at": "2026-09-21T01:44:13.866596Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Isabella가 파티 준비를 제대로 못 한다는 소문이 있던데, 직접 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 초대하긴 했어. 혹시 준비 상황에 대해 들은 거 있어?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "37396d97-bb83-42e5-8e85-b023bd7f9f0b"
+    ],
+    "confidence": 0.81,
+    "memory_id": "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T01:52:09.947352Z",
+    "last_accessed_at": "2026-09-21T01:52:09.947352Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 마리아, 내가 파티 준비를 제대로 못 한다는",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751"
+    ],
+    "confidence": 0.9,
+    "memory_id": "2ad0ce62-7b5d-405d-90c6-f8046e894354",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T01:52:23.992309Z",
+    "last_accessed_at": "2026-09-21T01:52:23.992309Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 클라우스, 이사벨라가 파티 준비를 제대로 못 한다는 소문 들었어요? 본인은 금요일 저녁에 홉스 카페에서 발렌타인 데이 파티를 연다며 초대하던데, 혹시 준비 상황에 대해 아는 게 있어요?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "2ad0ce62-7b5d-405d-90c6-f8046e894354"
+    ],
+    "confidence": 0.81,
+    "memory_id": "03401f9b-2bb7-4cfd-921c-02038d2a7fcb",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T01:52:38.642882Z",
+    "last_accessed_at": "2026-09-21T01:52:38.642882Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 마리아, 내가 파티 준비를 제대로 못 한다는 소문이 있나 보네. 금요일 저녁 Hobbs Cafe에서 발렌타",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751"
+    ],
+    "confidence": 0.9,
+    "memory_id": "e988accb-8f6f-43d2-a8fa-70029b68b341",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T01:55:15.876393Z",
+    "last_accessed_at": "2026-09-21T01:55:15.876393Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 이사벨라, 금요일 저녁 홉스 카페에서 여는 발렌타인 데이 파티 준비가 좀 어렵다는 얘기를 들었는데, 실제로는 어때요?",
+    "importance": 5,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb"
+    ],
+    "confidence": 0.73,
+    "memory_id": "de79c0d3-bc16-4b9c-b011-b1fc463dbd0e",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T01:55:15.768485Z",
+    "last_accessed_at": "2026-09-21T01:55:15.768485Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 파티 준비가 잘 안 되고 있다는 얘기를 들었는데, 금요일 저녁 홉스 카페에서 여는 발렌타인 데이 파티는 예정대로 하는 거야? 준비는 어떻게 돼 가?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "2ad0ce62-7b5d-405d-90c6-f8046e894354"
+    ],
+    "confidence": 0.81,
+    "memory_id": "6d2bd2ee-8e0f-4e27-82b1-90a58b928525",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T01:55:20.234294Z",
+    "last_accessed_at": "2026-09-21T01:55:20.234294Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 마리아, 준비가 잘 안 된다는 소문이 도나 보네. 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 열기로 한 건 그대로니까, 너도 꼭 와 �",
+    "importance": 5,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525"
+    ],
+    "confidence": 0.73,
+    "memory_id": "9d5d46db-a3cb-4ad1-8301-c38697454c82",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T01:55:32.558177Z",
+    "last_accessed_at": "2026-09-21T01:55:32.558177Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 마리아, 이사벨라한테 금요일 저녁 홉스 카페에서 열리는 발렌타인 데이 파티에 초대받긴 했는데, 준비 상황은 저도 잘 몰라요. 준비가 미흡하다는 건 아직 소문인 것 같은데, 혹시 더 들은 얘기 있어요?",
+    "importance": 5,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb"
+    ],
+    "confidence": 0.73,
+    "memory_id": "bd2c19d5-ca4d-43cb-82f4-ad0096b4db42",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T01:55:43.788950Z",
+    "last_accessed_at": "2026-09-21T01:55:43.788950Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Isabella가 파티 준비를 제대로 못 한다는 소문이 도나 보던데, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 했어. 혹시 준비 상황에 대해 더 들은 얘기 있어?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "e988accb-8f6f-43d2-a8fa-70029b68b341"
+    ],
+    "confidence": 0.81,
+    "memory_id": "fb951dcf-ce52-49a6-b379-1955eab5d965",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T01:55:44.051021Z",
+    "last_accessed_at": "2026-09-21T01:55:44.051021Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Klaus, Isabella가 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 직접 초대했는데, 준비가 잘 안 되고 있다는 소문도 있더라. 혹시 준비 상황에 대해 들은 거 있어?",
+    "importance": 5,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b"
+    ],
+    "confidence": 0.73,
+    "memory_id": "bd4b61f9-463b-4973-901f-aea3b30d4cc6",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T01:55:45.913601Z",
+    "last_accessed_at": "2026-09-21T01:55:45.913601Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 파티 준비가 잘 안 된다는 소문이 있다던데, 금요일 저녁 홉스 카페에서 발렌타인 데이 파티는 예정대로 하는 거지? 준비는 어떻게 돼 가?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "e988accb-8f6f-43d2-a8fa-70029b68b341"
+    ],
+    "confidence": 0.81,
+    "memory_id": "1a04fd0c-d3f0-4965-bf45-217fecc40c9b",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T01:55:54.553640Z",
+    "last_accessed_at": "2026-09-21T01:55:54.553640Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 이사벨라, 금요일 저녁 홉스 카페에서 여는 발렌타인 데이 파티는 준비 잘 되어 가요? 마리아한테 준비가 좀 어렵다는 소문을 들었는데, 직접 물어보는 게 좋을 것 같아서요.",
+    "importance": 5,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb"
+    ],
+    "confidence": 0.73,
+    "memory_id": "c62e954c-d8c9-4af0-aee0-a8337e1cbdff",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T01:56:08.873149Z",
+    "last_accessed_at": "2026-09-21T01:56:08.873149Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella는 Klaus를 반복해서 직접 초대하고 동반자 없이도 환영한다고 밝혀, Klaus가 마을 행사에 부담 없이 참여할 수 있는 사회적 접점을 제공하고 있다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "4ed8a860-51cc-4fce-8b05-3bc262813b97",
+      "4ac15512-6e27-443e-ad37-c1e2d7e3a26b"
+    ],
+    "confidence": 0.95,
+    "memory_id": "8093ed1a-28a0-48c1-9da7-43e907c8a3ca",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T02:03:37.244420Z",
+    "last_accessed_at": "2026-09-21T02:03:37.244420Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Klaus가 접한 행사 정보에는 주최자의 일관된 개최 안내와 Maria가 전한 준비 부실 소문이 공존한다. 금요일 저녁 Hobbs Cafe라는 일정은 일관되지만, 실제 준비 상태와 Isabella의 행사 운영 능력에 대한 평가는 아직 확인되지 않았다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "4ed8a860-51cc-4fce-8b05-3bc262813b97",
+      "4ac15512-6e27-443e-ad37-c1e2d7e3a26b",
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb",
+      "bd4b61f9-463b-4973-901f-aea3b30d4cc6"
+    ],
+    "confidence": 0.98,
+    "memory_id": "c2229630-d42e-43dc-8b1a-fa8a17dcca84",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T02:03:37.244420Z",
+    "last_accessed_at": "2026-09-21T02:03:37.244420Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria가 Klaus에게 거듭 준비 상황을 묻는 것은 그를 행사 정보를 확인할 잠재적 창구로 보고 있음을 시사한다. Klaus는 정보를 알아보는 입장이면서도 다른 주민에게 사실과 소문을 구분해 전달할 수 있는 연결점에 놓여 있다.",
+    "importance": 6,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb",
+      "bd4b61f9-463b-4973-901f-aea3b30d4cc6"
+    ],
+    "confidence": 0.82,
+    "memory_id": "dda0b83d-a6fc-43b7-945d-426cfadd2614",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T02:03:37.244420Z",
+    "last_accessed_at": "2026-09-21T02:03:37.244420Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 이사벨라, 금요일 저녁 홉스 카페에서 연다는 발렌타인 데이 파티는 준비 잘 되고 있어? 준비에 어려움이 있다는 얘기를 들었는데, 직접 물어보고 싶었어.",
+    "importance": 5,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb"
+    ],
+    "confidence": 0.73,
+    "memory_id": "9442e9a2-019d-4d94-83e4-5b43d14c6a6a",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:19:48.263207Z",
+    "last_accessed_at": "2026-09-21T02:19:48.263207Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "파티 준비에 어려움이 있다는 소문이 Maria와 Klaus 사이에서 공유되며, 행사에 대한 관심이 개최 여부와 준비 상태에 대한 불확실성으로 이어지고 있다. 다만 이는 주민들이 전한 소문이며, 실제 준비 차질이나 취소가 확인된 것은 아니다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "de79c0d3-bc16-4b9c-b011-b1fc463dbd0e",
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525",
+      "1a04fd0c-d3f0-4965-bf45-217fecc40c9b",
+      "c62e954c-d8c9-4af0-aee0-a8337e1cbdff",
+      "9442e9a2-019d-4d94-83e4-5b43d14c6a6a"
+    ],
+    "confidence": 0.96,
+    "memory_id": "b72c995f-7b2a-4422-9a51-c9a71e6b404b",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:20:06.553432Z",
+    "last_accessed_at": "2026-09-21T02:20:06.553432Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria와 Klaus는 소문만으로 결론을 내리기보다 주최자인 Isabella에게 직접 확인하려 한다. 이는 Isabella가 여전히 행사의 신뢰할 만한 정보원으로 여겨지고 있으며, 직접적인 소통으로 불확실성을 줄일 여지가 있음을 시사한다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "de79c0d3-bc16-4b9c-b011-b1fc463dbd0e",
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525",
+      "c62e954c-d8c9-4af0-aee0-a8337e1cbdff",
+      "9442e9a2-019d-4d94-83e4-5b43d14c6a6a"
+    ],
+    "confidence": 0.9,
+    "memory_id": "cff6043c-f9e8-47b8-a849-41fa11f5b717",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:20:06.553432Z",
+    "last_accessed_at": "2026-09-21T02:20:06.553432Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "주민들은 이미 파티의 시간과 장소를 알고 있으므로, 초대 목표의 핵심 과제는 단순한 행사 홍보보다 예정대로 열리는지와 준비 상황을 명확히 전달하는 데 있다. 개최 결정만으로는 주민들의 참석 판단에 필요한 확신이 충분히 형성되지 않은 것으로 보인다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "69e1d2d0-d509-42a6-8e5f-823fb42dc751",
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525",
+      "1a04fd0c-d3f0-4965-bf45-217fecc40c9b",
+      "c62e954c-d8c9-4af0-aee0-a8337e1cbdff",
+      "9442e9a2-019d-4d94-83e4-5b43d14c6a6a"
+    ],
+    "confidence": 0.87,
+    "memory_id": "6dbd815d-5617-4ab7-8e99-a5c142fd49d7",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:20:06.553432Z",
+    "last_accessed_at": "2026-09-21T02:20:06.553432Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 클라우스, 파티 준비가 어렵다는 얘기가 돈다던데, 실제로 차질이 생겼거나 취소됐다고 확인된 건 아니에요. 금요일 저녁 홉스 카페 발렌타인 데이 파티에 꼭 와 주셨으면 하는데, 개최 여부와 준비 상황부터 확실히 알려드려야겠네요.",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "b72c995f-7b2a-4422-9a51-c9a71e6b404b"
+    ],
+    "confidence": 0.86,
+    "memory_id": "bdc5880e-01e0-4a6f-ad03-b6178f637d76",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T02:26:44.053166Z",
+    "last_accessed_at": "2026-09-21T02:26:44.053166Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 마리아, 준비가 어렵다는 소문이 들리긴 하지만, 실제로 차질이 생겼거나 취소됐다고 확인된 건 아니야. 예정대로 열리는지와 준비 상황은 정확히 확인해서 알려줄게, 함께할 수 있으면 정말 좋겠어!",
+    "importance": 7,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "b72c995f-7b2a-4422-9a51-c9a71e6b404b"
+    ],
+    "confidence": 0.86,
+    "memory_id": "2cfc171b-3f26-440c-be71-9269730a4091",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:26:58.198206Z",
+    "last_accessed_at": "2026-09-21T02:26:58.198206Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 행사 소식을 알아볼 때 주최자의 직접 초대와 주변 소문을 대조하며 불확실한 준비 상황을 확인하려는 경향을 보인다. 반복 질문의 초점은 행사 자체의 존재보다 예정대로 진행될 수 있는지에 있다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "760c4061-90f9-4821-be06-11ef45c38507",
+      "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b",
+      "fb951dcf-ce52-49a6-b379-1955eab5d965"
+    ],
+    "confidence": 0.94,
+    "memory_id": "4bf249ca-b04a-4ad2-9183-a5e599cc082e",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:27:17.255042Z",
+    "last_accessed_at": "2026-09-21T02:27:17.255042Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria의 정보 확인 과정은 의도와 별개로 Isabella의 준비 역량에 관한 부정적 소문을 재전달하는 경로가 될 수 있다. 다만 현재 기억에는 실제 준비 차질이나 취소를 입증하는 내용이 없어, 평판상의 의심과 확인된 사실을 구분할 필요가 있다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "760c4061-90f9-4821-be06-11ef45c38507",
+      "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b",
+      "fb951dcf-ce52-49a6-b379-1955eab5d965",
+      "2cfc171b-3f26-440c-be71-9269730a4091"
+    ],
+    "confidence": 0.93,
+    "memory_id": "1ee6083a-4990-4321-b4f5-792e06fc35be",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:27:17.256039Z",
+    "last_accessed_at": "2026-09-21T02:27:17.256039Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella는 소문을 단정적으로 부인하기보다 확인된 사실의 한계를 밝히고 후속 확인을 약속하면서 Maria에게 참여 의사를 재차 전했다. 이는 행사 정보의 불확실성 속에서도 Maria와의 신뢰와 교류를 유지하려는 대응으로 해석된다.",
+    "importance": 6,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "760c4061-90f9-4821-be06-11ef45c38507",
+      "2cfc171b-3f26-440c-be71-9269730a4091"
+    ],
+    "confidence": 0.85,
+    "memory_id": "a532bcda-8b55-445e-9bc7-c5ff37e0b102",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:27:17.256039Z",
+    "last_accessed_at": "2026-09-21T02:27:17.256039Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Klaus의 계획: Isabella에게 '이사벨라, 금요일 저녁 홉스 카페 발렌타인 데이 파티 준비가 어렵다는 이야기를 들었는데, 현재 준비 상황과 예정대로 개최되는지 직접 확인해 주실 수 있나요?'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: 준비 부실 소문은 아직 확인되지 않았으므로 사실로 단정하지 않고, 주최자인 Isabella에게 개최 여부와 실제 준비 상황을 확인하는 것이 마을 행사 정보를 알아보려는 목표에 가장 직접적으로 도움이 된다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "8093ed1a-28a0-48c1-9da7-43e907c8a3ca",
+      "c2229630-d42e-43dc-8b1a-fa8a17dcca84",
+      "dda0b83d-a6fc-43b7-945d-426cfadd2614",
+      "bdc5880e-01e0-4a6f-ad03-b6178f637d76",
+      "03401f9b-2bb7-4cfd-921c-02038d2a7fcb",
+      "bd4b61f9-463b-4973-901f-aea3b30d4cc6"
+    ],
+    "confidence": 1.0,
+    "memory_id": "96055842-4791-497b-8e2e-c18c8e30c77a",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T02:39:34.560205Z",
+    "last_accessed_at": "2026-09-21T02:39:34.560205Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Maria의 계획: Isabella에게 '이사벨라, 지난번에 확인해 주겠다고 한 발렌타인 데이 파티 준비 상황에 새로 확인된 게 있어? 금요일 저녁 홉스 카페에서 예정대로 열리는지 궁금해.'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: 행사 주최자인 Isabella에게 후속 확인을 요청하면 마을 행사 소식을 직접 알아볼 수 있다. 준비 차질이나 취소는 확인되지 않았으므로 부정적인 소문을 되풀이하기보다 확인된 준비 상황과 예정대로 진행되는지에 초점을 맞춘다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "4bf249ca-b04a-4ad2-9183-a5e599cc082e",
+      "1ee6083a-4990-4321-b4f5-792e06fc35be",
+      "a532bcda-8b55-445e-9bc7-c5ff37e0b102",
+      "2cfc171b-3f26-440c-be71-9269730a4091",
+      "fb951dcf-ce52-49a6-b379-1955eab5d965",
+      "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b"
+    ],
+    "confidence": 1.0,
+    "memory_id": "6939fcd8-8f25-46b2-aaa3-43b9f531182c",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:45:22.719603Z",
+    "last_accessed_at": "2026-09-21T02:45:22.719603Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 지난번에 확인해 주겠다고 한 발렌타인 데이 파티 준비는 어떻게 돼 가고 있어? 금요일 저녁 홉스 카페에서 예정대로 열리는지 궁금해.",
+    "importance": 8,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "6939fcd8-8f25-46b2-aaa3-43b9f531182c"
+    ],
+    "confidence": 0.9,
+    "memory_id": "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:45:26.345865Z",
+    "last_accessed_at": "2026-09-21T02:45:26.345865Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Isabella의 계획: Maria에게 'Maria, 금요일 저녁 홉스 카페에서 예정된 발렌타인 데이 파티에 초대하고 싶어요. 준비 차질이나 취소가 확인된 것은 아니지만, 개최 여부와 구체적인 준비 상황은 확인해서 알려드릴게요. 일정이 확정되면 참석하실 의향이 있나요?'에 관해 대화한다. 행동 목적은 invite이다. 계획 이유: 같은 카페에 있는 Maria는 파티에 관심을 보이며 개최 여부와 준비 상황을 반복해서 물었다. 확인되지 않은 준비 상태를 단정하지 않고 불확실성을 인정하면서 참석 의향을 묻는 것이 초대 목표에 도움이 된다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+      "b72c995f-7b2a-4422-9a51-c9a71e6b404b",
+      "6dbd815d-5617-4ab7-8e99-a5c142fd49d7",
+      "cff6043c-f9e8-47b8-a849-41fa11f5b717",
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525",
+      "1a04fd0c-d3f0-4965-bf45-217fecc40c9b"
+    ],
+    "confidence": 1.0,
+    "memory_id": "26289704-513e-4f15-9aa5-f07dae2d95de",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:59:31.319162Z",
+    "last_accessed_at": "2026-09-21T02:59:31.319162Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Maria, 준비가 어렵다는 이야기가 들리긴 하지만 실제로 차질이나 취소가 확인된 건 아니라서, 개최 여부와 준비 상황은 확인해서 알려드릴게요. 금요일 저녁 홉스 카페에서 예정대로 열리게 되면 꼭 와주셨으면 하는데, 참석하실 생각 있으세요?",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "26289704-513e-4f15-9aa5-f07dae2d95de"
+    ],
+    "confidence": 0.9,
+    "memory_id": "259d8f2d-be40-4d18-92e3-6d82fdc596c1",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:59:36.267619Z",
+    "last_accessed_at": "2026-09-21T02:59:36.267619Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Isabella의 계획: Maria에게 'Maria, 금요일 저녁 홉스 카페에서 예정된 발렌타인 데이 파티에 초대하고 싶어요. 궁금해하신 개최 여부와 구체적인 준비 상황은 아직 확인해서 말씀드릴 정보가 없어요. 확인된 내용을 알려드리면 참석을 고려해 주시겠어요?'에 관해 대화한다. 행동 목적은 invite이다. 계획 이유: 같은 카페에 있는 Maria는 파티 개최 여부와 준비 상황에 관심을 보였다. 준비가 순조롭다거나 취소되었다고 단정하지 않고 정보의 한계를 밝히면서 참석 의향을 묻는 것이 초대 목표에 직접 도움이 된다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "26289704-513e-4f15-9aa5-f07dae2d95de",
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+      "b72c995f-7b2a-4422-9a51-c9a71e6b404b",
+      "6dbd815d-5617-4ab7-8e99-a5c142fd49d7",
+      "cff6043c-f9e8-47b8-a849-41fa11f5b717",
+      "6d2bd2ee-8e0f-4e27-82b1-90a58b928525"
+    ],
+    "confidence": 1.0,
+    "memory_id": "c71e1bcf-8740-41df-9258-6ea8b8444c63",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T02:59:49.403843Z",
+    "last_accessed_at": "2026-09-21T02:59:49.403843Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: 마리아, 지난번에 확인해 드리겠다고 했는데 아직 개최 여부나 준비 상황을 확실히 말씀드릴 정보가 없어요. 금요일 저녁 홉스 카페에서 예정된 발렌타인 데이 파티에 꼭 초대하고 싶은데, 확인해서 알려드리면 참석을 고려해 주시겠어요?",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "c71e1bcf-8740-41df-9258-6ea8b8444c63"
+    ],
+    "confidence": 0.9,
+    "memory_id": "ddbcf601-1eaa-4539-be72-5d18fc9f657e",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T02:59:52.669116Z",
+    "last_accessed_at": "2026-09-21T02:59:52.669116Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 행사 소식을 알아볼 때 미확인 소문을 사실로 받아들이기보다 주최자에게 직접 후속 확인을 구한다. 부정적 추측의 확산보다 정보의 정확성을 우선하는 태도가 드러난다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "6939fcd8-8f25-46b2-aaa3-43b9f531182c",
+      "259d8f2d-be40-4d18-92e3-6d82fdc596c1",
+      "ddbcf601-1eaa-4539-be72-5d18fc9f657e"
+    ],
+    "confidence": 0.96,
+    "memory_id": "1258aa62-c2eb-4f88-be5b-3528cf66110d",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:00:10.280598Z",
+    "last_accessed_at": "2026-09-21T03:00:10.280598Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella는 확인된 정보가 없는 상황에서도 Maria에게 반복해서 초대 의사를 표현한다. 두 사람의 대화는 단순한 행사 정보 확인을 넘어 Maria의 마을 행사 참여를 독려하는 관계적 접점이 되고 있지만, Maria의 참석 의사는 아직 확인되지 않았다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "259d8f2d-be40-4d18-92e3-6d82fdc596c1",
+      "ddbcf601-1eaa-4539-be72-5d18fc9f657e"
+    ],
+    "confidence": 0.9,
+    "memory_id": "1ac0c8c0-28bd-4760-a61c-47a8f7b9e914",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:00:10.281590Z",
+    "last_accessed_at": "2026-09-21T03:00:10.281590Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Isabella가 파티 준비를 제대로 못 하고 있다는 소문이 있던데, 직접 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 연다고 초대하긴 했어. 혹시 준비 상황에 대해 더 들은 얘기 있어?",
+    "importance": 5,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "687fbc3e-1f8d-4801-b5f1-aaaa9ff6ff0b"
+    ],
+    "confidence": 0.73,
+    "memory_id": "299331d5-2dda-4579-bbaa-0ea10d146f34",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T03:03:26.285210Z",
+    "last_accessed_at": "2026-09-21T03:03:26.285210Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 행사 주최자의 직접 초대와 다른 주민이 들은 이야기를 대조하며 마을 행사 정보를 확인하려는 모습을 보인다. 다만 현재 확인된 개최 계획과 달리, 준비가 미흡하다는 평가는 아직 검증되지 않았다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "37396d97-bb83-42e5-8e85-b023bd7f9f0b",
+      "9d5d46db-a3cb-4ad1-8301-c38697454c82",
+      "bd2c19d5-ca4d-43cb-82f4-ad0096b4db42",
+      "299331d5-2dda-4579-bbaa-0ea10d146f34"
+    ],
+    "confidence": 0.95,
+    "memory_id": "8e223dec-092a-4079-ace8-f5d5b2274fb5",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T03:03:41.579668Z",
+    "last_accessed_at": "2026-09-21T03:03:41.579668Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 소문의 진위를 알아보려는 동시에 그 소문을 다른 주민에게 전달하는 정보 중개자 역할도 하고 있다. 이런 확인 대화는 의도와 무관하게 Isabella의 행사 준비 능력에 대한 의심을 확산시킬 수 있다.",
+    "importance": 7,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "e988accb-8f6f-43d2-a8fa-70029b68b341",
+      "9d5d46db-a3cb-4ad1-8301-c38697454c82",
+      "bd2c19d5-ca4d-43cb-82f4-ad0096b4db42",
+      "299331d5-2dda-4579-bbaa-0ea10d146f34"
+    ],
+    "confidence": 0.9,
+    "memory_id": "ca215158-d74f-4fd3-949b-7ec05b9c5b59",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T03:03:41.579668Z",
+    "last_accessed_at": "2026-09-21T03:03:41.579668Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella의 파티는 단순한 친목 행사뿐 아니라 선거와 주민의 행동을 논의하는 비공식 정보 교류의 장으로 제안되고 있다. Maria에게 이 초대는 행사 소식을 알아보려는 목표를 마을의 정치·관계 동향 파악으로 넓힐 기회가 될 수 있다.",
+    "importance": 6,
+    "source_agent_id": null,
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "37396d97-bb83-42e5-8e85-b023bd7f9f0b",
+      "bd2c19d5-ca4d-43cb-82f4-ad0096b4db42",
+      "299331d5-2dda-4579-bbaa-0ea10d146f34"
+    ],
+    "confidence": 0.85,
+    "memory_id": "6a01d460-ce91-4f4d-b96f-13b135dd7554",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T03:03:41.579668Z",
+    "last_accessed_at": "2026-09-21T03:03:41.579668Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 금요일 저녁 홉스 카페에서 발렌타인 데이 파티 연다고 초대해 줬잖아. 준비가 잘 안 되고 있다는 소문을 들었는데, 지금 준비는 어때?",
+    "importance": 5,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "fb951dcf-ce52-49a6-b379-1955eab5d965"
+    ],
+    "confidence": 0.73,
+    "memory_id": "c003b9f4-7998-4e6c-8f34-1839299ec653",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:03:50.816099Z",
+    "last_accessed_at": "2026-09-21T03:03:50.816099Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella의 초대 목표는 단순한 행사 홍보보다 개최 여부와 준비 상황의 불확실성을 해소하는 데 달려 있다. Maria가 기존 초대 이후에도 거듭 확인을 요청한다는 점에서, 추가 초대 문구보다 확인된 정보를 제공하는 후속 대응이 참여를 이끌 핵심 과제다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+      "26289704-513e-4f15-9aa5-f07dae2d95de",
+      "c71e1bcf-8740-41df-9258-6ea8b8444c63",
+      "c003b9f4-7998-4e6c-8f34-1839299ec653"
+    ],
+    "confidence": 0.95,
+    "memory_id": "732ae777-4165-4d47-a8e4-04b61f819a87",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:04:13.786129Z",
+    "last_accessed_at": "2026-09-21T03:04:13.786129Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella는 초대 계획에서 확인되지 않은 낙관이나 취소 단정을 피하고 정보의 한계를 밝히려 한다. 이는 참석자를 확보하려는 목표와 초대자로서의 신뢰를 함께 지키려는 전략이지만, 실제 확인과 안내가 이루어졌다는 근거는 아직 없다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+      "26289704-513e-4f15-9aa5-f07dae2d95de",
+      "c71e1bcf-8740-41df-9258-6ea8b8444c63"
+    ],
+    "confidence": 0.93,
+    "memory_id": "4320f6ea-65a7-458b-a542-6aed705f7627",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:04:13.786129Z",
+    "last_accessed_at": "2026-09-21T03:04:13.786129Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 파티에 지속적인 관심을 보이는 잠재 참석자이면서, 준비 차질 소문이 Isabella에게 전달되는 접점이기도 하다. 따라서 Maria에게 정확한 준비 정보를 안내하는 일은 참석 의향을 구체화하고 행사에 대한 불확실성이 확산되는 것을 줄일 기회가 될 수 있다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3",
+      "c003b9f4-7998-4e6c-8f34-1839299ec653"
+    ],
+    "confidence": 0.86,
+    "memory_id": "ecc0a5b8-7a6b-493d-a4df-c599ecbaa38d",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:04:13.786129Z",
+    "last_accessed_at": "2026-09-21T03:04:13.786129Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 마리아, 이사벨라 말로는 준비에 차질이 생겼거나 취소됐다고 확인된 건 아니래요. 저도 소문만으로 단정하긴 어려워서, 금요일 저녁 홉스 카페 파티가 예정대로 열리는지와 준비 상황을 이사벨라에게 직접 확인해 보려고요.",
+    "importance": 8,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "96055842-4791-497b-8e2e-c18c8e30c77a"
+    ],
+    "confidence": 0.9,
+    "memory_id": "36943205-887b-4529-9ab8-55239619a0ba",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:04:17.287265Z",
+    "last_accessed_at": "2026-09-21T03:04:17.287265Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: Isabella가 파티 준비를 제대로 못 하고 있다는 소문이 있던데, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 했어. 혹시 준비가 어떻게 돼 가는지 더 들은 얘기 있어?",
+    "importance": 5,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "fb951dcf-ce52-49a6-b379-1955eab5d965"
+    ],
+    "confidence": 0.73,
+    "memory_id": "e9b090c8-7367-44de-b444-444a3b0c0017",
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "created_at": "2026-09-21T03:04:33.830458Z",
+    "last_accessed_at": "2026-09-21T03:04:33.830458Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Isabella의 계획: Maria에게 'Maria, 금요일 저녁 홉스 카페의 발렌타인 데이 파티 준비에 관해 아직 확인된 소식을 전해드리지는 못해요. 혹시 준비에 차질이 있다는 이야기를 어디서 들으셨고, 구체적으로 어떤 내용이었는지 알려주실 수 있나요?'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: Maria는 개최 여부와 준비 상황을 반복해서 문의했다. 초대를 되풀이하기보다 준비 차질 소문의 출처와 내용을 확인하는 것이 불확실성을 해소하고 참석 의향을 구체화하는 데 도움이 된다. 소문을 사실로 단정하거나 준비가 확인되었다고 주장하지 않는다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "26289704-513e-4f15-9aa5-f07dae2d95de",
+      "c71e1bcf-8740-41df-9258-6ea8b8444c63",
+      "4320f6ea-65a7-458b-a542-6aed705f7627",
+      "ecc0a5b8-7a6b-493d-a4df-c599ecbaa38d",
+      "732ae777-4165-4d47-a8e4-04b61f819a87",
+      "5b2b98ee-532e-4853-8c2b-68c7274c96a3"
+    ],
+    "confidence": 1.0,
+    "memory_id": "a201cc61-4cea-4247-a64a-5bce90eaa61f",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:07:52.089419Z",
+    "last_accessed_at": "2026-09-21T03:07:52.089419Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Maria, 금요일 저녁 홉스 카페의 발렌타인 데이 파티 준비 상황은 아직 확실히 말씀드리기 어려워요. 혹시 준비에 차질이 있다는 얘기는 누구에게 들으셨고, 구체적으로 어떤 내용이었나요?",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f"
+    ],
+    "confidence": 0.9,
+    "memory_id": "c4db5fa7-9838-49a9-b264-115ef95e8f5a",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:07:55.171588Z",
+    "last_accessed_at": "2026-09-21T03:07:55.171588Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Maria의 계획: Isabella에게 '이사벨라, 금요일 저녁 홉스 카페의 발렌타인 데이 파티가 예정대로 열리는지 새로 확인된 소식이 있나요? 준비 상황 중 확실히 알려줄 수 있는 내용이 궁금해요.'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: 마을 행사 소식을 알아보려는 목표에 맞춰 주최자인 Isabella에게 직접 확인한다. 준비 차질이나 취소는 확인되지 않았으므로 소문을 사실로 전제하지 않고 확정된 진행 여부와 준비 상황을 묻는다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "6939fcd8-8f25-46b2-aaa3-43b9f531182c",
+      "1258aa62-c2eb-4f88-be5b-3528cf66110d",
+      "1ac0c8c0-28bd-4760-a61c-47a8f7b9e914",
+      "4bf249ca-b04a-4ad2-9183-a5e599cc082e",
+      "c4db5fa7-9838-49a9-b264-115ef95e8f5a",
+      "36943205-887b-4529-9ab8-55239619a0ba"
+    ],
+    "confidence": 1.0,
+    "memory_id": "d043eb75-860f-49be-82bb-4f1982bb7c79",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:08:10.784313Z",
+    "last_accessed_at": "2026-09-21T03:08:10.784313Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 준비에 차질이 있다는 건 제가 확인한 내용은 아니에요. 지난번에 아직 확실히 말씀하시기 어렵다고 하셨는데, 금요일 저녁 홉스 카페의 발렌타인 데이 파티가 예정대로 열리는지나 준비 상황에 관해 새로 확인된 소식이 있나요?",
+    "importance": 8,
+    "source_agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "d043eb75-860f-49be-82bb-4f1982bb7c79"
+    ],
+    "confidence": 0.9,
+    "memory_id": "c8ad17f3-9ef0-4f7d-894e-8b5f97b6faaf",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:08:14.993542Z",
+    "last_accessed_at": "2026-09-21T03:08:14.993542Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Maria, 제가 파티 준비를 제대로 못 하고 있다는 이야기는 어디서 들으셨고, 구체적으로 어떤 내용이었나요? 금요일 저녁 홉스 카페에서 예정된 발렌타인 데이 파티에 초대하고 싶지만, 준비 상황은 아직 확인해서 말씀드릴 소식이 없어요.",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f"
+    ],
+    "confidence": 0.9,
+    "memory_id": "43c81ba8-be00-4fb7-9b8d-72756b3a78f5",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:08:40.271963Z",
+    "last_accessed_at": "2026-09-21T03:08:40.271963Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria는 행사 관련 소문을 접했을 때 이를 사실로 받아들이기보다 주최자에게 직접 확인하려는 정보 검증 지향을 보인다. 현재 관심은 준비 실패의 책임을 판단하는 것이 아니라 행사 개최 여부와 확실한 준비 정보를 확보하는 데 있다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "36943205-887b-4529-9ab8-55239619a0ba",
+      "c4db5fa7-9838-49a9-b264-115ef95e8f5a",
+      "d043eb75-860f-49be-82bb-4f1982bb7c79",
+      "43c81ba8-be00-4fb7-9b8d-72756b3a78f5"
+    ],
+    "confidence": 0.97,
+    "memory_id": "f1a04aec-5c66-46c4-8e33-035ad2050b6c",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:09:02.659412Z",
+    "last_accessed_at": "2026-09-21T03:09:02.659412Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "파티 준비에 관한 불확실성이 Isabella의 준비 역량에 대한 평판 문제로 번질 가능성이 드러난다. Isabella가 반복해서 소문의 출처와 구체적 내용을 묻는 만큼, Maria가 확인되지 않은 평가와 행사 진행 사실을 분리해 질문하는 태도는 정보 수집과 관계 보호를 함께 뒷받침한다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe",
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "c4db5fa7-9838-49a9-b264-115ef95e8f5a",
+      "d043eb75-860f-49be-82bb-4f1982bb7c79",
+      "43c81ba8-be00-4fb7-9b8d-72756b3a78f5"
+    ],
+    "confidence": 0.9,
+    "memory_id": "9cbca902-2233-4944-86ad-dbcee37aa4da",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:09:02.660445Z",
+    "last_accessed_at": "2026-09-21T03:09:02.660445Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Maria와 Klaus 모두 Isabella를 행사 정보의 핵심 확인 창구로 삼고 있지만, 주최자에게서도 아직 확정 정보가 나오지 않고 있다. 따라서 현재의 반복된 문의와 소문은 준비 차질이나 취소의 증거라기보다, 마을 행사에 관한 정보 공백이 지속되고 있음을 보여준다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "36943205-887b-4529-9ab8-55239619a0ba",
+      "c4db5fa7-9838-49a9-b264-115ef95e8f5a",
+      "d043eb75-860f-49be-82bb-4f1982bb7c79",
+      "43c81ba8-be00-4fb7-9b8d-72756b3a78f5"
+    ],
+    "confidence": 0.96,
+    "memory_id": "00091837-3c4b-4f40-90e0-e2041e6bbd3b",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:09:02.660445Z",
+    "last_accessed_at": "2026-09-21T03:09:02.660445Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Maria가 말했다: 이사벨라, 파티 준비가 잘 안 되고 있다는 소문을 들었는데, 직접 물어보는 게 낫겠다 싶었어. 금요일 저녁 홉스 카페에서 여는 발렌타인 데이 파티는 준비가 잘 돼 가고 있어?",
+    "importance": 6,
+    "source_agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "subject_agent_ids": [],
+    "evidence_memory_ids": [
+      "e988accb-8f6f-43d2-a8fa-70029b68b341"
+    ],
+    "confidence": 0.81,
+    "memory_id": "28f994dc-80a5-4612-a5fc-18a4dd557d00",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:09:07.343994Z",
+    "last_accessed_at": "2026-09-21T03:09:07.343994Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella의 초대 목표에서는 초대의 반복보다 개최 여부와 준비 상황의 불확실성을 해소하는 일이 우선 과제로 떠올랐다. Maria의 반복 문의는 참석을 권유하는 것만으로는 충분하지 않으며, 확인된 정보가 필요함을 보여준다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe",
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f",
+      "c8ad17f3-9ef0-4f7d-894e-8b5f97b6faaf",
+      "28f994dc-80a5-4612-a5fc-18a4dd557d00"
+    ],
+    "confidence": 0.94,
+    "memory_id": "955e8e74-150a-4c75-b6a3-3f4308ac964c",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:09:22.183411Z",
+    "last_accessed_at": "2026-09-21T03:09:22.183411Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella는 준비 차질 소문에 대응할 때 성급한 안심이나 사실 단정 대신 출처와 내용을 확인하려는 방향을 택하고 있다. 이는 초대 과정에서 정보의 정확성과 신뢰를 지키려는 전략이지만, Maria도 소문을 확인하지 못한 만큼 출처 확인만으로 실제 준비 상황에 대한 궁금증이 해소되지는 않을 수 있다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe",
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f",
+      "c8ad17f3-9ef0-4f7d-894e-8b5f97b6faaf",
+      "28f994dc-80a5-4612-a5fc-18a4dd557d00"
+    ],
+    "confidence": 0.91,
+    "memory_id": "cfa4270e-642a-4e48-b41a-77efb48b898a",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:09:22.184414Z",
+    "last_accessed_at": "2026-09-21T03:09:22.184414Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 마리아, 이사벨라 말로는 준비에 차질이 생겼거나 파티가 취소됐다고 확인된 건 아니라더군요. 저도 소문만으로 단정하지 않고, 금요일 저녁 홉스 카페에서 예정대로 열리는지와 준비 상황을 이사벨라에게 다시 확인해 보려고요.",
+    "importance": 8,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "96055842-4791-497b-8e2e-c18c8e30c77a"
+    ],
+    "confidence": 0.9,
+    "memory_id": "08ca1792-0a42-4a80-95e5-204f4f048b92",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:09:26.268300Z",
+    "last_accessed_at": "2026-09-21T03:09:26.268300Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Klaus, 제가 파티 준비를 제대로 못 하고 있다는 이야기가 있다던데, 혹시 어디서 어떤 내용을 들으셨나요? 금요일 저녁 홉스 카페에 예정된 발렌타인 데이 파티에 초대하고 싶은데, 개최 여부와 준비 상황을 확인해서 알려드리면 참석을 고려해 주시겠어요?",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f"
+    ],
+    "confidence": 0.9,
+    "memory_id": "a4765754-e7df-41d0-8900-724922407633",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T03:09:38.041411Z",
+    "last_accessed_at": "2026-09-21T03:09:38.041411Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Klaus는 행사 준비에 관한 소문을 확정된 사실과 구분하고, 주최자에게 직접 확인하는 방식으로 정보의 신뢰성을 확보하려 한다. 현재 목표에서는 단순한 소식 수집보다 개최 여부와 준비 상황의 검증을 우선한다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "bdc5880e-01e0-4a6f-ad03-b6178f637d76",
+      "96055842-4791-497b-8e2e-c18c8e30c77a",
+      "a4765754-e7df-41d0-8900-724922407633"
+    ],
+    "confidence": 0.98,
+    "memory_id": "358b08ae-b996-40c5-abea-161d8c2b0c03",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T03:10:01.428136Z",
+    "last_accessed_at": "2026-09-21T03:10:01.428136Z"
+  },
+  {
+    "memory_type": "reflection",
+    "description": "Isabella와 Klaus의 행사 관련 소통은 초대뿐 아니라 소문으로 흔들릴 수 있는 신뢰를 조정하는 과정이 되고 있다. Isabella는 소문의 출처를 묻고 확인된 정보를 제공하려 하며, Klaus는 직접 확인을 계획하고 있어, 향후 확인 결과가 행사에 대한 판단과 주최자에 대한 신뢰에 영향을 줄 가능성이 있다.",
+    "importance": 8,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "bdc5880e-01e0-4a6f-ad03-b6178f637d76",
+      "96055842-4791-497b-8e2e-c18c8e30c77a",
+      "a4765754-e7df-41d0-8900-724922407633"
+    ],
+    "confidence": 0.88,
+    "memory_id": "3f9ae458-3427-4851-ac8e-c549cc7a6c33",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T03:10:01.428136Z",
+    "last_accessed_at": "2026-09-21T03:10:01.428136Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Klaus의 계획: Isabella에게 '이사벨라, 금요일 저녁 홉스 카페 발렌타인 데이 파티 준비에 어려움이 있다는 이야기를 들었는데, 실제 준비 상황은 어떤지, 예정대로 열리는지 알려 주실 수 있나요?'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: 준비 부실 이야기는 확인되지 않은 소문이므로 사실로 단정하지 않고 주최자인 Isabella에게 직접 확인한다. 개최 여부와 준비 상황을 알아보는 것이 마을 행사 정보를 수집하려는 현재 목표에 가장 직접적으로 도움이 된다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "96055842-4791-497b-8e2e-c18c8e30c77a",
+      "3f9ae458-3427-4851-ac8e-c549cc7a6c33",
+      "358b08ae-b996-40c5-abea-161d8c2b0c03",
+      "8093ed1a-28a0-48c1-9da7-43e907c8a3ca",
+      "c2229630-d42e-43dc-8b1a-fa8a17dcca84",
+      "dda0b83d-a6fc-43b7-945d-426cfadd2614"
+    ],
+    "confidence": 1.0,
+    "memory_id": "495f0b05-c2e2-40d5-b810-f7afa5b62f01",
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "created_at": "2026-09-21T03:54:37.562369Z",
+    "last_accessed_at": "2026-09-21T03:54:37.562369Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Klaus가 말했다: 이사벨라, 준비에 어려움이 있다는 이야기를 들었는데, 어디서 들었는지나 구체적인 내용은 확실히 말씀드리기 어렵네요. 초대해 주셔서 감사하고, 지금 준비는 어떤지, 금요일 저녁 파티가 예정대로 열리는지 알려 주시면 참석을 고려해 볼게요.",
+    "importance": 8,
+    "source_agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "subject_agent_ids": [
+      "df9c0acd-75b0-4ae2-8e26-c058a69e84f0"
+    ],
+    "evidence_memory_ids": [
+      "495f0b05-c2e2-40d5-b810-f7afa5b62f01"
+    ],
+    "confidence": 0.9,
+    "memory_id": "5217bf66-7a55-4cde-a6eb-100a661c47d4",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:54:41.576348Z",
+    "last_accessed_at": "2026-09-21T03:54:41.576348Z"
+  },
+  {
+    "memory_type": "plan",
+    "description": "Isabella의 계획: Maria에게 'Maria, 파티 준비에 차질이 있다는 이야기를 들으셨다면 어디서 어떤 내용을 들으셨는지 알려주시겠어요? 아직 확인되지 않은 이야기라 출처와 내용을 먼저 확인하고 싶어요.'에 관해 대화한다. 행동 목적은 verify_rumor이다. 계획 이유: 기억상 초대를 반복하기보다 개최 여부와 준비 상황의 불확실성을 해소할 필요가 있다. 같은 카페에 있는 Maria에게 소문의 출처와 구체적인 내용을 묻는 것은 소문을 사실로 단정하지 않으면서, 신뢰할 수 있는 초대 안내를 마련하는 데 도움이 된다.",
+    "importance": 9,
+    "source_agent_id": null,
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "26289704-513e-4f15-9aa5-f07dae2d95de",
+      "c71e1bcf-8740-41df-9258-6ea8b8444c63",
+      "a201cc61-4cea-4247-a64a-5bce90eaa61f",
+      "4320f6ea-65a7-458b-a542-6aed705f7627",
+      "ecc0a5b8-7a6b-493d-a4df-c599ecbaa38d",
+      "955e8e74-150a-4c75-b6a3-3f4308ac964c"
+    ],
+    "confidence": 1.0,
+    "memory_id": "f7f5f1ad-a156-4444-8d41-90860e98a920",
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "created_at": "2026-09-21T03:54:56.708792Z",
+    "last_accessed_at": "2026-09-21T03:54:56.708792Z"
+  },
+  {
+    "memory_type": "dialogue",
+    "description": "Isabella가 말했다: Maria, 혹시 파티 준비에 차질이 있다는 이야기를 들으셨다면 어디서 어떤 내용을 들으셨는지 알려주시겠어요? 아직 확인되지 않은 이야기라, 초대 안내를 드리기 전에 정확히 알아보고 싶어요.",
+    "importance": 8,
+    "source_agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "subject_agent_ids": [
+      "61533f84-fdf3-4296-b865-158d9c323bbe"
+    ],
+    "evidence_memory_ids": [
+      "f7f5f1ad-a156-4444-8d41-90860e98a920"
+    ],
+    "confidence": 0.9,
+    "memory_id": "cc6fa9c8-9c7d-4eb1-b7d6-40b2984e7816",
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "created_at": "2026-09-21T03:54:59.883522Z",
+    "last_accessed_at": "2026-09-21T03:54:59.883522Z"
+  }
+]

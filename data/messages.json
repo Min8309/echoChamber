@@ -1,0 +1,42 @@
+[
+  {
+    "message_id": "naver-001",
+    "thread_id": "article-001",
+    "source_type": "naver_comment",
+    "author_id": "user_b030cc06a02712a3",
+    "reply_to_id": null,
+    "text": "PERSON_01이 이번 일을 일부러 숨겼다는 이야기가 있어요.",
+    "created_at": "2026-09-21T09:00:00Z",
+    "collected_at": "2026-09-21T04:21:15.668279Z"
+  },
+  {
+    "message_id": "naver-002",
+    "thread_id": "article-001",
+    "source_type": "naver_comment",
+    "author_id": "user_66cadbdbb294f9fb",
+    "reply_to_id": "naver-001",
+    "text": "그 이야기는 아직 확인되지 않은 것 아닌가요?",
+    "created_at": "2026-09-21T09:01:00Z",
+    "collected_at": "2026-09-21T04:21:15.668279Z"
+  },
+  {
+    "message_id": "naver-003",
+    "thread_id": "article-002",
+    "source_type": "naver_comment",
+    "author_id": "user_924bbe9148a7dc8f",
+    "reply_to_id": null,
+    "text": "PERSON_01이 이번 일을 일부러 숨겼다는 이야기가 있어요.",
+    "created_at": "2026-09-21T10:00:00Z",
+    "collected_at": "2026-09-21T07:27:21.744965Z"
+  },
+  {
+    "message_id": "naver-004",
+    "thread_id": "article-002",
+    "source_type": "naver_comment",
+    "author_id": "user_f6dce16eedfaaf9e",
+    "reply_to_id": "naver-003",
+    "text": "그 내용은 공식적으로 확인된 것이 아닙니다.",
+    "created_at": "2026-09-21T10:01:00Z",
+    "collected_at": "2026-09-21T07:27:21.744965Z"
+  }
+]

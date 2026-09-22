@@ -1,0 +1,14 @@
+message_id,thread_id,source_type,author_id,reply_to_id,text
+m001,t001,naver_comment,user001,,"PERSON_01이 회사에서도 남의 공을 가로챈다더라."
+m002,t001,naver_comment,user002,m001,"그 이야기는 아직 확인되지 않은 것 아닌가요?"
+m003,t002,naver_comment,user003,,"PERSON_02가 이번 행사를 망쳤다는 소문이 있어요."
+m004,t002,naver_comment,user004,m003,"진짜 그런 일이 있었나요?"
+m005,t002,naver_comment,user005,m004,"아니, 그건 좀 과장된 이야기 같아."
+
+text,expected_is_gossip,expected_certainty
+"PERSON_01이 회사를 그만둔다더라.",true,speculation
+"오늘 회사가 공식 발표했다.",false,confirmed
+"나는 이번 결정이 싫다.",false,opinion
+message_id,thread_id,author_id,reply_to_id,text
+naver-101,article-01,user-01,,"PERSON_01이 일을 일부러 숨겼다는 이야기가 있어요."
+naver-102,article-01,user-02,naver-101,"그 이야기는 아직 확인되지 않았어요."

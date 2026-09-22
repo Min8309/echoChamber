@@ -1,0 +1,326 @@
+[
+  {
+    "event_id": "2a48d320-9f3b-4c66-9b49-ce5311c7c579",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "topic": "Sam이 선거에서 이기기 위해 사람들을 포섭한다는 소문",
+    "utterance": "Klaus, 금요일 저녁에 내가 Hobbs Cafe에서 발렌타인 데이 파티를 열 건데, 너도 와 줄래?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella는 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 열 계획이며 Klaus를 초대한다.",
+      "sentiment": "neutral",
+      "certainty": "confirmed",
+      "confidence": 0.88,
+      "reputation_impact": 0.0,
+      "reason": "직접적인 초대이지만, 자신의 사적인 행사 계획을 공개하는 내용도 포함하므로 주어진 기준상 가십에 해당한다. 당사자가 밝힌 계획이며, 뚜렷한 평판 평가 요소는 없다."
+    },
+    "created_at": "2026-09-18T07:05:38.889950Z"
+  },
+  {
+    "event_id": "c4f2c2da-7d83-4099-b735-cdeba30e4f81",
+    "speaker_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Isabella가 금요일 저녁에 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 초대했는데, 준비를 제대로 못 하고 있다는 소문에 대해 들은 거 있어",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 열 예정이지만, 준비를 제대로 하지 못하고 있다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.4,
+      "reason": "제3자인 Isabella의 행사 준비 능력에 관한 소문을 묻고 있어 가십에 해당한다. 파티 초대는 직접 받았다고 하지만, 준비가 미흡하다는 평가는 확인되지 않은 전언이며 주최자로서의 신뢰도에 부정적인 영향을 줄 수 있다."
+    },
+    "created_at": "2026-09-21T01:44:20.215718Z"
+  },
+  {
+    "event_id": "45cdfca9-3fdb-4f3a-9477-addd05c14368",
+    "speaker_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Isabella가 파티 준비를 제대로 못 한다는 소문이 있던데, 직접 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 초대하긴 했어. 혹시 준비 상황에 대해 들은 거 있어?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 파티 준비를 제대로 못 한다는 소문이 있으며, 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다며 직접 초대했다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.6,
+      "reason": "제3자인 Isabella의 파티 준비 능력에 관한 부정적인 소문을 전달하고 추가 정보를 묻는 대화다. 직접 초대받았다는 내용과 달리 준비 능력에 대한 평가는 확인되지 않은 전언이며, Isabella의 역량과 신뢰도에 부정적인 영향을 줄 수 있다."
+    },
+    "created_at": "2026-09-21T01:52:20.106933Z"
+  },
+  {
+    "event_id": "c9b33e07-3944-4ddd-ba4f-6298114d79d4",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 내가 파티 준비를 제대로 못 한다는",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 파티 준비를 제대로 하지 못한다는 부정적 평가가 언급된다.",
+      "sentiment": "negative",
+      "certainty": "speculation",
+      "confidence": 0.65,
+      "reputation_impact": -0.3,
+      "reason": "파티 준비 능력에 대한 부정적 평가로 평판에 영향을 줄 수 있다. 다만 발화가 미완성이므로 이를 인정하는지, 다른 사람의 말을 전하는지, 반박하려는지는 확인할 수 없다."
+    },
+    "created_at": "2026-09-21T01:52:35.209667Z"
+  },
+  {
+    "event_id": "7ebc8546-7909-4c36-801e-22f099a9d37f",
+    "speaker_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "listener_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "클라우스, 이사벨라가 파티 준비를 제대로 못 한다는 소문 들었어요? 본인은 금요일 저녁에 홉스 카페에서 발렌타인 데이 파티를 연다며 초대하던데, 혹시 준비 상황에 대해 아는 게 있어요?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라",
+      "claim": "이사벨라가 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 연다고 초대했으나, 파티 준비를 제대로 하지 못한다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.5,
+      "reason": "대화에 없는 제3자인 이사벨라의 파티 계획과 준비 능력을 다루며, 준비를 제대로 못 한다는 부정적 소문을 전달한다. 이는 이사벨라의 행사 운영 능력과 신뢰도에 영향을 줄 수 있는 가십이다. 핵심 평가가 소문으로 제시되므로 확실성은 전언으로 분류한다."
+    },
+    "created_at": "2026-09-21T01:52:44.711612Z"
+  },
+  {
+    "event_id": "4148e3f4-0510-4ace-bd62-dc81ccc7330a",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 내가 파티 준비를 제대로 못 한다는 소문이 있나 보네. 금요일 저녁 Hobbs Cafe에서 발렌타",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라",
+      "claim": "이사벨라가 파티 준비를 제대로 하지 못한다는 소문이 있는 것 같다고 말한다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.94,
+      "reputation_impact": -0.5,
+      "reason": "화자 자신의 이야기이지만, 파티 준비 능력을 부정적으로 평가하는 소문을 언급하므로 평판에 영향을 주는 가십이다. 소문의 내용은 확인된 사실이 아니며, 뒤의 발언은 잘려 있어 추가 판단에 반영하지 않았다."
+    },
+    "created_at": "2026-09-21T01:55:23.572956Z"
+  },
+  {
+    "event_id": "01e6c16b-6282-4e60-8265-4afa6f961f9a",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 준비가 잘 안 된다는 소문이 도나 보네. 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 열기로 한 건 그대로니까, 너도 꼭 와 �",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라가 주최하는 발렌타인 데이 파티",
+      "claim": "파티 준비가 잘되지 않는다는 소문이 있지만, 금요일 저녁 홉스 카페에서 파티를 열 계획은 유지된다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.91,
+      "reputation_impact": -0.2,
+      "reason": "단순한 초대뿐 아니라 파티 준비가 미흡하다는 소문을 언급하므로 가십에 해당한다. 이 소문은 주최자의 준비 능력에 약한 부정적 영향을 줄 수 있다. 개최 계획은 화자가 직접 확인하지만, 준비 상태에 대한 부정적 평가는 전언이다."
+    },
+    "created_at": "2026-09-21T01:55:40.680392Z"
+  },
+  {
+    "event_id": "4cdadd04-87ed-4d68-b27a-f1c593c1a4b3",
+    "speaker_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 이사벨라한테 금요일 저녁 홉스 카페에서 열리는 발렌타인 데이 파티에 초대받긴 했는데, 준비 상황은 저도 잘 몰라요. 준비가 미흡하다는 건 아직 소문인 것 같은데, 혹시 더 들은 얘기 있어요?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라",
+      "claim": "이사벨라가 초대한 금요일 저녁 홉스 카페의 발렌타인 데이 파티 준비가 미흡하다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.97,
+      "reputation_impact": -0.3,
+      "reason": "제3자인 이사벨라와 관련된 행사 준비에 대한 부정적 소문을 전달하고 추가 정보를 묻는 대화다. 화자가 준비 상황을 잘 모르며 아직 소문이라고 명시하므로 전언으로 분류한다. 이사벨라의 준비성이나 신뢰도에 부정적인 영향을 줄 수 있지만, 실제 준비 책임자인지는 확인되지 않았다."
+    },
+    "created_at": "2026-09-21T01:55:50.521837Z"
+  },
+  {
+    "event_id": "86dea8d7-57ac-414a-8b42-292be4fd4040",
+    "speaker_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Isabella가 파티 준비를 제대로 못 한다는 소문이 도나 보던데, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 했어. 혹시 준비 상황에 대해 더 들은 얘기 있어?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 파티 준비를 제대로 하지 못한다는 소문이 있지만, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 말했다고 한다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.45,
+      "reason": "제3자인 Isabella의 행사 준비 능력에 관한 부정적인 소문과 행사 계획을 전달하고 추가 정보를 묻는 대화다. 준비 능력에 대한 평판을 떨어뜨릴 수 있으며, 직접 확인된 준비 상황이 아니라 소문과 전언에 근거하므로 가십이자 전언으로 분류한다."
+    },
+    "created_at": "2026-09-21T01:55:50.660977Z"
+  },
+  {
+    "event_id": "df660983-e4d2-43af-9e34-e360ffe9eedc",
+    "speaker_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "listener_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Klaus, Isabella가 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 직접 초대했는데, 준비가 잘 안 되고 있다는 소문도 있더라. 혹시 준비 상황에 대해 들은 거 있어?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 금요일 저녁 Hobbs Cafe에서 발렌타인 데이 파티를 연다고 직접 초대했으며, 파티 준비가 잘되지 않고 있다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.3,
+      "reason": "제3자인 Isabella의 행사 계획과 준비 상태를 다루므로 가십에 해당한다. 파티 개최는 직접 초대받았다는 진술에 근거하지만, 평판에 영향을 주는 준비 부실 주장은 소문이므로 전언으로 분류한다. 이 소문은 Isabella의 행사 준비 능력에 다소 부정적인 인상을 줄 수 있다."
+    },
+    "created_at": "2026-09-21T01:55:52.236999Z"
+  },
+  {
+    "event_id": "5306a4fe-7fbc-4a4f-8b26-3282ac57ad1b",
+    "speaker_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "listener_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "이사벨라, 금요일 저녁 홉스 카페에서 여는 발렌타인 데이 파티는 준비 잘 되어 가요? 마리아한테 준비가 좀 어렵다는 소문을 들었는데, 직접 물어보는 게 좋을 것 같아서요.",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "이사벨라가 금요일 저녁 홉스 카페에서 열리는 발렌타인 데이 파티를 준비하는 데 어려움을 겪고 있다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.9,
+      "reputation_impact": -0.2,
+      "reason": "현재 대화 상대에게 준비 상황을 직접 묻는 부분만으로는 가십이 아니지만, 마리아에게 들은 소문을 전달하고 있다. 준비의 어려움이라는 미확인 정보는 이사벨라의 행사 준비 능력에 대한 평가에 약한 부정적 영향을 줄 수 있다."
+    },
+    "created_at": "2026-09-21T01:56:15.407720Z"
+  },
+  {
+    "event_id": "06ace387-0c06-43e5-95b6-731ed242f796",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "topic": "파티",
+    "utterance": "클라우스, 파티 준비가 어렵다는 얘기가 돈다던데, 실제로 차질이 생겼거나 취소됐다고 확인된 건 아니에요. 금요일 저녁 홉스 카페 발렌타인 데이 파티에 꼭 와 주셨으면 하는데, 개최 여부와 준비 상황부터 확실히 알려드려야겠네요.",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "홉스 카페 발렌타인 데이 파티 준비 상황",
+      "claim": "금요일 저녁 예정된 파티의 준비가 어렵다는 소문이 돌고 있으나, 실제 차질이나 취소는 확인되지 않았다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.95,
+      "reputation_impact": -0.2,
+      "reason": "단순한 초대를 넘어 행사 준비에 어려움이 있다는 소문을 전달하므로 가십에 해당한다. 주최 측의 준비 역량에 대한 신뢰를 낮출 수 있지만, 화자가 차질이나 취소는 확인되지 않았다고 명시해 부정적 영향을 제한한다."
+    },
+    "created_at": "2026-09-21T02:26:51.344541Z"
+  },
+  {
+    "event_id": "fccd7349-898f-4d5f-8a70-286626e35c3e",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "파티",
+    "utterance": "마리아, 준비가 어렵다는 소문이 들리긴 하지만, 실제로 차질이 생겼거나 취소됐다고 확인된 건 아니야. 예정대로 열리는지와 준비 상황은 정확히 확인해서 알려줄게, 함께할 수 있으면 정말 좋겠어!",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "예정된 행사와 준비 상황",
+      "claim": "행사 준비가 어렵다는 소문이 있지만, 실제 차질이나 취소는 확인되지 않았으며 Isabella가 개최 여부와 준비 상황을 확인해 알려주겠다고 한다.",
+      "sentiment": "neutral",
+      "certainty": "hearsay",
+      "confidence": 0.93,
+      "reputation_impact": -0.1,
+      "reason": "행사 준비에 어려움이 있다는 미확인 소문을 전달하므로 가십에 해당한다. 준비 주체의 역량이나 신뢰에 약한 부정적 영향을 줄 수 있지만, 차질이나 취소가 확인된 것은 아니라고 명시하여 그 영향을 제한한다."
+    },
+    "created_at": "2026-09-21T02:27:06.389168Z"
+  },
+  {
+    "event_id": "8386cc86-8349-4d8f-85a4-2271a7f54223",
+    "speaker_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Maria, 금요일 저녁 홉스 카페에서 예정된 발렌타인 데이 파티에 초대하고 싶어요. 준비 차질이나 취소가 확인된 것은 아니지만, 개최 여부와 구체적인 준비 상황은 확인해서 알려드릴게요. 일정이 확정되면 참석하실 의향이 있나요?",
+    "utterance": "Maria, 준비가 어렵다는 이야기가 들리긴 하지만 실제로 차질이나 취소가 확인된 건 아니라서, 개최 여부와 준비 상황은 확인해서 알려드릴게요. 금요일 저녁 홉스 카페에서 예정대로 열리게 되면 꼭 와주셨으면 하는데, 참석하실 생각 있으세요?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "금요일 저녁 홉스 카페에서 열릴 예정인 행사",
+      "claim": "행사 준비가 어렵다는 이야기가 있으나, 실제 차질이나 취소는 확인되지 않았다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.9,
+      "reputation_impact": -0.1,
+      "reason": "행사 준비에 어려움이 있다는 전언은 준비 상황과 운영 신뢰도에 영향을 줄 수 있어 가십에 해당한다. 다만 화자가 차질이나 취소는 확인되지 않았다고 명시해 부정적 영향은 제한적이다. Maria에게 참석 의사를 직접 묻는 부분 자체는 가십이 아니다."
+    },
+    "created_at": "2026-09-21T02:59:44.144522Z"
+  },
+  {
+    "event_id": "098cf930-06a6-4f43-9926-96fbb8e645a6",
+    "speaker_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Isabella가 파티 준비를 제대로 못 하고 있다는 소문이 있던데, 직접 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 연다고 초대하긴 했어. 혹시 준비 상황에 대해 더 들은 얘기 있어?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 연다고 직접 초대했지만, 파티 준비를 제대로 못 하고 있다는 소문이 있다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.4,
+      "reason": "제3자인 Isabella의 파티 준비 능력을 부정적으로 평가하는 소문을 전달하고 추가 정보를 묻는 대화이므로 가십이다. 직접 초대받았다는 사실과 달리, 준비가 미흡하다는 핵심 평가는 확인되지 않은 전언이다."
+    },
+    "created_at": "2026-09-21T03:03:32.503769Z"
+  },
+  {
+    "event_id": "4c72e8e4-1d0c-4d89-874d-ff9e7f5877bb",
+    "speaker_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 이사벨라 말로는 준비에 차질이 생겼거나 취소됐다고 확인된 건 아니래요. 저도 소문만으로 단정하긴 어려워서, 금요일 저녁 홉스 카페 파티가 예정대로 열리는지와 준비 상황을 이사벨라에게 직접 확인해 보려고요.",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라 및 금요일 저녁 홉스 카페 파티",
+      "claim": "이사벨라의 말에 따르면 파티 준비에 차질이 생겼거나 파티가 취소됐다고 확인된 것은 아니다. 클라우스는 예정대로 개최되는지와 준비 상황을 이사벨라에게 직접 확인할 계획이다.",
+      "sentiment": "neutral",
+      "certainty": "hearsay",
+      "confidence": 0.97,
+      "reputation_impact": 0.0,
+      "reason": "제3자인 이사벨라의 발언과 파티 준비 상황에 관한 전언이므로 가십에 해당한다. 준비 차질이나 취소를 확정한 발언이 아니라 확인되지 않았음을 강조하며 직접 확인하려는 내용이다. 특정인의 책임이나 능력을 평가하지 않아 뚜렷한 평판 영향은 없다."
+    },
+    "created_at": "2026-09-21T03:04:30.930540Z"
+  },
+  {
+    "event_id": "4ec2f8bc-a0bd-4595-8ff3-2ef302d15f0d",
+    "speaker_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "listener_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "Isabella가 파티 준비를 제대로 못 하고 있다는 소문이 있던데, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 했어. 혹시 준비가 어떻게 돼 가는지 더 들은 얘기 있어?",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "Isabella",
+      "claim": "Isabella가 파티 준비를 제대로 못 하고 있다는 소문이 있지만, 본인은 금요일 저녁 홉스 카페에서 발렌타인 데이 파티를 예정대로 연다고 말했다는 내용이다.",
+      "sentiment": "negative",
+      "certainty": "hearsay",
+      "confidence": 0.98,
+      "reputation_impact": -0.4,
+      "reason": "제3자인 Isabella의 행사 준비 상황과 계획을 전하며 추가 소문을 묻고 있다. 준비가 미흡하다는 이야기는 확인되지 않은 전언이며, 행사 운영 능력과 신뢰도에 부정적인 영향을 줄 수 있어 가십에 해당한다."
+    },
+    "created_at": "2026-09-21T03:04:41.671725Z"
+  },
+  {
+    "event_id": "701208cc-84ac-464c-a9ae-e47d4ef77616",
+    "speaker_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "listener_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "topic": "Isabella가 파티 준비를 제대로 하지 못한다는 소문",
+    "utterance": "마리아, 이사벨라 말로는 준비에 차질이 생겼거나 파티가 취소됐다고 확인된 건 아니라더군요. 저도 소문만으로 단정하지 않고, 금요일 저녁 홉스 카페에서 예정대로 열리는지와 준비 상황을 이사벨라에게 다시 확인해 보려고요.",
+    "analysis": {
+      "is_gossip": true,
+      "subject": "이사벨라",
+      "claim": "이사벨라의 말에 따르면 준비 차질이나 파티 취소가 확인된 것은 아니다. 클라우스는 금요일 저녁 홉스 카페에서 파티가 예정대로 열리는지와 준비 상황을 이사벨라에게 다시 확인하려 한다.",
+      "sentiment": "neutral",
+      "certainty": "hearsay",
+      "confidence": 0.97,
+      "reputation_impact": 0.0,
+      "reason": "제3자인 이사벨라의 발언과 파티 진행 상황을 전달하므로 가십에 해당한다. 이사벨라에게서 들은 내용을 전하는 간접 정보이며, 준비 차질이나 취소를 확정하지 않고 재확인을 예고한다. 특정인의 책임이나 잘못을 주장하지 않아 평판 영향은 중립적이다."
+    },
+    "created_at": "2026-09-21T03:09:34.525211Z"
+  }
+]

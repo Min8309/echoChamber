@@ -1,0 +1,54 @@
+[
+  {
+    "agent_id": "df9c0acd-75b0-4ae2-8e26-c058a69e84f0",
+    "name": "Isabella",
+    "age": 34,
+    "occupation": "카페 주인",
+    "current_location": "Hobbs Cafe",
+    "current_goal": "마을 사람들을 파티에 초대한다",
+    "personality": {
+      "sociability": 0.9,
+      "gossip_tendency": 0.7,
+      "credulity": 0.4
+    }
+  },
+  {
+    "agent_id": "61533f84-fdf3-4296-b865-158d9c323bbe",
+    "name": "Maria",
+    "age": 28,
+    "occupation": "도서관 직원",
+    "current_location": "Hobbs Cafe",
+    "current_goal": "마을 행사 소식을 알아본다",
+    "personality": {
+      "sociability": 0.8,
+      "gossip_tendency": 0.8,
+      "credulity": 0.7
+    }
+  },
+  {
+    "agent_id": "6f5c303d-c448-46fd-8dab-e49f5a9f0580",
+    "name": "Maria",
+    "age": 28,
+    "occupation": "도서관 직원",
+    "current_location": "Hobbs Cafe",
+    "current_goal": "마을 행사 소식을 알아본다",
+    "personality": {
+      "sociability": 0.8,
+      "gossip_tendency": 0.8,
+      "credulity": 0.7
+    }
+  },
+  {
+    "agent_id": "7136ac79-c4d0-4b1a-b067-cf71df83eb21",
+    "name": "Klaus",
+    "age": 31,
+    "occupation": "작가",
+    "current_location": "마을 공원",
+    "current_goal": "마을 행사 정보를 알아본다",
+    "personality": {
+      "sociability": 0.6,
+      "gossip_tendency": 0.5,
+      "credulity": 0.6
+    }
+  }
+]
