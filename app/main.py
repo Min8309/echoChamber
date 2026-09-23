@@ -1,4 +1,7 @@
+import os
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.routers.reflections import router as reflections_router
 from app.routers.agents import router as agents_router
@@ -32,13 +35,58 @@ app.include_router(reflections_router)
 app.include_router(planning_router)
 app.include_router(ingestion_router)
 
-@app.get("/")
+# stitch UI 정적 폴더 서빙 (있을 경우)
+stitch_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch")
+if os.path.exists(stitch_dir):
+    app.mount("/stitch", StaticFiles(directory=stitch_dir), name="stitch")
+
+
+@app.get("/", response_class=HTMLResponse)
 def read_root():
-    return {
-        "project": "EchoChamber",
-        "status": "running",
-        "message": "EchoChamber API 서버가 정상적으로 실행 중입니다.",
-    }
+    html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "code.html")
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return """
+    <html>
+        <body>
+            <h1>EchoChamber API 서버가 실행 중입니다.</h1>
+            <p>UI 파일(stitch/code.html)을 찾을 수 없습니다.</p>
+        </body>
+    </html>
+    """
+
+
+@app.get("/real-lab", response_class=HTMLResponse)
+def read_real_lab():
+    html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "code_01.html")
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return """
+    <html>
+        <body>
+            <h1>EchoChamber - 현실 댓글 연구실</h1>
+            <p>UI 파일(stitch/code_01.html)을 찾을 수 없습니다.</p>
+        </body>
+    </html>
+    """
+
+
+@app.get("/education", response_class=HTMLResponse)
+def read_education():
+    html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "code_02.html")
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return """
+    <html>
+        <body>
+            <h1>EchoChamber Learning Lab</h1>
+            <p>UI 파일(stitch/code_02.html)을 찾을 수 없습니다.</p>
+        </body>
+    </html>
+    """
 
 
 @app.get("/health")
@@ -46,4 +94,5 @@ def health_check():
     return {
         "status": "healthy"
     }
+
 
