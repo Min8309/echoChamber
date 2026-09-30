@@ -18,5 +18,8 @@ EchoChamber는 대화 속에서 소문이 처음 시작된 지점을 추적하�
 - 감정과 평판 영향의 누적 변화 확인
 - 실제 댓글과 가상 에이전트 대화 비교 분석
 
+
+<img width="1031" height="626" alt="image" src="https://github.com/user-attachments/assets/7b5a47d4-9352-414c-a28f-8728e8cde58a" />
+
 <img width="1260" height="821" alt="image" src="https://github.com/user-attachments/assets/955d9cd7-bc07-4772-b789-1091082da555" />
 <img width="1252" height="730" alt="image" src="https://github.com/user-attachments/assets/14e87510-8ed4-422a-8581-14687577d201" />
