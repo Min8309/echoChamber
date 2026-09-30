@@ -2,7 +2,6 @@
 
 
 file:///c:/EchoChamber/stitch/code.html
-http://localhost:8008
 
 [echochamber.pptx](https://github.com/user-attachments/files/32836162/echochamber.pptx)
 
