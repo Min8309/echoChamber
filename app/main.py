@@ -75,6 +75,7 @@ def read_real_lab():
 
 @app.get("/education", response_class=HTMLResponse)
 def read_education():
+    """학습 연구실 UI 페이지를 반환합니다."""
     html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "code_02.html")
     if os.path.exists(html_path):
         with open(html_path, "r", encoding="utf-8") as f:
@@ -84,6 +85,23 @@ def read_education():
         <body>
             <h1>EchoChamber Learning Lab</h1>
             <p>UI 파일(stitch/code_02.html)을 찾을 수 없습니다.</p>
+        </body>
+    </html>
+    """
+
+
+@app.get("/alexandria", response_class=HTMLResponse)
+def read_alexandria():
+    """알렉산드리아 UI 페이지를 반환합니다."""
+    html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "alexandria", "code.html")
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return """
+    <html>
+        <body>
+            <h1>EchoChamber Alexandria</h1>
+            <p>UI 파일(stitch/alexandria/code.html)을 찾을 수 없습니다.</p>
         </body>
     </html>
     """

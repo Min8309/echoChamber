@@ -160,7 +160,7 @@
 <div class="p-3 m-4 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between">
 <div class="flex flex-col">
 <span class="font-label text-[12px] text-accent-navy font-semibold">Echo Learning Engine</span>
-<span class="font-mono-code text-[11px] text-on-surface-variant">Port 8000 • Active Sandbox</span>
+<span class="font-mono-code text-[11px] text-on-surface-variant">Port 8008 • Active Sandbox</span>
 </div>
 <span class="material-symbols-outlined text-tertiary text-[20px]">verified</span>
 </div>
@@ -411,6 +411,26 @@
         showToast('🎉 [미션 성공] 100/100 pt! 최초 출처와 왜곡자를 정확히 추적했습니다!', 'success');
       });
     }
+
+    // 네비게이션 상대 경로 지원
+    const isFileProto = window.location.protocol === 'file:';
+    document.querySelectorAll('aside nav a, header button, .tab-btn').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const path = link.getAttribute('data-path');
+        const btnText = link.innerText || '';
+
+        if (btnText.includes('마을 보기') || path === 'town-view' || path === 'dashboard') {
+          e.preventDefault();
+          window.location.href = isFileProto ? './code.html' : '/';
+        } else if (btnText.includes('알렉산드리아') || path === 'alexandria') {
+          e.preventDefault();
+          window.location.href = isFileProto ? './alexandria/code.html' : '/alexandria';
+        } else if (btnText.includes('현실 댓글') || path === 'real-comment-lab') {
+          e.preventDefault();
+          window.location.href = isFileProto ? './code_01.html' : '/real-lab';
+        }
+      });
+    });
   });
 </script>
 </body></html>

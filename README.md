@@ -1,6 +1,6 @@
 프로젝트 구현 목적
 
-http://localhost:8000
+http://localhost:8008
 
 [echochamber.pptx](https://github.com/user-attachments/files/32836162/echochamber.pptx)
 

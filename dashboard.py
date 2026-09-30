@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 
 
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = "http://127.0.0.1:8008"
 
 st.divider()
 st.subheader("실제 댓글 분석")
@@ -1590,11 +1590,11 @@ try:
 except requests.RequestException as error:
     st.error(
         "FastAPI 서버에 연결할 수 없습니다. "
-        "8000번 포트에서 서버가 실행 중인지 확인하세요."
+        "8008번 포트에서 서버가 실행 중인지 확인하세요."
     )
 
     st.code(
-        "python -m uvicorn app.main:app --reload"
+        "python -m uvicorn app.main:app --port 8008 --reload"
     )
 
     st.exception(error)

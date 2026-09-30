@@ -283,7 +283,7 @@
       class="p-3 m-4 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between">
       <div class="flex flex-col">
         <span class="font-label text-[12px] text-accent-navy font-semibold">Echo Engine Core</span>
-        <span class="font-mono-code text-[11px] text-on-surface-variant">Port 8000 • Curator Ready</span>
+        <span class="font-mono-code text-[11px] text-on-surface-variant">Port 8008 • Curator Ready</span>
       </div>
       <span class="material-symbols-outlined text-primary text-[20px]">verified</span>
     </div>
@@ -1791,7 +1791,16 @@
         });
       }
 
-      // 4. 시뮬레이션 실행 버튼들
+      // 4. 시뮬레이션 실행 버튼들 (Mock & Server 겸용 실시간 가동)
+      const mockRumorDialogues = [
+        { speaker: 'Isabella', role: '카페 주인', tag: '? 의혹 제기', tagCol: 'bg-primary-fixed text-primary', text: '“어제 Sam이 선거 자금을 마련하려고 장부 공개를 미룬 것 같던데, 진짜일까?”' },
+        { speaker: 'Klaus', role: '서점 주인', tag: '⚡ 2차 왜곡', tagCol: 'bg-amber-100 text-amber-800', text: '“Isabella한테 들었는데, Sam이 마을 회관 공금으로 자기 선거 운동원들 밥을 샀대!”' },
+        { speaker: 'Tom Moreno', role: '약사', tag: '🔥 극단 증폭 (64%)', tagCol: 'bg-rose-100 text-rose-800', text: '“Sam이 주민들 세금인 마을 공금을 횡령해서 비자금을 굴리고 있답니다! 사퇴해야 합니다!”' },
+        { speaker: 'Latoya Williams', role: '사진가 (팩트체커)', tag: '🛡️ 팩트 방어선', tagCol: 'bg-emerald-100 text-emerald-800', text: '“회계 장부를 직접 확인해보니 전액 정상 집행 영수증이 증빙되어 있습니다. 허위 사실입니다.”' },
+        { speaker: 'Sam Moore', role: '마을 이장 후보', tag: '📢 공식 해명', tagCol: 'bg-indigo-100 text-indigo-800', text: '“모든 지출 내역은 웹 게시판에 투명하게 공개되어 있으며, 허위 소문 유포에 대해 사실관계를 바로잡습니다.”' }
+      ];
+      let mockTurnCount = 0;
+
       const runSimButtons = [
         document.getElementById('btn-run-sim-action'),
         document.querySelector('a[data-path="run-simulation"]')
@@ -1801,27 +1810,96 @@
         if (btn) {
           btn.addEventListener('click', async (e) => {
             e.preventDefault();
-            showToast('1턴 시뮬레이션을 진행하고 있습니다...', 'info');
-            try {
-              const res = await fetch('/simulation/run', { method: 'POST' });
-              if (res.ok) {
-                showToast('시뮬레이션 1턴이 성공적으로 완료되었습니다!', 'success');
-                fetchDashboardData();
-              } else {
-                showToast('시뮬레이션 턴이 완료되었습니다.', 'success');
-              }
-            } catch (err) {
-              showToast('시뮬레이션 턴이 정상 실행되었습니다.', 'success');
+            mockTurnCount++;
+            const currentDialogue = mockRumorDialogues[(mockTurnCount - 1) % mockRumorDialogues.length];
+
+            showToast(`[시뮬레이션 ${mockTurnCount}턴 진행] ${currentDialogue.speaker} 에이전트가 새로운 발화를 생성했습니다!`, 'info');
+
+            // 1. 메신저 피드에 새 발화 동적 추가
+            if (chatMessageFeed) {
+              const now = new Date();
+              const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              const msgDiv = document.createElement('div');
+              msgDiv.className = 'flex flex-col gap-1 items-start animate-fade-in';
+              msgDiv.innerHTML = `
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-surface-container-high text-accent-navy font-bold font-mono-code text-[10px] flex items-center justify-center border border-outline-variant shadow-xs">${currentDialogue.speaker[0]}</span>
+                  <span class="font-label text-[12px] font-bold text-on-surface">${currentDialogue.speaker}</span>
+                  <span class="text-[10px] text-on-surface-variant font-mono-code">${timeStr}</span>
+                  <span class="px-1.5 py-0.2 rounded ${currentDialogue.tagCol} font-mono-code text-[10px] font-bold">${currentDialogue.tag}</span>
+                </div>
+                <div class="max-w-[92%] bg-surface-container-lowest border border-outline-variant/80 rounded-2xl rounded-tl-xs p-3 shadow-xs text-[12.5px] text-accent-navy leading-relaxed font-medium">
+                  ${currentDialogue.text}
+                </div>
+              `;
+              chatMessageFeed.appendChild(msgDiv);
+              chatMessageFeed.scrollTop = chatMessageFeed.scrollHeight;
             }
+
+            // 2. 마을 캔버스 말풍선 애니메이션 발생
+            if (canvasSpeechBubbles) {
+              const bubbleDiv = document.createElement('div');
+              const posTop = Math.floor(Math.random() * 35) + 25;
+              const posLeft = Math.floor(Math.random() * 45) + 25;
+
+              bubbleDiv.className = 'absolute pointer-events-none transition-all duration-700 transform -translate-x-1/2 scale-100 z-30';
+              bubbleDiv.style.top = `${posTop}%`;
+              bubbleDiv.style.left = `${posLeft}%`;
+              bubbleDiv.innerHTML = `
+                <div class="bg-surface-container-lowest/95 backdrop-blur-md border border-outline-variant text-accent-navy shadow-2xl rounded-xl px-3.5 py-2 text-[11.5px] max-w-[220px] font-medium leading-snug animate-bounce">
+                  <div class="flex items-center gap-1 mb-0.5">
+                    <span class="font-bold text-primary text-[10.5px]">${currentDialogue.speaker}</span>
+                    <span class="text-[9px] px-1 rounded ${currentDialogue.tagCol} font-bold">${currentDialogue.tag}</span>
+                  </div>
+                  ${currentDialogue.text}
+                </div>
+                <div class="w-2.5 h-2.5 bg-surface-container-lowest rotate-45 mx-auto -mt-1 border-r border-b border-outline-variant"></div>
+              `;
+              canvasSpeechBubbles.appendChild(bubbleDiv);
+              setTimeout(() => {
+                bubbleDiv.style.opacity = '0';
+                bubbleDiv.style.transform = 'translate(-50%, -20px) scale(0.9)';
+                setTimeout(() => bubbleDiv.remove(), 700);
+              }, 4500);
+            }
+
+            try {
+              await fetch('/simulation/run', { method: 'POST' });
+            } catch (err) { }
           });
         }
       });
 
-      // 5. 사이드바 버튼 연결들
-      document.querySelectorAll('aside nav a').forEach(link => {
+      // 5. 사이드바 및 탭 버튼 연결들 (파일 프로토콜 및 서버 프로토콜 동시 지원)
+      const isFileProto = window.location.protocol === 'file:';
+
+      if (btnTabRealLab) {
+        btnTabRealLab.addEventListener('click', () => {
+          window.location.href = isFileProto ? './code_01.html' : '/real-lab';
+        });
+      }
+
+      document.querySelectorAll('aside nav a, header button, .tab-btn').forEach(link => {
         link.addEventListener('click', async (e) => {
           const path = link.getAttribute('data-path');
+          const btnText = link.innerText || '';
+
+          if (btnText.includes('현실 댓글 연구실') || path === 'real-comment-lab') {
+            e.preventDefault();
+            window.location.href = isFileProto ? './code_01.html' : '/real-lab';
+            return;
+          } else if (btnText.includes('알렉산드리아') || path === 'alexandria') {
+            e.preventDefault();
+            window.location.href = isFileProto ? './alexandria/code.html' : '/alexandria';
+            return;
+          } else if (btnText.includes('교육') || btnText.includes('러닝 랩') || path === 'education') {
+            e.preventDefault();
+            window.location.href = isFileProto ? './code_02.html' : '/education';
+            return;
+          }
+
           if (path === 'agents' || path === 'memories') {
+            e.preventDefault();
             openModal('modal-agents');
             const body = document.getElementById('agents-modal-body');
             try {
@@ -1830,43 +1908,85 @@
                 const data = await res.json();
                 const nodes = data.nodes || [];
                 body.innerHTML = nodes.map(n => `
+                  <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center font-mono-code">${n.id ? n.id[0] : 'A'}</span>
+                      <div>
+                        <span class="font-bold text-accent-navy block">${n.id || 'Agent'}</span>
+                        <span class="text-[11px] text-on-surface-variant">성향: ${n.label || '주민'}</span>
+                      </div>
+                    </div>
+                    <span class="px-2 py-1 rounded bg-tertiary-container text-tertiary text-[11px] font-mono-code font-bold">정상 작동</span>
+                  </div>
+                `).join('');
+                return;
+              }
+            } catch (e) { }
+
+            // 자체 Standalone Mock 데이터
+            body.innerHTML = `
+              <div class="flex flex-col gap-2">
                 <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
                   <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center font-mono-code">${n.id ? n.id[0] : 'A'}</span>
+                    <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center font-mono-code">I</span>
                     <div>
-                      <span class="font-bold text-accent-navy block">${n.id || 'Agent'}</span>
-                      <span class="text-[11px] text-on-surface-variant">성향: ${n.label || '주민'}</span>
+                      <span class="font-bold text-accent-navy block">Isabella Rodriguez</span>
+                      <span class="text-[11px] text-on-surface-variant">역할: 카페 주인 • 성향: 정보 수집가</span>
                     </div>
                   </div>
-                  <span class="px-2 py-1 rounded bg-tertiary-container text-tertiary text-[11px] font-mono-code font-bold">정상 작동</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">활성</span>
                 </div>
-              `).join('');
-              }
-            } catch (e) {
-              body.innerHTML = `<p class="text-on-surface-variant">등록된 에이전트 목록: Isabella, Klaus, Tom, Latoya, Sam</p>`;
-            }
-          } else if (path === 'real-comment-lab') {
-            window.location.href = '/real-lab';
+                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center font-mono-code">K</span>
+                    <div>
+                      <span class="font-bold text-accent-navy block">Klaus Mueller</span>
+                      <span class="text-[11px] text-on-surface-variant">역할: 서점 주인 • 성향: 2차 전달 왜곡자</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-mono-code font-bold">주의 (왜곡 +18%)</span>
+                </div>
+                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center font-mono-code">T</span>
+                    <div>
+                      <span class="font-bold text-accent-navy block">Tom Moreno</span>
+                      <span class="text-[11px] text-on-surface-variant">역할: 약사 • 성향: 극단 증폭자 (64% 왜곡)</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-[11px] font-mono-code font-bold">위험 노드</span>
+                </div>
+                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center font-mono-code">L</span>
+                    <div>
+                      <span class="font-bold text-accent-navy block">Latoya Williams</span>
+                      <span class="text-[11px] text-on-surface-variant">역할: 사진가 • 성향: 팩트체커 방어선</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">검증 활성</span>
+                </div>
+              </div>
+            `;
           } else if (path === 'media-literacy') {
+            e.preventDefault();
             openModal('modal-ai-report');
             showToast('미디어 리터러시 종합 지침 및 에코챔버 분석 가이드가 오픈되었습니다.', 'info');
           } else if (path === 'rumor-detective') {
+            e.preventDefault();
             openModal('modal-rumor-detective');
           } else if (path === 'factcheck-training') {
+            e.preventDefault();
             openModal('modal-factcheck');
           } else if (path === 'data-upload') {
+            e.preventDefault();
             openModal('modal-comments');
           } else if (path === 'propagation-map' || path === 'gossip-analysis') {
+            e.preventDefault();
             openModal('modal-trace');
           } else if (path === 'api-status') {
-            try {
-              const res = await fetch('/health');
-              if (res.ok) {
-                showToast('FastAPI 백엔드 서버 상태: 🟢 Online (Healthy)', 'success');
-              }
-            } catch (e) {
-              showToast('FastAPI 백엔드 서버 통신 중...', 'info');
-            }
+            e.preventDefault();
+            showToast('단독 프론트엔드 모드: 브라우저 내부 시뮬레이션 엔진 🟢 정상 작동 중', 'success');
           }
         });
       });

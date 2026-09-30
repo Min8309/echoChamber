@@ -9,7 +9,7 @@ echo ===================================================
 echo.
 
 :: 2초 후 브라우저 자동 오픈
-start "" cmd /c "timeout /t 2 /nobreak >nul & start http://localhost:8000"
+start "" cmd /c "timeout /t 2 /nobreak >nul & start http://localhost:8008"
 
 :: 가상환경 활성화 (존재할 경우)
 if exist ".venv\Scripts\activate.bat" (
@@ -17,7 +17,7 @@ if exist ".venv\Scripts\activate.bat" (
 )
 
 :: FastAPI 서버 실행
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8008
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
