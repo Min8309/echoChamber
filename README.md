@@ -2,6 +2,8 @@
 
 
 file:///c:/EchoChamber/stitch/code.html 
+file:///c:/EchoChamber/stitch/code_01.html
+file:///c:/EchoChamber/stitch/alexandria/code.html
 
 [echochamber.pptx](https://github.com/user-attachments/files/32836162/echochamber.pptx)
 
