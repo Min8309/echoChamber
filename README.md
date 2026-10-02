@@ -1,6 +1,6 @@
 프로젝트 구현 목적
 
-- 🌐 **온라인 데모 (GitHub Pages)**: [https://min8309.github.io/echoChamber/](https://min8309.github.io/echoChamber/)
+- 🌐 **온라인 데모 (GitHub Pages)**: [[https://min8309.github.io/echoChamber/](https://min8309.github.io/echoChamber/)](https://min8309.github.io/echoChamber/)
 - 💻 로컬 서버 접속: http://localhost:8008
 - 📖 배포 가이드 문서: [DEPLOYMENT.md](file:///c:/EchoChamber/DEPLOYMENT.md)
 - 📂 단독 실행 (로컬 파일): file:///c:/EchoChamber/index.html
