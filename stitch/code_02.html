@@ -412,22 +412,35 @@
       });
     }
 
-    // 네비게이션 상대 경로 지원
-    const isFileProto = window.location.protocol === 'file:';
+    // 네비게이션 상대 경로 지원 (GitHub Pages, 로컬 파일 및 서버 프로토콜 동시 지원)
+    function getNavUrl(target) {
+      const isServer = (window.location.port === '8008') || (window.location.hostname === 'localhost' && window.location.port === '8008');
+      if (isServer) {
+        if (target === 'home') return '/';
+        if (target === 'alexandria') return '/alexandria';
+        if (target === 'real-lab') return '/real-lab';
+        return '/education';
+      }
+      if (target === 'home') return '../index.html';
+      if (target === 'alexandria') return './alexandria/code.html';
+      if (target === 'real-lab') return './code_01.html';
+      return './code_02.html';
+    }
+
     document.querySelectorAll('aside nav a, header button, .tab-btn').forEach(link => {
       link.addEventListener('click', (e) => {
         const path = link.getAttribute('data-path');
         const btnText = link.innerText || '';
 
-        if (btnText.includes('마을 보기') || path === 'town-view' || path === 'dashboard') {
+        if (btnText.includes('마을 보기') || btnText.includes('대시보드') || path === 'town-view' || path === 'dashboard') {
           e.preventDefault();
-          window.location.href = isFileProto ? './code.html' : '/';
+          window.location.href = getNavUrl('home');
         } else if (btnText.includes('알렉산드리아') || path === 'alexandria') {
           e.preventDefault();
-          window.location.href = isFileProto ? './alexandria/code.html' : '/alexandria';
+          window.location.href = getNavUrl('alexandria');
         } else if (btnText.includes('현실 댓글') || path === 'real-comment-lab') {
           e.preventDefault();
-          window.location.href = isFileProto ? './code_01.html' : '/real-lab';
+          window.location.href = getNavUrl('real-lab');
         }
       });
     });

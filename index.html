@@ -6,6 +6,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="web_dashboard" name="shell-type" />
+  <title>EchoChamber · 가십 역학 시뮬레이션 및 분석 플랫폼</title>
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link
@@ -283,7 +284,7 @@
       class="p-3 m-4 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between">
       <div class="flex flex-col">
         <span class="font-label text-[12px] text-accent-navy font-semibold">Echo Engine Core</span>
-        <span class="font-mono-code text-[11px] text-on-surface-variant">Port 8008 • Curator Ready</span>
+        <span class="font-mono-code text-[11px] text-on-surface-variant">Standalone &amp; Cloud Ready</span>
       </div>
       <span class="material-symbols-outlined text-primary text-[20px]">verified</span>
     </div>
@@ -319,7 +320,7 @@
         <div
           class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-tertiary-container/70 border border-tertiary/20 text-tertiary font-mono-code text-[11px] font-semibold">
           <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-          <span>FastAPI 연결됨</span>
+          <span id="api-status-text">시뮬레이션 가동 중</span>
         </div>
         <div class="hidden xl:flex items-center gap-1 text-on-surface-variant font-mono-code text-[11px] px-1">
           <span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
@@ -373,7 +374,7 @@
               <div
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-tertiary-container/60 border border-tertiary/25 text-tertiary font-mono-code text-[12px] font-semibold">
                 <span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
-                <span>FastAPI 연결 완료 v2.4.1</span>
+                <span>엔진 활성 상태 v2.4.1</span>
               </div>
               <div
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface font-label text-[12px]">
@@ -388,7 +389,7 @@
             </div>
           </div>
         </section>
-        <!-- 2. NEW CORE SECTION: Virtual Town Live View & Live Agent Messenger Dialog Feed -->
+        <!-- 2. CORE SECTION: Virtual Town Live View & Live Agent Messenger Dialog Feed -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <!-- Left Column: Virtual Town Live Visualizer (Smallville Live Environment) -->
           <div
@@ -417,7 +418,6 @@
                   10:48 AM</span>
               </div>
             </div>
-            <!-- Visualizer Canvas with Background Image and Interactive Simulation Hotspots -->
             <!-- Visualizer Canvas with Background Image and Interactive Simulation Hotspots -->
             <div id="village-canvas-container"
               class="relative w-full h-[400px] overflow-hidden bg-slate-900 group transition-all duration-500 rounded-b-none">
@@ -714,89 +714,77 @@
           <div
             class="bg-surface-container-lowest border border-outline-variant/80 rounded-xl p-4 shadow-xs flex items-center justify-between hover:border-primary/40 transition-colors">
             <div class="flex items-center gap-3">
-              <div
-                class="w-10 h-10 rounded-lg bg-surface-container-high text-accent-navy flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[22px]">campaign</span>
+              <div class="w-10 h-10 rounded-lg bg-error-container text-error flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[22px]">forum</span>
               </div>
               <div>
                 <div class="flex items-center gap-1.5">
-                  <span class="font-label text-[12px] text-on-surface-variant font-semibold">감지된 가십</span>
-                  <span class="font-mono-code text-[10px] text-on-surface-variant">v4.2</span>
+                  <span class="font-label text-[12px] text-on-surface-variant font-semibold">포착된 가십</span>
+                  <span class="px-1.5 py-0.2 rounded bg-error text-on-error font-mono-code text-[10px] font-bold">주의</span>
                 </div>
                 <div class="flex items-baseline gap-1 mt-0.5">
-                  <span class="font-headline text-[24px] font-bold text-accent-navy leading-none">42</span>
+                  <span class="font-headline text-[24px] font-bold text-accent-navy leading-none">14</span>
                   <span class="text-[12px] text-on-surface-variant font-medium">건</span>
                 </div>
               </div>
             </div>
-            <div class="text-right font-mono-code text-[10px]">
-              <div class="text-tertiary font-bold">사실 14 • 추측 21</div>
-              <div class="text-error font-bold">왜곡 감지 7</div>
+            <div class="text-right font-label text-[11px] text-on-surface-variant">
+              <div>왜곡 발생 <strong class="text-error font-bold">8건</strong></div>
+              <div>추측형 <strong class="text-warning font-bold">6건</strong></div>
             </div>
           </div>
-          <!-- Stat 4: Average Trust Score -->
+          <!-- Stat 4: Avg Distortion Rate -->
           <div
             class="bg-surface-container-lowest border border-outline-variant/80 rounded-xl p-4 shadow-xs flex items-center justify-between hover:border-primary/40 transition-colors">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[22px]">verified_user</span>
+              <div
+                class="w-10 h-10 rounded-lg bg-surface-container-highest text-accent-navy flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[22px]">ssid_chart</span>
               </div>
               <div>
                 <div class="flex items-center gap-1.5">
-                  <span class="font-label text-[12px] text-on-surface-variant font-semibold">평균 신뢰도</span>
+                  <span class="font-label text-[12px] text-on-surface-variant font-semibold">평균 왜곡율</span>
                   <span
-                    class="px-1.5 py-0.2 rounded bg-error-container text-error font-mono-code text-[10px] font-bold">-4.2%</span>
+                    class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-mono-code text-[10px] font-bold">실시간</span>
                 </div>
                 <div class="flex items-baseline gap-1 mt-0.5">
-                  <span class="font-headline text-[24px] font-bold text-accent-navy leading-none">76.4</span>
-                  <span class="text-[12px] text-accent-navy font-semibold">%</span>
+                  <span class="font-headline text-[24px] font-bold text-accent-navy leading-none">28.4</span>
+                  <span class="text-[12px] text-on-surface-variant font-medium">%</span>
                 </div>
               </div>
             </div>
             <div class="text-right font-label text-[11px] text-on-surface-variant">
-              <div>지수: <strong class="text-tertiary font-bold">양호</strong></div>
-              <div class="font-mono-code text-[10px]">표본 184개</div>
+              <div>최대 왜곡 <strong class="text-error font-bold">64.0%</strong></div>
+              <div>사실 일치 <strong class="text-tertiary font-bold">71.6%</strong></div>
             </div>
           </div>
         </section>
-        <!-- Central Interactive Section: Rumor Propagation Network (Graph + Inspector) -->
+        <!-- 4. NETWORK VISUALIZER SECTION (D3/SVG Topology) -->
         <section
-          class="bg-surface-container-lowest border border-outline-variant/90 rounded-xl shadow-xs overflow-hidden flex flex-col">
-          <!-- Toolbar / Controls -->
+          class="bg-surface-container-lowest border border-outline-variant/90 rounded-xl overflow-hidden shadow-xs flex flex-col">
+          <!-- Visualizer Subheader -->
           <div
-            class="p-4 bg-surface-container-low border-b border-outline-variant/80 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            class="px-6 py-4 bg-surface-container-low border-b border-outline-variant/80 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs">
-                <span class="material-symbols-outlined text-[20px]">hub</span>
-              </div>
+              <span class="material-symbols-outlined text-primary text-[22px]">hub</span>
               <div>
-                <h2 class="font-headline text-[18px] font-bold text-accent-navy">소문 전파 네트워크 (Live Network Graph)</h2>
-                <span class="font-mono-code text-[11px] text-on-surface-variant">토폴로지: 6-Hop 유향 가중 그래프 • 실시간 학술 데이터 피드
-                  활성</span>
+                <h2 class="font-headline text-[18px] font-bold text-accent-navy">소문 확산 네트워크 (Information Flow Graph)
+                </h2>
+                <span class="font-label text-[12px] text-on-surface-variant">Isabella 발원 ➜ Tom 왜곡 증폭 ➜ Sam 평판 하락
+                  연쇄 구조</span>
               </div>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <!-- Filter Tabs -->
-              <div class="inline-flex p-1 bg-surface-container border border-outline-variant rounded-lg gap-1">
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1 bg-surface-container border border-outline-variant rounded-lg p-0.5">
                 <button
-                  class="px-3 py-1 rounded bg-surface-container-lowest text-accent-navy font-label text-[12px] font-bold shadow-xs border border-outline-variant/60"
+                  class="px-3 py-1.5 rounded-md font-label text-[12px] bg-surface-container-lowest text-accent-navy font-semibold shadow-xs"
                   type="button">
-                  전체 확산 경로
+                  토폴로지 뷰
                 </button>
                 <button
-                  class="px-3 py-1 rounded text-on-surface-variant hover:text-accent-navy font-label text-[12px] font-medium transition-colors"
+                  class="px-3 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface transition-colors"
                   type="button">
-                  Sam 관련 소문 (선거 포섭)
-                </button>
-                <button
-                  class="px-3 py-1 rounded text-on-surface-variant hover:text-accent-navy font-label text-[12px] font-medium transition-colors"
-                  type="button">
-                  Isabella의 파티
-                </button>
-                <button
-                  class="px-3 py-1 rounded text-on-surface-variant hover:text-accent-navy font-label text-[12px] font-medium transition-colors"
-                  type="button">
-                  Klaus의 신기술
+                  확산 타임라인
                 </button>
               </div>
               <div
@@ -1077,7 +1065,7 @@
             </div>
           </div>
         </section>
-        <!-- 4. BOTTOM GRID: 3 Scholarly Modular Analysis Cards -->
+        <!-- 5. BOTTOM GRID: 3 Scholarly Modular Analysis Cards -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Card 1: Low Trust & Distortion Warning -->
           <div
@@ -1129,13 +1117,13 @@
             </div>
             <div class="grid grid-cols-2 gap-2 pt-1">
               <button
-                class="py-2 px-2 rounded-lg bg-surface-container border border-outline-variant text-accent-navy font-label text-[12px] font-semibold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1"
+                class="py-2 px-2 rounded-lg bg-surface-container border border-outline-variant text-accent-navy font-label text-[12px] font-semibold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1 cursor-pointer"
                 type="button" id="btn-trace">
                 <span class="material-symbols-outlined text-[16px]">route</span>
                 전파 경로 추적
               </button>
               <button
-                class="py-2 px-2 rounded-lg bg-error text-on-error font-label text-[12px] font-semibold hover:opacity-95 transition-opacity flex items-center justify-center gap-1 shadow-xs"
+                class="py-2 px-2 rounded-lg bg-error text-on-error font-label text-[12px] font-semibold hover:opacity-95 transition-opacity flex items-center justify-center gap-1 shadow-xs cursor-pointer"
                 type="button" id="btn-factcheck">
                 <span class="material-symbols-outlined text-[16px]">verified</span>
                 팩트체크 주입
@@ -1248,12 +1236,12 @@
             </div>
             <div class="grid grid-cols-2 gap-2 pt-1">
               <button
-                class="py-2 px-2 rounded-lg bg-surface-container border border-outline-variant text-accent-navy font-label text-[12px] font-semibold hover:bg-surface-container-high transition-colors"
+                class="py-2 px-2 rounded-lg bg-surface-container border border-outline-variant text-accent-navy font-label text-[12px] font-semibold hover:bg-surface-container-high transition-colors cursor-pointer"
                 type="button" id="btn-detailed-report">
                 상세 AI 리포트
               </button>
               <button
-                class="py-2 px-2 rounded-lg bg-primary text-on-primary font-label text-[12px] font-semibold hover:bg-primary-container transition-colors shadow-xs"
+                class="py-2 px-2 rounded-lg bg-primary text-on-primary font-label text-[12px] font-semibold hover:bg-primary-container transition-colors shadow-xs cursor-pointer"
                 type="button" id="btn-run-sim-action">
                 시뮬레이션 검증
               </button>
@@ -1279,7 +1267,7 @@
             class="material-symbols-outlined">close</span></button>
       </div>
       <div class="p-6 flex flex-col gap-4 font-label text-[13px]">
-        <p class="text-on-surface-variant">선택된 가십 또는 소문에 대해 올바른 사실(Fact)을 마을 에이전트들의 기억 저장소에 강제 주입합니다.</p>
+        <p class="text-on-surface-variant">선택된 가십 또는 소문에 대해 올바른 사실(Fact)을 마을 에이전트들의 기억 저장소에 주입합니다.</p>
         <div class="flex flex-col gap-1.5">
           <label class="font-semibold text-accent-navy">대상 가십 / 주제</label>
           <input type="text" id="input-fact-topic" value="Sam의 선거 포섭 의혹"
@@ -1316,8 +1304,13 @@
             class="material-symbols-outlined">close</span></button>
       </div>
       <div class="p-6 overflow-y-auto flex flex-col gap-4 font-label text-[13px]" id="trace-modal-body">
-        <div class="flex items-center justify-center py-8 text-on-surface-variant">
-          <span class="material-symbols-outlined animate-spin mr-2">sync</span> 전파 경로 데이터 불러오는 중...
+        <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-2">
+          <span class="font-bold text-accent-navy">감지된 소문 전파 트리 (Smallville #04)</span>
+          <div class="font-mono-code text-[12px] text-on-surface-variant leading-relaxed">
+            1. [Step 1] Isabella: "Sam이 포섭을 시도할 수도 있다" (추측 생성)<br/>
+            2. [Step 2] Klaus: "Sam이 회관 공금으로 식사를 대접했다" (왜곡 변형)<br/>
+            3. [Step 3] Tom: "Sam이 공금을 횡령했다" (부정성 극대화 64%)
+          </div>
         </div>
       </div>
       <div class="px-6 py-3 bg-surface-container-low border-t border-outline-variant flex justify-end">
@@ -1341,8 +1334,47 @@
             class="material-symbols-outlined">close</span></button>
       </div>
       <div class="p-6 overflow-y-auto flex flex-col gap-3 font-label text-[13px]" id="agents-modal-body">
-        <div class="flex items-center justify-center py-8 text-on-surface-variant">
-          <span class="material-symbols-outlined animate-spin mr-2">sync</span> 에이전트 목록 로드 중...
+        <div class="flex flex-col gap-2">
+          <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center font-mono-code">I</span>
+              <div>
+                <span class="font-bold text-accent-navy block">Isabella Rodriguez</span>
+                <span class="text-[11px] text-on-surface-variant">역할: 카페 주인 • 성향: 정보 수집가</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">활성</span>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center font-mono-code">K</span>
+              <div>
+                <span class="font-bold text-accent-navy block">Klaus Mueller</span>
+                <span class="text-[11px] text-on-surface-variant">역할: 서점 주인 • 성향: 2차 전달 왜곡자</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-mono-code font-bold">주의 (왜곡 +18%)</span>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center font-mono-code">T</span>
+              <div>
+                <span class="font-bold text-accent-navy block">Tom Moreno</span>
+                <span class="text-[11px] text-on-surface-variant">역할: 약사 • 성향: 극단 증폭자 (64% 왜곡)</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-[11px] font-mono-code font-bold">위험 노드</span>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center font-mono-code">L</span>
+              <div>
+                <span class="font-bold text-accent-navy block">Latoya Williams</span>
+                <span class="text-[11px] text-on-surface-variant">역할: 사진가 • 성향: 팩트체커 방어선</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">검증 활성</span>
+          </div>
         </div>
       </div>
       <div class="px-6 py-3 bg-surface-container-low border-t border-outline-variant flex justify-end">
@@ -1366,7 +1398,7 @@
             class="material-symbols-outlined">close</span></button>
       </div>
       <div class="p-6 flex flex-col gap-4 font-label text-[13px]">
-        <p class="text-on-surface-variant">익명 네이버 댓글 또는 시뮬레이션용 댓글 메시지를 서버에 수집하여 분석을 실행합니다.</p>
+        <p class="text-on-surface-variant">익명 네이버 댓글 또는 시뮬레이션용 댓글 메시지를 수집하여 분석을 실행합니다.</p>
         <div class="flex flex-col gap-1.5">
           <label class="font-semibold text-accent-navy">작성자 ID</label>
           <input type="text" id="input-comment-author" value="user_echo_01"
@@ -1436,8 +1468,7 @@
           <span class="material-symbols-outlined text-[24px]">search</span>
           <div>
             <h3 class="font-headline font-bold text-[18px] text-accent-navy">🔍 [미션 01] 당신은 이 소문의 최초 출처를 찾을 수 있습니까?</h3>
-            <span class="font-mono-code text-[11px] text-primary">Media Literacy &amp; EchoChamber Detective
-              Challenge</span>
+            <span class="font-mono-code text-[11px] text-primary">Media Literacy &amp; EchoChamber Detective Challenge</span>
           </div>
         </div>
         <button onclick="closeModal('modal-rumor-detective')"
@@ -1498,8 +1529,7 @@
             </label>
             <label
               class="p-3 rounded-lg border border-outline-variant flex items-center gap-2 cursor-pointer hover:bg-surface-container">
-              <input type="radio" name="q-distortion" value="Tom" class="text-primary focus:ring-primary" checked> Tom
-              Moreno
+              <input type="radio" name="q-distortion" value="Tom" class="text-primary focus:ring-primary" checked> Tom Moreno
             </label>
             <label
               class="p-3 rounded-lg border border-outline-variant flex items-center gap-2 cursor-pointer hover:bg-surface-container">
@@ -1519,8 +1549,7 @@
             <span class="font-bold text-tertiary text-[15px] flex items-center gap-1.5">
               <span class="material-symbols-outlined">emoji_events</span> 🏆 미션 성공! 완벽한 소문 추적입니다.
             </span>
-            <span class="px-2.5 py-0.5 rounded bg-tertiary text-on-tertiary font-mono-code text-[12px] font-bold">100 /
-              100 pt</span>
+            <span class="px-2.5 py-0.5 rounded bg-tertiary text-on-tertiary font-mono-code text-[12px] font-bold">100 / 100 pt</span>
           </div>
           <div class="text-[12.5px] leading-relaxed text-accent-navy">
             • <strong>최초 발설자</strong>: Isabella (장부 미개봉 추측 발화)<br />
@@ -1544,8 +1573,24 @@
   <!-- TOAST CONTAINER -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-[200] flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- FastAPI REST Dynamic Integration Script -->
+  <!-- JavaScript Navigation & Dynamic Interaction Logic -->
   <script>
+    // 범용 내비게이션 라우팅 헬퍼 (GitHub Pages, Static, FastAPI 서버 동시 지원)
+    function getNavUrl(target) {
+      const isServer = (window.location.port === '8008') || (window.location.hostname === 'localhost' && window.location.port === '8008');
+      if (isServer) {
+        if (target === 'real-lab') return '/real-lab';
+        if (target === 'alexandria') return '/alexandria';
+        if (target === 'education') return '/education';
+        return '/';
+      }
+      // GitHub Pages / 정적 환경 (루트 기준 상대경로)
+      if (target === 'real-lab') return './stitch/code_01.html';
+      if (target === 'alexandria') return './stitch/alexandria/code.html';
+      if (target === 'education') return './stitch/code_02.html';
+      return './index.html';
+    }
+
     function openModal(id) {
       const m = document.getElementById(id);
       if (m) m.classList.remove('hidden');
@@ -1570,22 +1615,20 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // API 연결 상태 초기 데이터 로드
       fetchDashboardData();
 
-      // 0. 상단 툴바 탭 전환 (가상 마을 시뮬레이션 <-> 현실 댓글 연구실)
+      // 0. 상단 툴바 탭 전환
       const btnTabVirtual = document.getElementById('btn-tab-virtual');
       const btnTabRealLab = document.getElementById('btn-tab-real-lab');
 
       if (btnTabRealLab) {
         btnTabRealLab.addEventListener('click', () => {
-          window.location.href = '/real-lab';
+          window.location.href = getNavUrl('real-lab');
         });
       }
 
       if (btnTabVirtual) {
         btnTabVirtual.addEventListener('click', () => {
-          // 가상 마을 시뮬레이션 탭 하이라이트 스타일 복구
           btnTabVirtual.className = 'px-3.5 py-1.5 rounded-md font-label text-[12px] bg-surface-container-lowest text-accent-navy font-bold shadow-xs border border-outline-variant/60 transition-all cursor-pointer';
           if (btnTabRealLab) {
             btnTabRealLab.className = 'px-3.5 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface font-medium transition-all cursor-pointer';
@@ -1595,7 +1638,7 @@
         });
       }
 
-      // A. 마을 공간 확대 버튼 (400px <-> 680px)
+      // A. 마을 공간 확대 버튼
       const btnExpandVillage = document.getElementById('btn-expand-village');
       const villageCanvasContainer = document.getElementById('village-canvas-container');
       let isExpanded = false;
@@ -1617,7 +1660,7 @@
         });
       }
 
-      // B. 카메라 시점 변경 버튼 (FOV 모드 토글)
+      // B. 카메라 시점 변경 버튼
       const btnChangeCamera = document.getElementById('btn-change-camera');
       const cameraFovText = document.getElementById('camera-fov-text');
       const villageCanvasImg = document.getElementById('village-canvas-img');
@@ -1633,14 +1676,12 @@
           currentCamIdx = (currentCamIdx + 1) % cameraModes.length;
           const mode = cameraModes[currentCamIdx];
           cameraFovText.innerText = mode.text;
-
-          // 이미지 줌/필터 클래스 갱신
           villageCanvasImg.className = `w-full h-full object-cover object-center filter ${mode.filter} transition-all duration-700 ${mode.scale}`;
           showToast(`카메라 시점이 전환되었습니다: ${mode.text}`, 'info');
         });
       }
 
-      // C. 에이전트 실시간 발화 메신저 소문 주입 및 마을 화면 동적 말풍선(Speech Bubble) 팝업 연동
+      // C. 에이전트 실시간 발화 메신저 소문 주입
       const inputInjectRumor = document.getElementById('input-inject-rumor');
       const btnSendInjectRumor = document.getElementById('btn-send-inject-rumor');
       const chatMessageFeed = document.getElementById('chat-message-feed');
@@ -1651,50 +1692,42 @@
         const text = inputInjectRumor.value.trim();
         if (!text) return;
 
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        // 1. 메신저 피드에 주입된 메시지 추가
         if (chatMessageFeed) {
+          const now = new Date();
+          const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           const msgDiv = document.createElement('div');
           msgDiv.className = 'flex flex-col gap-1 items-start animate-fade-in';
           msgDiv.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-primary text-on-primary font-bold font-mono-code text-[10px] flex items-center justify-center border border-primary/40 shadow-xs">USER</span>
-            <span class="font-label text-[12px] font-bold text-primary">사용자 소문 개입</span>
-            <span class="text-[10px] text-on-surface-variant font-mono-code">${timeStr}</span>
-            <span class="px-1.5 py-0.2 rounded bg-primary-fixed text-primary font-mono-code text-[10px] font-bold animate-pulse">⚡ 실시간 주입</span>
-          </div>
-          <div class="max-w-[92%] bg-primary-fixed/30 border border-primary/40 rounded-2xl rounded-tl-xs p-3 shadow-xs text-[12.5px] text-accent-navy leading-relaxed font-semibold">
-            “${text}”
-          </div>
-        `;
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-primary text-on-primary font-bold font-mono-code text-[10px] flex items-center justify-center">YOU</span>
+              <span class="font-label text-[12px] font-bold text-accent-navy">연구원 (소문 주입)</span>
+              <span class="text-[10px] text-on-surface-variant font-mono-code">${timeStr}</span>
+              <span class="px-1.5 py-0.2 rounded bg-primary-fixed text-primary font-mono-code text-[10px] font-bold">주입 이벤트</span>
+            </div>
+            <div class="max-w-[92%] bg-primary-fixed/20 border border-primary/40 rounded-2xl rounded-tl-xs p-3 shadow-xs text-[12.5px] text-accent-navy leading-relaxed font-semibold">
+              “${text}”
+            </div>
+          `;
           chatMessageFeed.appendChild(msgDiv);
           chatMessageFeed.scrollTop = chatMessageFeed.scrollHeight;
         }
 
-        // 2. 마을 캔버스 상에 실시간 말풍선(Speech Bubble) 뜨게 팝업 생성!
         if (canvasSpeechBubbles) {
           const bubbleDiv = document.createElement('div');
-          // 랜덤 위치 (중앙 분수대 / 도서관 / 카페 근처)
-          const posTop = Math.floor(Math.random() * 30) + 30; // 30% ~ 60%
-          const posLeft = Math.floor(Math.random() * 40) + 30; // 30% ~ 70%
+          const posTop = Math.floor(Math.random() * 40) + 20;
+          const posLeft = Math.floor(Math.random() * 50) + 20;
 
-          bubbleDiv.className = 'absolute pointer-events-none transition-all duration-500 transform -translate-x-1/2 scale-100 z-30';
+          bubbleDiv.className = 'absolute pointer-events-none transition-all duration-700 transform -translate-x-1/2 scale-100 z-30';
           bubbleDiv.style.top = `${posTop}%`;
           bubbleDiv.style.left = `${posLeft}%`;
-
           bubbleDiv.innerHTML = `
-          <div class="bg-primary/95 backdrop-blur-md border border-white/60 text-white shadow-2xl rounded-xl px-3.5 py-2 text-[11.5px] max-w-[230px] font-medium leading-snug animate-bounce">
-            <span class="font-bold text-primary-fixed block text-[10px] uppercase tracking-wider mb-0.5">⚡ 사용자 개입 소문 전파</span>
-            “${text}”
-          </div>
-          <div class="w-2.5 h-2.5 bg-primary rotate-45 mx-auto -mt-1 border-r border-b border-white/60"></div>
-        `;
-
+            <div class="bg-primary text-on-primary shadow-2xl rounded-xl px-3.5 py-2 text-[12px] max-w-[220px] font-semibold leading-snug animate-bounce">
+              <span class="block text-[10px] text-primary-fixed font-mono-code">주입된 소문</span>
+              “${text}”
+            </div>
+            <div class="w-2.5 h-2.5 bg-primary rotate-45 mx-auto -mt-1"></div>
+          `;
           canvasSpeechBubbles.appendChild(bubbleDiv);
-
-          // 5초 후 말풍선 자연스럽게 페이드아웃 및 제거
           setTimeout(() => {
             bubbleDiv.style.opacity = '0';
             bubbleDiv.style.transform = 'translate(-50%, -20px) scale(0.9)';
@@ -1702,7 +1735,6 @@
           }, 5000);
         }
 
-        // 3. 백엔드 REST API 연동
         try {
           fetch('/conversations/', {
             method: 'POST',
@@ -1736,50 +1768,16 @@
       if (btnSubmitFactcheck) {
         btnSubmitFactcheck.addEventListener('click', () => {
           const topic = document.getElementById('input-fact-topic').value;
-          const content = document.getElementById('input-fact-content').value;
           closeModal('modal-factcheck');
-          showToast(`[팩트 주입 완] ${topic} 에 대한 올바른 정보가 에이전트 메모리에 반영되었습니다.`, 'success');
+          showToast(`[팩트 주입 완료] '${topic}'에 대한 올바른 정보가 에이전트 기억에 반영되었습니다.`, 'success');
         });
       }
 
       // 2. 전파 경로 추적 버튼
       const btnTrace = document.getElementById('btn-trace');
       if (btnTrace) {
-        btnTrace.addEventListener('click', async () => {
+        btnTrace.addEventListener('click', () => {
           openModal('modal-trace');
-          const body = document.getElementById('trace-modal-body');
-          try {
-            const res = await fetch('/network/cascades');
-            if (res.ok) {
-              const data = await res.json();
-              body.innerHTML = `
-              <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-2">
-                <span class="font-bold text-accent-navy">감지된 소문 전파 트리</span>
-                <div class="font-mono-code text-[12px] text-on-surface-variant">
-                  • 최초 출발 노드: <strong class="text-primary">Isabella</strong><br/>
-                  • 경유 노드: <strong>Klaus</strong> (주관 해석 변형)<br/>
-                  • 최종 도달 노드: <strong class="text-error">Tom</strong> (왜곡 확산)
-                </div>
-              </div>
-              <div class="p-3 bg-surface-container rounded-lg font-mono-code text-[11px] text-accent-navy">
-                경로 수: ${data.cascades ? data.cascades.length : 1} 개의 소문 전파 체인 활성화됨.
-              </div>
-            `;
-            } else {
-              body.innerHTML = `<p class="text-error">전파 경로 데이터를 로드할 수 없습니다.</p>`;
-            }
-          } catch (e) {
-            body.innerHTML = `
-            <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-2">
-              <span class="font-bold text-accent-navy">감지된 소문 전파 트리 (Smallville #04)</span>
-              <div class="font-mono-code text-[12px] text-on-surface-variant">
-                1. [Step 1] Isabella: "Sam이 포섭을 시도할 수도 있다" (추측 생성)<br/>
-                2. [Step 2] Klaus: "Sam이 회관 공금으로 식사를 대접했다" (왜곡 변형)<br/>
-                3. [Step 3] Tom: "Sam이 공금을 횡령했다" (부정성 극대화)
-              </div>
-            </div>
-          `;
-          }
         });
       }
 
@@ -1791,7 +1789,7 @@
         });
       }
 
-      // 4. 시뮬레이션 실행 버튼들 (Mock & Server 겸용 실시간 가동)
+      // 4. 시뮬레이션 실행 버튼들
       const mockRumorDialogues = [
         { speaker: 'Isabella', role: '카페 주인', tag: '? 의혹 제기', tagCol: 'bg-primary-fixed text-primary', text: '“어제 Sam이 선거 자금을 마련하려고 장부 공개를 미룬 것 같던데, 진짜일까?”' },
         { speaker: 'Klaus', role: '서점 주인', tag: '⚡ 2차 왜곡', tagCol: 'bg-amber-100 text-amber-800', text: '“Isabella한테 들었는데, Sam이 마을 회관 공금으로 자기 선거 운동원들 밥을 샀대!”' },
@@ -1815,7 +1813,6 @@
 
             showToast(`[시뮬레이션 ${mockTurnCount}턴 진행] ${currentDialogue.speaker} 에이전트가 새로운 발화를 생성했습니다!`, 'info');
 
-            // 1. 메신저 피드에 새 발화 동적 추가
             if (chatMessageFeed) {
               const now = new Date();
               const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -1836,7 +1833,6 @@
               chatMessageFeed.scrollTop = chatMessageFeed.scrollHeight;
             }
 
-            // 2. 마을 캔버스 말풍선 애니메이션 발생
             if (canvasSpeechBubbles) {
               const bubbleDiv = document.createElement('div');
               const posTop = Math.floor(Math.random() * 35) + 25;
@@ -1870,29 +1866,9 @@
         }
       });
 
-      // 5. 사이드바 및 탭 버튼 연결들 (GitHub Pages, 파일 프로토콜 및 서버 프로토콜 동시 지원)
-      function getNavUrl(target) {
-        const isServer = (window.location.port === '8008') || (window.location.hostname === 'localhost' && window.location.port === '8008');
-        if (isServer) {
-          if (target === 'real-lab') return '/real-lab';
-          if (target === 'alexandria') return '/alexandria';
-          if (target === 'education') return '/education';
-          return '/';
-        }
-        if (target === 'real-lab') return './code_01.html';
-        if (target === 'alexandria') return './alexandria/code.html';
-        if (target === 'education') return './code_02.html';
-        return './code.html';
-      }
-
-      if (btnTabRealLab) {
-        btnTabRealLab.addEventListener('click', () => {
-          window.location.href = getNavUrl('real-lab');
-        });
-      }
-
+      // 5. 사이드바 및 네비게이션 처리
       document.querySelectorAll('aside nav a, header button, .tab-btn').forEach(link => {
-        link.addEventListener('click', async (e) => {
+        link.addEventListener('click', (e) => {
           const path = link.getAttribute('data-path');
           const btnText = link.innerText || '';
 
@@ -1904,7 +1880,7 @@
             e.preventDefault();
             window.location.href = getNavUrl('alexandria');
             return;
-          } else if (btnText.includes('교육') || btnText.includes('러닝 랩') || path === 'education') {
+          } else if (btnText.includes('교육') || btnText.includes('러닝 랩') || path === 'media-literacy') {
             e.preventDefault();
             window.location.href = getNavUrl('education');
             return;
@@ -1913,77 +1889,6 @@
           if (path === 'agents' || path === 'memories') {
             e.preventDefault();
             openModal('modal-agents');
-            const body = document.getElementById('agents-modal-body');
-            try {
-              const res = await fetch('/network');
-              if (res.ok) {
-                const data = await res.json();
-                const nodes = data.nodes || [];
-                body.innerHTML = nodes.map(n => `
-                  <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center font-mono-code">${n.id ? n.id[0] : 'A'}</span>
-                      <div>
-                        <span class="font-bold text-accent-navy block">${n.id || 'Agent'}</span>
-                        <span class="text-[11px] text-on-surface-variant">성향: ${n.label || '주민'}</span>
-                      </div>
-                    </div>
-                    <span class="px-2 py-1 rounded bg-tertiary-container text-tertiary text-[11px] font-mono-code font-bold">정상 작동</span>
-                  </div>
-                `).join('');
-                return;
-              }
-            } catch (e) { }
-
-            // 자체 Standalone Mock 데이터
-            body.innerHTML = `
-              <div class="flex flex-col gap-2">
-                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center font-mono-code">I</span>
-                    <div>
-                      <span class="font-bold text-accent-navy block">Isabella Rodriguez</span>
-                      <span class="text-[11px] text-on-surface-variant">역할: 카페 주인 • 성향: 정보 수집가</span>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">활성</span>
-                </div>
-                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center font-mono-code">K</span>
-                    <div>
-                      <span class="font-bold text-accent-navy block">Klaus Mueller</span>
-                      <span class="text-[11px] text-on-surface-variant">역할: 서점 주인 • 성향: 2차 전달 왜곡자</span>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-mono-code font-bold">주의 (왜곡 +18%)</span>
-                </div>
-                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center font-mono-code">T</span>
-                    <div>
-                      <span class="font-bold text-accent-navy block">Tom Moreno</span>
-                      <span class="text-[11px] text-on-surface-variant">역할: 약사 • 성향: 극단 증폭자 (64% 왜곡)</span>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-[11px] font-mono-code font-bold">위험 노드</span>
-                </div>
-                <div class="p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center font-mono-code">L</span>
-                    <div>
-                      <span class="font-bold text-accent-navy block">Latoya Williams</span>
-                      <span class="text-[11px] text-on-surface-variant">역할: 사진가 • 성향: 팩트체커 방어선</span>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono-code font-bold">검증 활성</span>
-                </div>
-              </div>
-            `;
-          } else if (path === 'media-literacy') {
-            e.preventDefault();
-            openModal('modal-ai-report');
-            showToast('미디어 리터러시 종합 지침 및 에코챔버 분석 가이드가 오픈되었습니다.', 'info');
           } else if (path === 'rumor-detective') {
             e.preventDefault();
             openModal('modal-rumor-detective');
@@ -1998,7 +1903,7 @@
             openModal('modal-trace');
           } else if (path === 'api-status') {
             e.preventDefault();
-            showToast('단독 프론트엔드 모드: 브라우저 내부 시뮬레이션 엔진 🟢 정상 작동 중', 'success');
+            showToast('웹 시뮬레이션 엔진 🟢 정상 작동 중', 'success');
           }
         });
       });
@@ -2007,17 +1912,16 @@
       const btnSubmitDetective = document.getElementById('btn-submit-detective');
       const resultPanel = document.getElementById('detective-result-panel');
 
-      if (btnSubmitDetective) {
+      if (btnSubmitDetective && resultPanel) {
         btnSubmitDetective.addEventListener('click', () => {
           const originVal = document.querySelector('input[name="q-origin"]:checked')?.value;
           const distortionVal = document.querySelector('input[name="q-distortion"]:checked')?.value;
 
-          if (resultPanel) {
-            resultPanel.classList.remove('hidden');
-            resultPanel.classList.add('flex');
+          resultPanel.classList.remove('hidden');
+          resultPanel.classList.add('flex');
 
-            if (originVal === 'Isabella' && distortionVal === 'Tom') {
-              resultPanel.innerHTML = `
+          if (originVal === 'Isabella' && distortionVal === 'Tom') {
+            resultPanel.innerHTML = `
               <div class="flex items-center justify-between">
                 <span class="font-bold text-tertiary text-[15px] flex items-center gap-1.5">
                   <span class="material-symbols-outlined text-[22px]">emoji_events</span> 🏆 미션 성공! 완벽한 소문 추적입니다.
@@ -2030,9 +1934,9 @@
                 • <strong>리터러시 교육 피드백</strong>: 전달자의 주관적 과장을 단정적 사실로 신봉하지 않는 비판적 미디어 수용 능력이 뛰어납니다!
               </div>
             `;
-              showToast('🎉 [미션 성공] 100/100 pt! 최초 출처와 왜곡자를 정확히 추적했습니다!', 'success');
-            } else {
-              resultPanel.innerHTML = `
+            showToast('🎉 [미션 성공] 100/100 pt! 최초 출처와 왜곡자를 정확히 추적했습니다!', 'success');
+          } else {
+            resultPanel.innerHTML = `
               <div class="flex items-center justify-between">
                 <span class="font-bold text-warning text-[15px] flex items-center gap-1.5">
                   <span class="material-symbols-outlined text-[22px]">warning</span> 🔍 미션 재검토가 필요합니다.
@@ -2045,42 +1949,39 @@
                 • <strong>힌트</strong>: 메신저의 추측 발화 태그(? 추측)와 왜곡 감지(! 왜곡) 지표를 다시 확인해보세요!
               </div>
             `;
-              showToast('미션 결과를 확인해보세요. 정답 힌트가 제공되었습니다.', 'info');
-            }
+            showToast('미션 결과를 확인해보세요. 정답 힌트가 제공되었습니다.', 'info');
           }
         });
       }
 
-    // 6. 댓글 수집 버튼 제출
-    const btnSubmitComment = document.getElementById('btn-submit-comment');
-    if (btnSubmitComment) {
-      btnSubmitComment.addEventListener('click', async () => {
-        const author = document.getElementById('input-comment-author').value;
-        const text = document.getElementById('input-comment-text').value;
-        closeModal('modal-comments');
-        try {
-          await fetch('/ingestion/comments', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ messages: [{ message_id: `msg_${Date.now()}`, author_id: author, text: text }] })
-          });
+      // 7. 댓글 수집 버튼 제출
+      const btnSubmitComment = document.getElementById('btn-submit-comment');
+      if (btnSubmitComment) {
+        btnSubmitComment.addEventListener('click', async () => {
+          const author = document.getElementById('input-comment-author').value;
+          const text = document.getElementById('input-comment-text').value;
+          closeModal('modal-comments');
+          try {
+            await fetch('/ingestion/comments', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ messages: [{ message_id: `msg_${Date.now()}`, author_id: author, text: text }] })
+            });
+          } catch (e) { }
           showToast('댓글 데이터가 수집되어 분석에 반영되었습니다!', 'success');
-        } catch (e) {
-          showToast('댓글 데이터가 정상 수집되었습니다.', 'success');
-        }
-      });
-    }
-  });
+        });
+      }
+    });
 
     async function fetchDashboardData() {
       try {
         const netRes = await fetch('/network');
         if (netRes.ok) {
-          const netData = await netRes.json();
-          console.log(`[EchoChamber] Connected: ${netData.nodes ? netData.nodes.length : 0} Nodes.`);
+          const statusText = document.getElementById('api-status-text');
+          if (statusText) statusText.innerText = 'FastAPI 연결됨';
         }
       } catch (err) {
-        console.warn('[EchoChamber API Warning]', err);
+        console.warn('[EchoChamber] Standalone Browser Engine Active');
       }
     }
   </script>

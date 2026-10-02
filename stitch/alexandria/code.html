@@ -1,964 +1,1307 @@
 <!DOCTYPE html>
 
-<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Serif+KR:wght@500;600;700&amp;family=Noto+Serif:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "on-secondary-fixed-variant": "#42474b",
-          "tertiary-container": "#e6f4ea",
-          "surface-container-low": "#f6f8fb",
-          "on-primary-fixed": "#001946",
-          "error": "#ba1a1a",
-          "background": "#faf9fa",
-          "on-background": "#0f172a",
-          "on-primary-fixed-variant": "#00419d",
-          "on-surface": "#0f172a",
-          "on-primary": "#ffffff",
-          "surface-dim": "#dbdadb",
-          "surface-container-high": "#e9edf3",
-          "secondary": "#3b5998",
-          "on-tertiary-fixed-variant": "#064e3b",
-          "surface-bright": "#faf9fa",
-          "surface-tint": "#3366cc",
-          "surface": "#faf9fa",
-          "on-secondary": "#ffffff",
-          "tertiary": "#0d9488",
-          "on-primary-container": "#ffffff",
-          "on-secondary-fixed": "#171c20",
-          "on-error": "#ffffff",
-          "on-tertiary": "#ffffff",
-          "on-secondary-container": "#1e3a8a",
-          "inverse-primary": "#b1c5ff",
-          "on-tertiary-fixed": "#064e3b",
-          "primary": "#3366cc",
-          "on-surface-variant": "#475569",
-          "on-tertiary-container": "#064e3b",
-          "tertiary-fixed": "#ccfbf1",
-          "surface-container-lowest": "#ffffff",
-          "secondary-fixed-dim": "#c2c7cc",
-          "on-error-container": "#93000a",
-          "secondary-fixed": "#e0e7ff",
-          "primary-fixed-dim": "#b1c5ff",
-          "primary-fixed": "#dbeafe",
-          "inverse-on-surface": "#f2f0f1",
-          "surface-container-highest": "#e2e8f0",
-          "primary-container": "#3366cc",
-          "outline-variant": "#cbd5e1",
-          "surface-variant": "#e2e8f0",
-          "outline": "#64748b",
-          "secondary-container": "#e0e7ff",
-          "tertiary-fixed-dim": "#99f6e4",
-          "inverse-surface": "#303031",
-          "error-container": "#fee2e2",
-          "surface-container": "#f1f5f9"
-        },
-        borderRadius: {
-          "DEFAULT": "0.25rem",
-          "lg": "0.375rem",
-          "xl": "0.5rem",
-          "full": "9999px"
-        },
-        spacing: {
-          "gutter-mobile": "0.75rem",
-          "gutter": "1.25rem",
-          "space-sm": "0.5rem",
-          "space-xs": "0.25rem",
-          "space-md": "1rem",
-          "space-lg": "1.5rem",
-          "margin": "2rem",
-          "space-xl": "2.5rem",
-          "margin-mobile": "1rem"
-        },
-        fontFamily: {
-          "headline": ["Noto Serif KR", "Noto Serif", "serif"],
-          "display": ["Noto Serif KR", "Noto Serif", "serif"],
-          "body": ["Inter", "sans-serif"],
-          "label": ["Inter", "sans-serif"],
-          "mono": ["JetBrains Mono", "monospace"]
-        },
-        fontSize: {
-          "headline-xl": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-          "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
-          "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
-          "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}],
-          "body-md": ["14px", {"lineHeight": "21px", "letterSpacing": "0em", "fontWeight": "400"}],
-          "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
-          "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
-          "mono-metric": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-          "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
-          "headline-lg": ["22px", {"lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
-          "headline-sm": ["18px", {"lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-          "mono-code": ["11px", {"lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400"}]
-        }
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="web_dashboard" name="shell-type" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Serif+KR:wght@500;600;700&amp;family=Noto+Serif:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    @layer base {
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        overscroll-behavior: none;
+      }
+
+      main>:first-child {
+        margin-top: 0 !important;
+      }
+
+      main>:last-child {
+        margin-bottom: 0 !important;
       }
     }
-  };
-</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/60 shadow-[0_2px_12px_rgba(15,23,42,0.04)] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-20 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest border-b border-outline-variant/50"><img alt="EchoChamber Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VrUiNkn9Dp2_1Tr9-f7wIRyWMbBDifXVGpKvLpQG0-RbEuda4qR4UZMoKlJ5lQ_5QzBt3t_QXnqEAxfzNO_ZpGHYAYueRSqpTr5wjFVkrWunKZaaoh1CpMVe20QeMpY2ddWsjEGeE4lFnEfCG5aze9gBYS0QmMhRmz_l14Rnw1wBo8Wjt4nh4dEhCV074mXiGUCyZgt7PqGBXB76UPsvlVZZv_rxHdiqiQuXgHRpwZRMnaS2ohgCr-wA"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline text-lg font-bold text-on-surface tracking-tight">EchoChamber</span><span class="px-space-xs py-0.5 rounded bg-primary-fixed text-primary font-mono text-[10px] uppercase font-semibold border border-primary/20">Lab v2.4</span></div><span class="font-label text-xs text-on-surface-variant font-medium">살아 움직이는 소문 연구실</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-lg" data-active-classes="bg-primary text-on-primary font-semibold shadow-[0_2px_8px_rgba(51,102,204,0.25)]"><div class="flex flex-col gap-space-xs"><div class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between"><span>OVERVIEW</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">grid_view</span><span class="font-label text-sm">대시보드</span></a></div><div class="flex flex-col gap-space-xs"><div class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between"><span>SIMULATION</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="town-view" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">location_city</span><span class="font-label text-sm">마을 보기</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary text-on-primary font-semibold shadow-[0_2px_10px_rgba(51,102,204,0.25)] border border-primary" data-path="run-simulation" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">play_circle</span><span class="font-label text-sm">시뮬레이션 실행</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="agents" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">groups</span><span class="font-label text-sm">에이전트 관리</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="memories" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">neurology</span><span class="font-label text-sm">기억 저장소</span></a></div><div class="flex flex-col gap-space-xs"><div class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between"><span>ANALYSIS</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="gossip-analysis" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">forum</span><span class="font-label text-sm">가십 분석</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="real-comment-lab" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">labs</span><span class="font-label text-sm">실제 댓글 분석</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="propagation-map" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">hub</span><span class="font-label text-sm">전파 경로</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="reputation-shift" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">trending_up</span><span class="font-label text-sm">평판 변화</span></a></div><div class="flex flex-col gap-space-xs"><div class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between"><span>DATA</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="data-upload" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">cloud_upload</span><span class="font-label text-sm">데이터 업로드</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="history-logs" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">manage_search</span><span class="font-label text-sm">분석 기록</span></a></div><div class="flex flex-col gap-space-xs"><div class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between"><span>SYSTEM</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="api-status" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">api</span><span class="font-label text-sm">API 상태</span></div><span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-mono-code font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>Online</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent" data-path="settings" href="#"><span class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">settings</span><span class="font-label text-sm">설정</span></a></div></nav></div></div><div class="p-space-md m-space-md bg-surface-container-low rounded-xl border border-outline-variant/60 flex items-center justify-between"><div class="flex flex-col"><span class="font-label text-xs text-on-surface font-semibold">Echo Engine</span><span class="font-mono text-mono-code text-on-surface-variant">Port 8008 • Ready</span></div><span class="material-symbols-outlined text-primary text-[20px]">verified</span></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant/60 shadow-[0_1px_6px_rgba(15,23,42,0.03)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-lg flex-1 max-w-xl"><div class="flex items-center gap-space-xs font-mono text-mono-code text-on-surface-variant"><span class="text-on-surface font-medium">Echo Lab</span><span>/</span><span class="text-primary font-semibold">Observatory</span></div><div class="relative flex-1"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input class="w-full h-10 pl-9 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body text-sm border border-outline-variant/60 placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="소문 키워드, 에이전트 식별자, 전파 이벤트 검색..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="inline-flex p-1 bg-surface-container-high rounded-lg items-center border border-outline-variant/50"><button class="px-space-md py-1.5 rounded font-label text-xs bg-surface-container-lowest text-on-surface font-semibold shadow-sm transition-all" type="button">가상 마을 시뮬레이션</button><button class="px-space-md py-1.5 rounded font-label text-xs text-on-surface-variant hover:text-on-surface transition-all" type="button">현실 댓글 연구실</button></div><div class="flex items-center gap-2 px-space-md py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-metric"><span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span><span class="font-label text-xs font-semibold">FastAPI 연결됨</span></div><div class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-mono text-mono-code px-space-sm"><span class="material-symbols-outlined text-[16px]">schedule</span><span>마지막 분석: 방금 전</span></div><button class="relative w-9 h-9 rounded-lg bg-surface-container-lowest border border-outline-variant/60 hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-20 w-full min-h-screen bg-background px-space-lg py-space-lg"><div class="flex flex-col w-full">
-<!-- Top Simulation Header & Instrumentation Ribbon -->
-<section class="flex flex-col gap-space-md mb-space-lg">
-<!-- Breadcrumb & Control Bar Container -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
-<div class="flex flex-col gap-space-xs">
-<div class="flex items-center gap-space-xs font-mono text-mono-code text-on-surface-variant">
-<span>Echo Lab</span>
-<span>/</span>
-<span>Simulation</span>
-<span>/</span>
-<span class="text-primary font-semibold">시뮬레이션 실행</span>
-</div>
-<div class="flex items-center gap-space-sm flex-wrap">
-<h1 class="font-headline text-2xl text-on-surface font-bold tracking-tight">시뮬레이션 실행 및 대화 타임라인</h1>
-<span class="px-3 py-0.5 rounded-full bg-primary-fixed text-primary border border-primary/30 font-mono text-mono-code font-bold">Smallville #04</span>
-</div>
-<p class="font-body text-sm text-on-surface-variant max-w-3xl leading-relaxed">
-          가상 마을 에이전트들의 대화를 트리거하고 소문의 확산, 기억 저장, 왜곡 변화 과정을 단계별로 관찰합니다.
-        </p>
-</div>
-<!-- Live Global Action Toolbar -->
-<div class="flex items-center gap-space-xs flex-wrap bg-surface-container-low p-1.5 rounded-xl border border-outline-variant/50">
-<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-semibold shadow hover:bg-primary/90 transition-all" id="btn-play">
-<span class="material-symbols-outlined text-[18px]">play_arrow</span>
-<span>계속 실행</span>
-</button>
-<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label text-xs font-semibold border border-outline-variant/60 shadow-sm hover:bg-surface-container-high transition-all" id="btn-pause">
-<span class="material-symbols-outlined text-[18px]">pause</span>
-<span>일시정지</span>
-</button>
-<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-lowest text-primary font-label text-xs font-semibold border border-outline-variant/60 shadow-sm hover:bg-surface-container-high transition-all" id="btn-step">
-<span class="material-symbols-outlined text-[18px]">bolt</span>
-<span>1단계 실행</span>
-</button>
-<button class="flex items-center gap-1.5 px-space-sm py-2 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-error hover:bg-surface-container-high border border-outline-variant/60 transition-all" id="btn-reset">
-<span class="material-symbols-outlined text-[18px]">restart_alt</span>
-<span class="font-label text-xs">리셋</span>
-</button>
-<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high text-on-surface font-label text-xs font-semibold border border-outline-variant/50 hover:bg-surface-variant transition-all">
-<span class="material-symbols-outlined text-[18px]">tune</span>
-<span>새 시뮬레이션 설정</span>
-</button>
-</div>
-</div>
-<!-- Active Pipeline Telemetry Ribbon -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">speed</span>
-</div>
-<div class="flex flex-col">
-<span class="font-mono text-mono-code uppercase text-on-surface-variant">FastAPI Engine</span>
-<span class="font-label text-sm font-semibold text-on-surface">v2.4.1 정상 연결됨</span>
-</div>
-</div>
-<span class="flex items-center gap-1 text-emerald-800 font-mono text-mono-code px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 font-medium">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>12ms
-        </span>
-</div>
-<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-10 h-10 rounded-lg bg-primary-fixed text-primary border border-primary/30 flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">timer</span>
-</div>
-<div class="flex flex-col">
-<span class="font-mono text-mono-code uppercase text-on-surface-variant">Simulation State</span>
-<span class="font-label text-sm font-semibold text-on-surface">STEP 3 / 5 진행 중</span>
-</div>
-</div>
-<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label text-xs font-semibold border border-outline-variant/40">
-          일시정지 대기중
-        </span>
-</div>
-<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant/60 flex items-center justify-center text-on-surface">
-<span class="material-symbols-outlined text-[20px]">holiday_village</span>
-</div>
-<div class="flex flex-col">
-<span class="font-mono text-mono-code uppercase text-on-surface-variant">Active Environment</span>
-<span class="font-label text-sm font-semibold text-on-surface">Smallville 서부 구역</span>
-</div>
-</div>
-<span class="font-mono text-mono-metric font-bold text-on-surface bg-surface-container-low border border-outline-variant/50 px-2.5 py-1 rounded-lg">
-          24명 (6명 관여)
-        </span>
-</div>
-</div>
-</section>
-<!-- Main 2-Column Split Workbench Grid -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-<!-- LEFT COLUMN: Parameter Workbench & Agent Roster (Approx 4 cols in 12-grid) -->
-<div class="lg:col-span-4 flex flex-col gap-space-lg">
-<!-- Card 1: Trigger & Parameter Setup -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
-<div class="flex items-center justify-between pb-space-xs">
-<div class="flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span class="font-mono text-mono-code uppercase font-semibold text-on-surface-variant tracking-wider">TRIGGER SETUP</span>
-</div>
-<span class="font-label text-xs text-primary bg-primary-fixed px-2 py-0.5 rounded-full font-bold border border-primary/20">Active Engine</span>
-</div>
-<h2 class="font-headline text-lg text-on-surface font-bold">대화 주제 및 발화 트리거</h2>
-<!-- Mode Toggle Tabs -->
-<div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-xl border border-outline-variant/50">
-<button class="py-2 px-space-sm rounded-lg bg-surface-container-lowest font-label text-xs font-semibold text-on-surface shadow-sm text-center border border-outline-variant/40 transition-all" type="button">
-            직접 주제 입력 (수동)
-          </button>
-<button class="py-2 px-space-sm rounded-lg font-label text-xs text-on-surface-variant hover:text-on-surface text-center transition-all" type="button">
-            AI 자율 의제 생성
-          </button>
-</div>
-<!-- Topic Prompt Input -->
-<div class="flex flex-col gap-1.5">
-<label class="font-label text-xs text-on-surface-variant font-semibold flex items-center justify-between">
-<span>주입 가십 / 소문 시드</span>
-<span class="font-mono text-mono-code text-primary font-semibold">강도 Level 3</span>
-</label>
-<textarea class="w-full p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/60 text-on-surface font-body text-sm focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-all resize-none" rows="3">Sam이 선거에서 이기려고 마을 회관 리모델링 자금을 사적으로 유용했다는 헛소문</textarea>
-</div>
-<!-- Source & Target Agent Selectors -->
-<div class="grid grid-cols-1 gap-space-sm">
-<div class="flex flex-col gap-1">
-<span class="font-label text-xs text-on-surface-variant font-semibold">최초 발신자 (Source Agent)</span>
-<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
-<div class="flex items-center gap-space-sm">
-<div class="w-7 h-7 rounded-full bg-primary text-on-primary font-mono text-[10px] flex items-center justify-center font-bold">IR</div>
-<div class="flex flex-col">
-<span class="font-label text-xs font-bold text-on-surface">Isabella Rodriguez</span>
-<span class="font-mono text-mono-code text-on-surface-variant">카페 주인 • 외향적 정보 발신형</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<span class="font-label text-xs text-on-surface-variant font-semibold">최초 청취 대상 (Target Agent)</span>
-<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
-<div class="flex items-center gap-space-sm">
-<div class="w-7 h-7 rounded-full bg-slate-700 text-white font-mono text-[10px] flex items-center justify-center font-bold">KM</div>
-<div class="flex flex-col">
-<span class="font-label text-xs font-bold text-on-surface">Klaus Mueller</span>
-<span class="font-mono text-mono-code text-on-surface-variant">도서관 연구원 • 2차 전파형</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
-</div>
-</div>
-</div>
-<!-- Sliders: Max Steps & Distortion Rate -->
-<div class="flex flex-col gap-space-sm pt-space-xs">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<span class="font-label text-xs font-semibold text-on-surface">실행 단계 수 (Max Steps)</span>
-<span class="font-mono text-mono-metric font-bold text-primary">5 단계</span>
-</div>
-<input class="w-full accent-primary cursor-pointer h-1.5 bg-surface-container-high rounded-lg" max="10" min="1" type="range" value="5"/>
-</div>
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<span class="font-label text-xs font-semibold text-on-surface">소문 왜곡 유도 강도 (Distortion Rate)</span>
-<span class="font-mono text-mono-metric font-bold text-rose-600">35% (중간)</span>
-</div>
-<input class="w-full accent-primary cursor-pointer h-1.5 bg-surface-container-high rounded-lg" max="100" min="0" type="range" value="35"/>
-</div>
-</div>
-<!-- Trigger Run CTA Button -->
-<button class="w-full mt-space-xs py-3 rounded-lg bg-primary text-on-primary font-label text-sm font-bold shadow hover:bg-primary/95 transition-all flex items-center justify-center gap-space-xs">
-<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
-<span>시뮬레이션 시작 / 재실행</span>
-</button>
-</div>
-<!-- Card 2: Participating Agent Cohort -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span class="font-mono text-mono-code uppercase font-semibold text-on-surface-variant tracking-wider">COHORT POOL</span>
-</div>
-<span class="font-mono text-mono-code text-on-surface font-semibold bg-surface-container-high border border-outline-variant/40 px-2 py-0.5 rounded-full">6명 활성 중</span>
-</div>
-<h3 class="font-headline text-lg text-on-surface font-bold">마을 참여 에이전트</h3>
-<!-- Agent Rosters with Role Tags & Activity Bars -->
-<div class="flex flex-col gap-space-sm">
-<!-- Isabella -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="Warm photographic studio portrait of Isabella, a 30-year-old Hispanic female cafe owner with thoughtful observant expression and friendly style against soft warm background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4w30UJYx4gdc6fNIK94_OpLoCZJCIBCgA9QCS2pQfZS02bS6nX3w8O3ZmNPaD1f7x4-wtuloMXZvQswejcIr9B2EyjsXBADDcXeYQJVYKH7mmO2wz9C9GKTXryxd26NfDmgu_tXECw21yDmEWC-Ntklab-aZICfX7CEyI_jz_1j5gNTEj4Uuiwh9t1BYYTcTnhu8Hcvll5mangfzKF2UvNReQ3uR1F7ZEjFTFWjM31I56IC5uGK5u"/>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Isabella Rodriguez</span>
-<span class="px-1.5 py-0.2 rounded bg-primary-fixed text-primary font-mono text-[10px] font-bold border border-primary/20">발신원</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">카페 주인 • 사교 네트워크 허브</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-emerald-700 font-bold">98% 신뢰</span>
-</div>
-<!-- Activity Progress Micro-bar -->
-<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-<div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
-</div>
-</div>
-<!-- Klaus -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="Photographic portrait of Klaus Mueller, a 42-year-old intellectual German researcher with round wire-rimmed glasses in archival library background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcxcJxH0cWJ5XU0gz5q2P6oeYzonUYHenCniIcVYseab5hsdoLN2pYqx-oucZ0oayfVWgjlkBKqvfOvRli67tJ8GjRFa5Dg1mJZy1M6KsTOGo3DXa8SS373KE0kA4wCnc7SIB1m0hnSsJAukEvGZTKD7HwY4RZeuyVC0Um7MDHt01i4ii7rNfnVS97UDXbsNNJklRoLHEN4-dWiWKBwkwW7iDOfwIPlGMCpA3ocbhlwrHTdw5gyHms"/>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Klaus Mueller</span>
-<span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-mono text-[10px] font-bold">전파자</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">도서관 연구원 • 가공 정보 전달</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-slate-700 font-bold">72% 관여</span>
-</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-<div class="bg-slate-600 h-full rounded-full" style="width: 65%;"></div>
-</div>
-</div>
-<!-- Tom -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-bold font-mono text-mono-code">TM</div>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Tom Moreno</span>
-<span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 border border-rose-200 font-mono text-[10px] font-bold">확산/왜곡</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">청년회 간사 • 감정적 증폭자</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-rose-700 font-bold">64% 왜곡률</span>
-</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-<div class="bg-rose-500 h-full rounded-full" style="width: 92%;"></div>
-</div>
-</div>
-<!-- Sam (Target) -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="Portrait photo of Sam Moore, a 48-year-old mayoral candidate with tired earnest expression, neat attire against classic town hall background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4faXmxcfW-OyTyOk3PivWZiiJu0ADAjdE4QZ9IUXBpCwozGbFYapIoOcEQrD-k39528TihlZdGPe0V_MvNOAA5mWR-54zCzY4eXT9Y_tHRPbDfjv8RVpogBzv4ivwgC1JAMrNtUu0LrQD4Bw17EIuiKyZCsuGCh_irVNNFjTqlxL2KjsDkX61h1LdOdhElopGcGROHp60Y6-tc3_9xcjJA1qWO_m2S-hF-rAAUcJQ4NQ8tCzi8yKa"/>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Sam Moore</span>
-<span class="px-1.5 py-0.2 rounded bg-outline-variant text-on-surface-variant font-mono text-[10px] font-bold">표적 대상</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">전직 교장 • 마을 시장 후보</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-rose-700 font-bold">-0.38 급락</span>
-</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-<div class="bg-rose-600 h-full rounded-full" style="width: 28%;"></div>
-</div>
-</div>
-<!-- Latoya -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center font-bold font-mono text-mono-code">LW</div>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Latoya Williams</span>
-<span class="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] font-bold">팩트체크형</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">지역 기자 • 출처 검증 지향</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-emerald-700 font-bold">검증 활성</span>
-</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
-<div class="bg-emerald-600 h-full rounded-full" style="width: 45%;"></div>
-</div>
-</div>
-<!-- Abigail -->
-<div class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold font-mono text-mono-code">AC</div>
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5">
-<span class="font-label text-xs font-bold text-on-surface">Abigail Chen</span>
-<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-on-surface-variant font-mono text-[10px]">중립 청자</span>
-</div>
-<span class="font-body text-[12px] text-on-surface-variant">음악 강사 • 관조적 수용자</span>
-</div>
-</div>
-<span class="font-mono text-mono-code text-on-surface-variant">대기</span>
-</div>
-</div>
-</div>
-</div>
-<!-- RIGHT COLUMN: Step Dialogue Timeline & Realtime Deep Analysis (8 cols in 12-grid) -->
-<div class="lg:col-span-8 flex flex-col gap-space-lg">
-<!-- Top Step Pipeline Indicator & Aggregated Health Bar -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
-<div class="flex items-center justify-between flex-wrap gap-2">
-<div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-primary text-[20px]">account_tree</span>
-<span class="font-headline text-base font-bold text-on-surface">실시간 확산 파이프라인 진행도</span>
-</div>
-<div class="flex items-center gap-space-xs font-mono text-mono-code">
-<span class="text-on-surface-variant">총 소요:</span>
-<span class="font-bold text-on-surface">1분 42초</span>
-</div>
-</div>
-<!-- Horizontal Step Breadcrumbs -->
-<div class="grid grid-cols-5 gap-space-xs text-center">
-<!-- Step 1 -->
-<div class="flex flex-col gap-1 items-center">
-<div class="w-full py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-sm">
-<span class="material-symbols-outlined text-[14px]">check</span>STEP 01
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed-variant": "#42474b",
+            "tertiary-container": "#e6f4ea",
+            "surface-container-low": "#f6f8fb",
+            "on-primary-fixed": "#001946",
+            "error": "#ba1a1a",
+            "background": "#faf9fa",
+            "on-background": "#0f172a",
+            "on-primary-fixed-variant": "#00419d",
+            "on-surface": "#0f172a",
+            "on-primary": "#ffffff",
+            "surface-dim": "#dbdadb",
+            "surface-container-high": "#e9edf3",
+            "secondary": "#3b5998",
+            "on-tertiary-fixed-variant": "#064e3b",
+            "surface-bright": "#faf9fa",
+            "surface-tint": "#3366cc",
+            "surface": "#faf9fa",
+            "on-secondary": "#ffffff",
+            "tertiary": "#0d9488",
+            "on-primary-container": "#ffffff",
+            "on-secondary-fixed": "#171c20",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#1e3a8a",
+            "inverse-primary": "#b1c5ff",
+            "on-tertiary-fixed": "#064e3b",
+            "primary": "#3366cc",
+            "on-surface-variant": "#475569",
+            "on-tertiary-container": "#064e3b",
+            "tertiary-fixed": "#ccfbf1",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#c2c7cc",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#e0e7ff",
+            "primary-fixed-dim": "#b1c5ff",
+            "primary-fixed": "#dbeafe",
+            "inverse-on-surface": "#f2f0f1",
+            "surface-container-highest": "#e2e8f0",
+            "primary-container": "#3366cc",
+            "outline-variant": "#cbd5e1",
+            "surface-variant": "#e2e8f0",
+            "outline": "#64748b",
+            "secondary-container": "#e0e7ff",
+            "tertiary-fixed-dim": "#99f6e4",
+            "inverse-surface": "#303031",
+            "error-container": "#fee2e2",
+            "surface-container": "#f1f5f9"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.375rem",
+            "xl": "0.5rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "gutter-mobile": "0.75rem",
+            "gutter": "1.25rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif KR", "Noto Serif", "serif"],
+            "display": ["Noto Serif KR", "Noto Serif", "serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "21px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "mono-metric": ["13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-lg": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-code": ["11px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="bg-background font-body text-on-surface antialiased">
+  <aside
+    class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/60 shadow-[0_2px_12px_rgba(15,23,42,0.04)] z-50 flex flex-col justify-between overflow-y-auto">
+    <div class="flex flex-col">
+      <div
+        class="h-20 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest border-b border-outline-variant/50">
+        <img alt="EchoChamber Logo" class="h-8 w-auto object-contain"
+          src="https://lh3.googleusercontent.com/aida/AEtjO1VrUiNkn9Dp2_1Tr9-f7wIRyWMbBDifXVGpKvLpQG0-RbEuda4qR4UZMoKlJ5lQ_5QzBt3t_QXnqEAxfzNO_ZpGHYAYueRSqpTr5wjFVkrWunKZaaoh1CpMVe20QeMpY2ddWsjEGeE4lFnEfCG5aze9gBYS0QmMhRmz_l14Rnw1wBo8Wjt4nh4dEhCV074mXiGUCyZgt7PqGBXB76UPsvlVZZv_rxHdiqiQuXgHRpwZRMnaS2ohgCr-wA" />
+        <div class="flex flex-col">
+          <div class="flex items-center gap-space-xs"><span
+              class="font-headline text-lg font-bold text-on-surface tracking-tight">EchoChamber</span><span
+              class="px-space-xs py-0.5 rounded bg-primary-fixed text-primary font-mono text-[10px] uppercase font-semibold border border-primary/20">Lab
+              v2.4</span></div><span class="font-label text-xs text-on-surface-variant font-medium">살아 움직이는 소문
+            연구실</span>
+        </div>
+      </div>
+      <div class="px-space-md py-space-sm">
+        <nav class="flex flex-col gap-space-lg"
+          data-active-classes="bg-primary text-on-primary font-semibold shadow-[0_2px_8px_rgba(51,102,204,0.25)]">
+          <div class="flex flex-col gap-space-xs">
+            <div
+              class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between">
+              <span>OVERVIEW</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="dashboard" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">grid_view</span><span
+                class="font-label text-sm">대시보드</span></a>
+          </div>
+          <div class="flex flex-col gap-space-xs">
+            <div
+              class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between">
+              <span>SIMULATION</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="town-view" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">location_city</span><span
+                class="font-label text-sm">마을 보기</span></a><a aria-current="page"
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary text-on-primary font-semibold shadow-[0_2px_10px_rgba(51,102,204,0.25)] border border-primary"
+              data-path="run-simulation" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">play_circle</span><span
+                class="font-label text-sm">시뮬레이션 실행</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="agents" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">groups</span><span
+                class="font-label text-sm">에이전트 관리</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="memories" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">neurology</span><span
+                class="font-label text-sm">기억 저장소</span></a>
+          </div>
+          <div class="flex flex-col gap-space-xs">
+            <div
+              class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between">
+              <span>ANALYSIS</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="gossip-analysis" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">forum</span><span
+                class="font-label text-sm">가십 분석</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="real-comment-lab" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">labs</span><span
+                class="font-label text-sm">실제 댓글 분석</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="propagation-map" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">hub</span><span
+                class="font-label text-sm">전파 경로</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="reputation-shift" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">trending_up</span><span
+                class="font-label text-sm">평판 변화</span></a>
+          </div>
+          <div class="flex flex-col gap-space-xs">
+            <div
+              class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between">
+              <span>DATA</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="data-upload" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">cloud_upload</span><span
+                class="font-label text-sm">데이터 업로드</span></a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="history-logs" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">manage_search</span><span
+                class="font-label text-sm">분석 기록</span></a>
+          </div>
+          <div class="flex flex-col gap-space-xs">
+            <div
+              class="px-space-sm py-space-xs font-mono text-mono-code uppercase tracking-wider text-on-surface-variant font-semibold flex items-center justify-between">
+              <span>SYSTEM</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div><a
+              class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="api-status" href="#">
+              <div class="flex items-center gap-space-sm"><span
+                  class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">api</span><span
+                  class="font-label text-sm">API 상태</span></div><span
+                class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-mono-code font-semibold"><span
+                  class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>Online</span>
+            </a><a
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group border border-transparent"
+              data-path="settings" href="#"><span
+                class="material-symbols-outlined text-[19px] transition-transform group-hover:scale-110">settings</span><span
+                class="font-label text-sm">설정</span></a>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div
+      class="p-space-md m-space-md bg-surface-container-low rounded-xl border border-outline-variant/60 flex items-center justify-between">
+      <div class="flex flex-col"><span class="font-label text-xs text-on-surface font-semibold">Echo Engine</span><span
+          class="font-mono text-mono-code text-on-surface-variant">Port 8008 • Ready</span></div><span
+        class="material-symbols-outlined text-primary text-[20px]">verified</span>
+    </div>
+  </aside>
+  <div class="pl-72">
+    <header
+      class="fixed top-0 left-72 right-0 h-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant/60 shadow-[0_1px_6px_rgba(15,23,42,0.03)] z-40 px-space-lg flex items-center justify-between">
+      <div class="flex items-center gap-space-lg flex-1 max-w-xl">
+        <div class="flex items-center gap-space-xs font-mono text-mono-code text-on-surface-variant"><span
+            class="text-on-surface font-medium">Echo Lab</span><span>/</span><span
+            class="text-primary font-semibold">Observatory</span></div>
+        <div class="relative flex-1"><span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input
+            class="w-full h-10 pl-9 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body text-sm border border-outline-variant/60 placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            placeholder="소문 키워드, 에이전트 식별자, 전파 이벤트 검색..." type="text" /></div>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <div class="inline-flex p-1 bg-surface-container-high rounded-lg items-center border border-outline-variant/50">
+          <button
+            class="px-space-md py-1.5 rounded font-label text-xs bg-surface-container-lowest text-on-surface font-semibold shadow-sm transition-all"
+            type="button">가상 마을 시뮬레이션</button><button
+            class="px-space-md py-1.5 rounded font-label text-xs text-on-surface-variant hover:text-on-surface transition-all"
+            type="button">현실 댓글 연구실</button></div>
+        <div
+          class="flex items-center gap-2 px-space-md py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-metric">
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span><span
+            class="font-label text-xs font-semibold">FastAPI 연결됨</span></div>
+        <div
+          class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-mono text-mono-code px-space-sm">
+          <span class="material-symbols-outlined text-[16px]">schedule</span><span>마지막 분석: 방금 전</span></div><button
+          class="relative w-9 h-9 rounded-lg bg-surface-container-lowest border border-outline-variant/60 hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"
+          type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span
+            class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span></button>
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span
+            class="material-symbols-outlined text-on-primary text-[18px]">person</span></div>
+      </div>
+    </header>
+    <main class="relative pt-20 w-full min-h-screen bg-background px-space-lg py-space-lg">
+      <div class="flex flex-col w-full">
+        <!-- Top Simulation Header & Instrumentation Ribbon -->
+        <section class="flex flex-col gap-space-md mb-space-lg">
+          <!-- Breadcrumb & Control Bar Container -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+            <div class="flex flex-col gap-space-xs">
+              <div class="flex items-center gap-space-xs font-mono text-mono-code text-on-surface-variant">
+                <span>Echo Lab</span>
+                <span>/</span>
+                <span>Simulation</span>
+                <span>/</span>
+                <span class="text-primary font-semibold">시뮬레이션 실행</span>
+              </div>
+              <div class="flex items-center gap-space-sm flex-wrap">
+                <h1 class="font-headline text-2xl text-on-surface font-bold tracking-tight">시뮬레이션 실행 및 대화 타임라인</h1>
+                <span
+                  class="px-3 py-0.5 rounded-full bg-primary-fixed text-primary border border-primary/30 font-mono text-mono-code font-bold">Smallville
+                  #04</span>
+              </div>
+              <p class="font-body text-sm text-on-surface-variant max-w-3xl leading-relaxed">
+                가상 마을 에이전트들의 대화를 트리거하고 소문의 확산, 기억 저장, 왜곡 변화 과정을 단계별로 관찰합니다.
+              </p>
             </div>
-<span class="font-label text-[11px] text-on-surface-variant">발화 생성 (완료)</span>
-</div>
-<!-- Step 2 -->
-<div class="flex flex-col gap-1 items-center">
-<div class="w-full py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-sm">
-<span class="material-symbols-outlined text-[14px]">check</span>STEP 02
-            </div>
-<span class="font-label text-[11px] text-on-surface-variant">1차 전파 (완료)</span>
-</div>
-<!-- Step 3 (Active) -->
-<div class="flex flex-col gap-1 items-center">
-<div class="w-full py-1.5 rounded-lg bg-primary text-on-primary font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-md">
-<span class="w-2 h-2 rounded-full bg-surface-container-lowest animate-ping"></span>STEP 03
-            </div>
-<span class="font-label text-[11px] text-primary font-bold">2차 증폭 (일시정지)</span>
-</div>
-<!-- Step 4 -->
-<div class="flex flex-col gap-1 items-center opacity-45">
-<div class="w-full py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-mono text-mono-code border border-outline-variant/40">
-              STEP 04
-            </div>
-<span class="font-label text-[11px] text-on-surface-variant">팩트체크 대질</span>
-</div>
-<!-- Step 5 -->
-<div class="flex flex-col gap-1 items-center opacity-45">
-<div class="w-full py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-mono text-mono-code border border-outline-variant/40">
-              STEP 05
-            </div>
-<span class="font-label text-[11px] text-on-surface-variant">평판 수렴/고착</span>
-</div>
-</div>
-<!-- Metric Badges Row -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-xs">
-<div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
-<span class="font-label text-[11px] text-on-surface-variant">누적 대화량</span>
-<span class="font-mono text-mono-metric font-bold text-on-surface">3 회 완료</span>
-</div>
-<div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
-<span class="font-label text-[11px] text-on-surface-variant">신규 기억 생성</span>
-<span class="font-mono text-mono-metric font-bold text-primary">4 개 노드</span>
-</div>
-<div class="bg-rose-50 border border-rose-200 p-2.5 rounded-lg flex flex-col">
-<span class="font-label text-[11px] text-rose-700 font-semibold">누적 소문 왜곡률</span>
-<span class="font-mono text-mono-metric font-bold text-rose-700">42% (주의 레벨)</span>
-</div>
-<div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
-<span class="font-label text-[11px] text-on-surface-variant">Sam 평판 변동</span>
-<span class="font-mono text-mono-metric font-bold text-primary">-0.38 p</span>
-</div>
-</div>
-</div>
-<!-- TIMELINE LIST CONTAINER -->
-<div class="flex flex-col gap-space-md">
-<!-- =================== STEP 01 CARD =================== -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
-<!-- Step Header Meta -->
-<div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
-<div class="flex items-center gap-space-sm">
-<span class="px-2.5 py-1 rounded-md bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">STEP 01</span>
-<span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">schedule</span>09:15 AM
-              </span>
-<span class="text-outline-variant">•</span>
-<span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">storefront</span>홉스 카페 테라스
-              </span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">data_object</span>JSON 노드
+            <!-- Live Global Action Toolbar -->
+            <div
+              class="flex items-center gap-space-xs flex-wrap bg-surface-container-low p-1.5 rounded-xl border border-outline-variant/50">
+              <button
+                class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-semibold shadow hover:bg-primary/90 transition-all"
+                id="btn-play">
+                <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                <span>계속 실행</span>
               </button>
-<button class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">visibility</span>기억 세부 보기
+              <button
+                class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label text-xs font-semibold border border-outline-variant/60 shadow-sm hover:bg-surface-container-high transition-all"
+                id="btn-pause">
+                <span class="material-symbols-outlined text-[18px]">pause</span>
+                <span>일시정지</span>
               </button>
-</div>
-</div>
-<!-- Interaction Pathway: Isabella -> Klaus -->
-<div class="flex items-center gap-space-sm text-on-surface">
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-mono text-[10px]">IR</span>
-<span>Isabella</span>
-</div>
-<span class="material-symbols-outlined text-[18px] text-primary font-bold">arrow_forward</span>
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center font-mono text-[10px]">KM</span>
-<span>Klaus</span>
-</div>
-<span class="text-on-surface-variant font-mono text-[12px] ml-auto">사적 담소 발화</span>
-</div>
-<!-- Dialogue Bubble -->
-<div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/50 flex flex-col gap-2">
-<p class="font-headline text-sm md:text-base text-on-surface font-medium leading-relaxed">
-              “Klaus, 혹시 들었어? Sam이 이번 마을 회관 리모델링 예산 회계 장부를 안 보여주려고 한대. 선거 자금으로 쓰려는 거 아닐까?”
-            </p>
-</div>
-<!-- Analytical Metadata Badges -->
-<div class="flex flex-wrap items-center gap-2 pt-1">
-<span class="px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-label text-xs font-semibold flex items-center gap-1">
-<span class="w-2 h-2 rounded-full bg-amber-500"></span>
-              판정: 가십 추측 (Speculation)
-            </span>
-<span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold">
-              발화 신뢰도: 0.88 (높음)
-            </span>
-<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px] text-primary">memory</span>
-              Klaus 기억함에 [Sam 선거 자금 유용 의혹] 생성 (1개)
-            </span>
-<span class="px-3 py-1 rounded-full bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">
-              Sam 평판 -0.05
-            </span>
-</div>
-</div>
-<!-- =================== STEP 02 CARD =================== -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
-<!-- Step Header Meta -->
-<div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
-<div class="flex items-center gap-space-sm">
-<span class="px-2.5 py-1 rounded-md bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">STEP 02</span>
-<span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">schedule</span>09:42 AM
-              </span>
-<span class="text-outline-variant">•</span>
-<span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">menu_book</span>도서관 앞 벤치
-              </span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">data_object</span>JSON 노드
+              <button
+                class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-lowest text-primary font-label text-xs font-semibold border border-outline-variant/60 shadow-sm hover:bg-surface-container-high transition-all"
+                id="btn-step">
+                <span class="material-symbols-outlined text-[18px]">bolt</span>
+                <span>1단계 실행</span>
               </button>
-<button class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">visibility</span>기억 세부 보기
+              <button
+                class="flex items-center gap-1.5 px-space-sm py-2 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-error hover:bg-surface-container-high border border-outline-variant/60 transition-all"
+                id="btn-reset">
+                <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+                <span class="font-label text-xs">리셋</span>
               </button>
-</div>
-</div>
-<!-- Interaction Pathway: Klaus -> Tom -->
-<div class="flex items-center gap-space-sm text-on-surface">
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center font-mono text-[10px]">KM</span>
-<span>Klaus</span>
-</div>
-<span class="material-symbols-outlined text-[18px] text-primary font-bold">arrow_forward</span>
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-mono text-[10px]">TM</span>
-<span>Tom</span>
-</div>
-<span class="text-rose-700 font-mono text-[12px] ml-auto font-semibold">1차 왜곡 변형 전달</span>
-</div>
-<!-- Dialogue Bubble -->
-<div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/50 flex flex-col gap-2">
-<p class="font-headline text-sm md:text-base text-on-surface font-medium leading-relaxed">
-              “Tom, Isabella한테 들었는데 Sam이 회관 공금으로 자기 선거 운동원들 밥을 샀다더라. 완전 불법 아니야?”
-            </p>
-</div>
-<!-- Semantic Diff / Distortion Analysis Box -->
-<div class="bg-rose-50/70 border border-rose-200 p-space-md rounded-xl flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<span class="font-label text-xs font-bold text-rose-900 flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-rose-700">change_circle</span>
-                의미 왜곡(Semantic Distortion) Diff 비교
+              <button
+                class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high text-on-surface font-label text-xs font-semibold border border-outline-variant/50 hover:bg-surface-variant transition-all">
+                <span class="material-symbols-outlined text-[18px]">tune</span>
+                <span>새 시뮬레이션 설정</span>
+              </button>
+            </div>
+          </div>
+          <!-- Active Pipeline Telemetry Ribbon -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-space-sm">
+                <div
+                  class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[20px]">speed</span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-mono text-mono-code uppercase text-on-surface-variant">FastAPI Engine</span>
+                  <span class="font-label text-sm font-semibold text-on-surface">v2.4.1 정상 연결됨</span>
+                </div>
+              </div>
+              <span
+                class="flex items-center gap-1 text-emerald-800 font-mono text-mono-code px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>12ms
               </span>
-<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200 font-mono text-mono-code font-bold">
-                왜곡율 64% 급증
+            </div>
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-space-sm">
+                <div
+                  class="w-10 h-10 rounded-lg bg-primary-fixed text-primary border border-primary/30 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[20px]">timer</span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-mono text-mono-code uppercase text-on-surface-variant">Simulation State</span>
+                  <span class="font-label text-sm font-semibold text-on-surface">STEP 3 / 5 진행 중</span>
+                </div>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label text-xs font-semibold border border-outline-variant/40">
+                일시정지 대기중
               </span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm text-body-sm pt-1">
-<div class="p-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/50 flex flex-col">
-<span class="font-mono text-[11px] text-on-surface-variant mb-1">원문 (STEP 01 의혹 단계)</span>
-<span class="text-on-surface line-through decoration-rose-600 decoration-2">“장부를 안 보여주려 함 (추측)”</span>
-</div>
-<div class="p-2.5 rounded-lg bg-surface-container-lowest border border-rose-200 flex flex-col">
-<span class="font-mono text-[11px] text-rose-700 font-bold mb-1">변형 (STEP 02 기정사실화)</span>
-<span class="text-rose-700 font-semibold">“공금으로 운동원 밥을 삼 (불법 왜곡 단정!)”</span>
-</div>
-</div>
-</div>
-<!-- Analytical Metadata Badges -->
-<div class="flex flex-wrap items-center gap-2 pt-1">
-<span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200 font-label text-xs font-bold flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">warning</span>
-              왜곡 감지 64% (과장 및 허위 단정)
-            </span>
-<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code font-medium">
-              신뢰도 하락: 0.88 → 0.65
-            </span>
-<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code">
-              Tom 기억함에 [Sam 공금 횡령 확정] 각인 (2개)
-            </span>
-<span class="px-3 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 font-mono text-mono-code font-bold">
-              Sam 평판 -0.22 급락
-            </span>
-</div>
-</div>
-<!-- =================== STEP 03 CARD (ACTIVE / PAUSED) =================== -->
-<div class="bg-surface-container-lowest rounded-xl p-space-lg border-2 border-primary/40 shadow-md flex flex-col gap-space-md">
-<!-- Step Header Meta -->
-<div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
-<div class="flex items-center gap-space-sm">
-<span class="px-2.5 py-1 rounded-md bg-primary text-on-primary font-mono text-mono-code font-bold flex items-center gap-1 shadow-sm">
-<span class="w-2 h-2 rounded-full bg-surface-container-lowest animate-pulse"></span>
-                STEP 03 (현재 진행)
+            </div>
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/60 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-space-sm">
+                <div
+                  class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant/60 flex items-center justify-center text-on-surface">
+                  <span class="material-symbols-outlined text-[20px]">holiday_village</span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-mono text-mono-code uppercase text-on-surface-variant">Active Environment</span>
+                  <span class="font-label text-sm font-semibold text-on-surface">Smallville 서부 구역</span>
+                </div>
+              </div>
+              <span
+                class="font-mono text-mono-metric font-bold text-on-surface bg-surface-container-low border border-outline-variant/50 px-2.5 py-1 rounded-lg">
+                24명 (6명 관여)
               </span>
-<span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">schedule</span>10:10 AM
-              </span>
-<span class="text-outline-variant">•</span>
-<span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
-<span class="material-symbols-outlined text-[15px]">replace_video</span>마을 광장 분수대
-              </span>
-</div>
-<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-primary border border-outline-variant/50 font-mono text-mono-code font-bold flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px]">pause_circle</span>실행 일시정지됨
-            </span>
-</div>
-<!-- Interaction Pathway: Tom -> Latoya & Abigail -->
-<div class="flex items-center gap-space-sm text-on-surface flex-wrap">
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-mono text-[10px]">TM</span>
-<span>Tom</span>
-</div>
-<span class="material-symbols-outlined text-[18px] text-rose-600 font-bold">arrow_forward</span>
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center font-mono text-[10px]">LW</span>
-<span>Latoya</span>
-</div>
-<span class="text-on-surface-variant">&amp;</span>
-<div class="flex items-center gap-1.5 font-label text-xs font-bold">
-<span class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-mono text-[10px]">AC</span>
-<span>Abigail</span>
-</div>
-<span class="text-rose-700 font-mono text-[12px] ml-auto font-bold bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">극단적 확산 발화</span>
-</div>
-<!-- Dialogue Bubble with Warning Aura -->
-<div class="bg-surface-container-low rounded-xl p-space-md border border-rose-200/80 flex flex-col gap-2">
-<p class="font-headline text-base md:text-lg text-on-surface font-bold leading-relaxed">
-              “다들 Sam 찍지 마! Sam이 선거 조작하려고 마을 예산 전부 털어먹었대!”
-            </p>
-</div>
-<!-- Real-time AI Cognitive Reflection & Risk Card -->
-<div class="bg-slate-50 border border-outline-variant/70 rounded-xl p-space-md flex flex-col gap-space-sm">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-primary text-[20px]">psychology</span>
-<span class="font-headline text-sm md:text-base font-bold text-on-surface">실시간 AI 인지 분석 및 청자 반추(Reflection)</span>
-</div>
-<span class="px-2.5 py-0.5 rounded-full bg-rose-700 text-white font-mono text-mono-code font-bold">
-                위험: 비방 의도 94%
-              </span>
-</div>
-<!-- Deep Evidence Text -->
-<p class="font-body text-xs md:text-sm text-on-surface leading-normal">
-<strong class="font-semibold text-primary font-headline">AI 모델 판정 근거:</strong> 제3자 진술(Klaus)을 2차 인용하며 '선거 조작', '전부 털어먹음'이라는 극단적 과장 어휘를 사용함. 진실 계수(0.12) 대비 과장 왜곡 배율이 4.8배에 도달하여 네트워크 감염 위험군으로 분류됩니다.
-            </p>
-<!-- Latoya Fact-check Cognitive Reaction -->
-<div class="bg-surface-container-lowest border border-outline-variant/60 p-space-sm rounded-lg flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-emerald-700 text-[20px] mt-0.5">verified_user</span>
-<div class="flex flex-col">
-<span class="font-label text-xs font-bold text-on-surface">Latoya의 반추(Cognitive Reaction):</span>
-<span class="font-body text-xs text-on-surface-variant leading-relaxed">
-                  “Tom의 발언이 감정적이며 원 출처가 불분명함을 인지함. Sam과의 대질 전까지 정보 수용을 유보하고, 도서관 회계 장부 열람 및 사실 확인 계획을 수립함.”
-                </span>
-</div>
-</div>
-<!-- Active Intervention Actions Trigger Bar -->
-<div class="flex items-center justify-between flex-wrap gap-2 pt-space-xs">
-<div class="flex items-center gap-space-xs">
-<button class="px-space-md py-2 rounded-lg bg-emerald-700 text-white font-label text-xs font-bold shadow hover:bg-emerald-800 transition-all flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[18px]">verified</span>
-<span>팩트체크 개입(Intervention) 주입</span>
-</button>
-<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label text-xs font-semibold border border-outline-variant/60 hover:bg-surface-container-high transition-all">
-                  발화 재작성 (Prompt Retune)
+            </div>
+          </div>
+        </section>
+        <!-- Main 2-Column Split Workbench Grid -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+          <!-- LEFT COLUMN: Parameter Workbench & Agent Roster (Approx 4 cols in 12-grid) -->
+          <div class="lg:col-span-4 flex flex-col gap-space-lg">
+            <!-- Card 1: Trigger & Parameter Setup -->
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
+              <div class="flex items-center justify-between pb-space-xs">
+                <div class="flex items-center gap-space-xs">
+                  <span class="w-2 h-2 rounded-full bg-primary"></span>
+                  <span
+                    class="font-mono text-mono-code uppercase font-semibold text-on-surface-variant tracking-wider">TRIGGER
+                    SETUP</span>
+                </div>
+                <span
+                  class="font-label text-xs text-primary bg-primary-fixed px-2 py-0.5 rounded-full font-bold border border-primary/20">Active
+                  Engine</span>
+              </div>
+              <h2 class="font-headline text-lg text-on-surface font-bold">대화 주제 및 발화 트리거</h2>
+              <!-- Mode Toggle Tabs -->
+              <div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-xl border border-outline-variant/50">
+                <button
+                  class="py-2 px-space-sm rounded-lg bg-surface-container-lowest font-label text-xs font-semibold text-on-surface shadow-sm text-center border border-outline-variant/40 transition-all"
+                  type="button">
+                  직접 주제 입력 (수동)
                 </button>
-</div>
-<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-bold shadow hover:bg-primary/90 transition-all flex items-center gap-1.5">
-<span>시뮬레이션 스텝 승인 후 다음 단계로</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Bottom Floating & Visual Flowchart Section -->
-<section class="mt-space-lg bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
-<div class="flex items-center justify-between flex-wrap gap-space-md">
-<div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-lg bg-primary-fixed text-primary border border-primary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">hub</span>
-</div>
-<div class="flex flex-col">
-<span class="font-headline text-base font-bold text-on-surface">실시간 전파 다이어그램 &amp; 누적 영향 요약</span>
-<span class="font-body text-xs text-on-surface-variant">소문이 네트워크 노드를 건너가며 왜곡 증폭 및 저항을 겪는 구조도입니다.</span>
-</div>
-</div>
-<!-- Action Utilities -->
-<div class="flex items-center gap-space-xs">
-<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs font-semibold border border-outline-variant/50 transition-all flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[18px]">download</span>
-<span>타임라인 로그 CSV/JSON 내보내기</span>
-</button>
-<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-bold hover:bg-primary/95 shadow transition-all flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[18px]">send</span>
-<span>리포트로 분석 전송</span>
-</button>
-</div>
-</div>
-<!-- Interactive Node Flow Vector Diagram -->
-<div class="p-space-md bg-surface-container-low rounded-xl border border-outline-variant/50 overflow-x-auto">
-<div class="flex items-center justify-between min-w-[720px] py-space-sm px-space-md relative">
-<!-- Node 1: Isabella -->
-<div class="flex flex-col items-center gap-2 z-10">
-<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center shadow-sm relative">
-<span class="font-mono font-bold text-primary text-sm">IR</span>
-<span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-fixed text-primary border border-primary/20 text-[9px] flex items-center justify-center font-bold">1</span>
-</div>
-<div class="flex flex-col items-center text-center">
-<span class="font-label text-xs font-bold text-on-surface">Isabella</span>
-<span class="font-mono text-[11px] text-on-surface-variant">소문 발원 (+0%)</span>
-</div>
-</div>
-<!-- Edge 1 -> 2 -->
-<div class="flex-1 flex flex-col items-center px-2">
-<span class="font-mono text-[11px] text-on-surface-variant font-medium mb-1">장부 미공개 의혹</span>
-<div class="w-full h-1 bg-slate-200 rounded-full relative">
-<div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
-</div>
-<span class="font-mono text-[11px] text-primary font-bold mt-1">왜곡 +18%</span>
-</div>
-<!-- Node 2: Klaus -->
-<div class="flex flex-col items-center gap-2 z-10">
-<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center shadow-sm relative">
-<span class="font-mono font-bold text-slate-700 text-sm">KM</span>
-<span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[9px] flex items-center justify-center font-bold">2</span>
-</div>
-<div class="flex flex-col items-center text-center">
-<span class="font-label text-xs font-bold text-on-surface">Klaus</span>
-<span class="font-mono text-[11px] text-slate-700 font-semibold">2차 가공 (+18%)</span>
-</div>
-</div>
-<!-- Edge 2 -> 3 -->
-<div class="flex-1 flex flex-col items-center px-2">
-<span class="font-mono text-[11px] text-rose-700 font-medium mb-1">공금 식대 유용 왜곡</span>
-<div class="w-full h-1 bg-rose-100 rounded-full relative">
-<div class="h-full bg-rose-600 rounded-full" style="width: 100%;"></div>
-</div>
-<span class="font-mono text-[11px] text-rose-700 font-bold mt-1">왜곡 +46%</span>
-</div>
-<!-- Node 3: Tom -->
-<div class="flex flex-col items-center gap-2 z-10">
-<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-rose-300 flex items-center justify-center shadow-sm relative">
-<span class="font-mono font-bold text-rose-700 text-sm">TM</span>
-<span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-700 text-white text-[9px] flex items-center justify-center font-bold">3</span>
-</div>
-<div class="flex flex-col items-center text-center">
-<span class="font-label text-xs font-bold text-on-surface">Tom</span>
-<span class="font-mono text-[11px] text-rose-700 font-bold">극단 증폭 (64%)</span>
-</div>
-</div>
-<!-- Edge 3 -> 4 (Interrupted by Verification) -->
-<div class="flex-1 flex flex-col items-center px-2">
-<span class="font-mono text-[11px] text-emerald-800 font-bold mb-1">방어 기제 작동 (검증)</span>
-<div class="w-full h-1 bg-emerald-100 rounded-full relative flex items-center justify-center">
-<span class="w-3 h-3 rounded-full bg-emerald-600"></span>
-</div>
-<span class="font-mono text-[11px] text-emerald-800 font-bold mt-1">확산 차단 시도</span>
-</div>
-<!-- Node 4: Latoya -->
-<div class="flex flex-col items-center gap-2 z-10">
-<div class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center shadow-md relative">
-<span class="font-mono font-bold text-sm">LW</span>
-<span class="material-symbols-outlined text-[14px] absolute -bottom-1 -right-1 bg-surface-container-lowest text-emerald-700 rounded-full p-0.5 border border-emerald-300">verified</span>
-</div>
-<div class="flex flex-col items-center text-center">
-<span class="font-label text-xs font-bold text-on-surface">Latoya</span>
-<span class="font-mono text-[11px] text-emerald-800 font-bold">팩트체커 (방어선)</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-</div>
-<script>
-  /**
-   * EchoChamber Alexandria Standalone Interactive Engine
-   * 서버 없이 브라우저에서 100% 동작하는 모의 시뮬레이션 엔진
-   */
-  document.addEventListener('DOMContentLoaded', () => {
-    // 토스트 알림 함수
-    function showToast(msg, type = 'info') {
-      let toastContainer = document.getElementById('toast-container');
-      if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        toastContainer.className = 'fixed bottom-5 right-5 z-[300] flex flex-col gap-2 pointer-events-none';
-        document.body.appendChild(toastContainer);
-      }
-      const toast = document.createElement('div');
-      const borderCol = type === 'error' ? 'border-error text-error bg-red-50' : type === 'success' ? 'border-emerald-500 text-emerald-800 bg-emerald-50' : 'border-primary text-primary bg-blue-50';
-      toast.className = `px-4 py-3 rounded-lg border ${borderCol} shadow-xl font-label text-[13px] font-semibold pointer-events-auto flex items-center gap-2 animate-bounce`;
-      toast.innerHTML = `<span class="material-symbols-outlined text-[18px]">info</span> <span>${msg}</span>`;
-      toastContainer.appendChild(toast);
-      setTimeout(() => toast.remove(), 3500);
-    }
+                <button
+                  class="py-2 px-space-sm rounded-lg font-label text-xs text-on-surface-variant hover:text-on-surface text-center transition-all"
+                  type="button">
+                  AI 자율 의제 생성
+                </button>
+              </div>
+              <!-- Topic Prompt Input -->
+              <div class="flex flex-col gap-1.5">
+                <label
+                  class="font-label text-xs text-on-surface-variant font-semibold flex items-center justify-between">
+                  <span>주입 가십 / 소문 시드</span>
+                  <span class="font-mono text-mono-code text-primary font-semibold">강도 Level 3</span>
+                </label>
+                <textarea
+                  class="w-full p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/60 text-on-surface font-body text-sm focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-all resize-none"
+                  rows="3">Sam이 선거에서 이기려고 마을 회관 리모델링 자금을 사적으로 유용했다는 헛소문</textarea>
+              </div>
+              <!-- Source & Target Agent Selectors -->
+              <div class="grid grid-cols-1 gap-space-sm">
+                <div class="flex flex-col gap-1">
+                  <span class="font-label text-xs text-on-surface-variant font-semibold">최초 발신자 (Source Agent)</span>
+                  <div
+                    class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
+                    <div class="flex items-center gap-space-sm">
+                      <div
+                        class="w-7 h-7 rounded-full bg-primary text-on-primary font-mono text-[10px] flex items-center justify-center font-bold">
+                        IR</div>
+                      <div class="flex flex-col">
+                        <span class="font-label text-xs font-bold text-on-surface">Isabella Rodriguez</span>
+                        <span class="font-mono text-mono-code text-on-surface-variant">카페 주인 • 외향적 정보 발신형</span>
+                      </div>
+                    </div>
+                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <span class="font-label text-xs text-on-surface-variant font-semibold">최초 청취 대상 (Target Agent)</span>
+                  <div
+                    class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
+                    <div class="flex items-center gap-space-sm">
+                      <div
+                        class="w-7 h-7 rounded-full bg-slate-700 text-white font-mono text-[10px] flex items-center justify-center font-bold">
+                        KM</div>
+                      <div class="flex flex-col">
+                        <span class="font-label text-xs font-bold text-on-surface">Klaus Mueller</span>
+                        <span class="font-mono text-mono-code text-on-surface-variant">도서관 연구원 • 2차 전파형</span>
+                      </div>
+                    </div>
+                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Sliders: Max Steps & Distortion Rate -->
+              <div class="flex flex-col gap-space-sm pt-space-xs">
+                <div class="flex flex-col gap-1">
+                  <div class="flex justify-between items-center">
+                    <span class="font-label text-xs font-semibold text-on-surface">실행 단계 수 (Max Steps)</span>
+                    <span class="font-mono text-mono-metric font-bold text-primary">5 단계</span>
+                  </div>
+                  <input class="w-full accent-primary cursor-pointer h-1.5 bg-surface-container-high rounded-lg"
+                    max="10" min="1" type="range" value="5" />
+                </div>
+                <div class="flex flex-col gap-1">
+                  <div class="flex justify-between items-center">
+                    <span class="font-label text-xs font-semibold text-on-surface">소문 왜곡 유도 강도 (Distortion Rate)</span>
+                    <span class="font-mono text-mono-metric font-bold text-rose-600">35% (중간)</span>
+                  </div>
+                  <input class="w-full accent-primary cursor-pointer h-1.5 bg-surface-container-high rounded-lg"
+                    max="100" min="0" type="range" value="35" />
+                </div>
+              </div>
+              <!-- Trigger Run CTA Button -->
+              <button
+                class="w-full mt-space-xs py-3 rounded-lg bg-primary text-on-primary font-label text-sm font-bold shadow hover:bg-primary/95 transition-all flex items-center justify-center gap-space-xs">
+                <span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+                <span>시뮬레이션 시작 / 재실행</span>
+              </button>
+            </div>
+            <!-- Card 2: Participating Agent Cohort -->
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-space-xs">
+                  <span class="w-2 h-2 rounded-full bg-primary"></span>
+                  <span
+                    class="font-mono text-mono-code uppercase font-semibold text-on-surface-variant tracking-wider">COHORT
+                    POOL</span>
+                </div>
+                <span
+                  class="font-mono text-mono-code text-on-surface font-semibold bg-surface-container-high border border-outline-variant/40 px-2 py-0.5 rounded-full">6명
+                  활성 중</span>
+              </div>
+              <h3 class="font-headline text-lg text-on-surface font-bold">마을 참여 에이전트</h3>
+              <!-- Agent Rosters with Role Tags & Activity Bars -->
+              <div class="flex flex-col gap-space-sm">
+                <!-- Isabella -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-space-sm">
+                      <img class="w-8 h-8 rounded-full object-cover border border-outline-variant"
+                        data-alt="Warm photographic studio portrait of Isabella, a 30-year-old Hispanic female cafe owner with thoughtful observant expression and friendly style against soft warm background"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4w30UJYx4gdc6fNIK94_OpLoCZJCIBCgA9QCS2pQfZS02bS6nX3w8O3ZmNPaD1f7x4-wtuloMXZvQswejcIr9B2EyjsXBADDcXeYQJVYKH7mmO2wz9C9GKTXryxd26NfDmgu_tXECw21yDmEWC-Ntklab-aZICfX7CEyI_jz_1j5gNTEj4Uuiwh9t1BYYTcTnhu8Hcvll5mangfzKF2UvNReQ3uR1F7ZEjFTFWjM31I56IC5uGK5u" />
+                      <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                          <span class="font-label text-xs font-bold text-on-surface">Isabella Rodriguez</span>
+                          <span
+                            class="px-1.5 py-0.2 rounded bg-primary-fixed text-primary font-mono text-[10px] font-bold border border-primary/20">발신원</span>
+                        </div>
+                        <span class="font-body text-[12px] text-on-surface-variant">카페 주인 • 사교 네트워크 허브</span>
+                      </div>
+                    </div>
+                    <span class="font-mono text-mono-code text-emerald-700 font-bold">98% 신뢰</span>
+                  </div>
+                  <!-- Activity Progress Micro-bar -->
+                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
+                  </div>
+                </div>
+                <!-- Klaus -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-space-sm">
+                      <img class="w-8 h-8 rounded-full object-cover border border-outline-variant"
+                        data-alt="Photographic portrait of Klaus Mueller, a 42-year-old intellectual German researcher with round wire-rimmed glasses in archival library background"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcxcJxH0cWJ5XU0gz5q2P6oeYzonUYHenCniIcVYseab5hsdoLN2pYqx-oucZ0oayfVWgjlkBKqvfOvRli67tJ8GjRFa5Dg1mJZy1M6KsTOGo3DXa8SS373KE0kA4wCnc7SIB1m0hnSsJAukEvGZTKD7HwY4RZeuyVC0Um7MDHt01i4ii7rNfnVS97UDXbsNNJklRoLHEN4-dWiWKBwkwW7iDOfwIPlGMCpA3ocbhlwrHTdw5gyHms" />
+                      <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                          <span class="font-label text-xs font-bold text-on-surface">Klaus Mueller</span>
+                          <span
+                            class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-mono text-[10px] font-bold">전파자</span>
+                        </div>
+                        <span class="font-body text-[12px] text-on-surface-variant">도서관 연구원 • 가공 정보 전달</span>
+                      </div>
+                    </div>
+                    <span class="font-mono text-mono-code text-slate-700 font-bold">72% 관여</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-slate-600 h-full rounded-full" style="width: 65%;"></div>
+                  </div>
+                </div>
+                <!-- Tom -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-space-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-bold font-mono text-mono-code">
+                        TM</div>
+                      <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                          <span class="font-label text-xs font-bold text-on-surface">Tom Moreno</span>
+                          <span
+                            class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 border border-rose-200 font-mono text-[10px] font-bold">확산/왜곡</span>
+                        </div>
+                        <span class="font-body text-[12px] text-on-surface-variant">청년회 간사 • 감정적 증폭자</span>
+                      </div>
+                    </div>
+                    <span class="font-mono text-mono-code text-rose-700 font-bold">64% 왜곡률</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-rose-500 h-full rounded-full" style="width: 92%;"></div>
+                  </div>
+                </div>
+                <!-- Sam (Target) -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-space-sm">
+                      <img class="w-8 h-8 rounded-full object-cover border border-outline-variant"
+                        data-alt="Portrait photo of Sam Moore, a 48-year-old mayoral candidate with tired earnest expression, neat attire against classic town hall background"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4faXmxcfW-OyTyOk3PivWZiiJu0ADAjdE4QZ9IUXBpCwozGbFYapIoOcEQrD-k39528TihlZdGPe0V_MvNOAA5mWR-54zCzY4eXT9Y_tHRPbDfjv8RVpogBzv4ivwgC1JAMrNtUu0LrQD4Bw17EIuiKyZCsuGCh_irVNNFjTqlxL2KjsDkX61h1LdOdhElopGcGROHp60Y6-tc3_9xcjJA1qWO_m2S-hF-rAAUcJQ4NQ8tCzi8yKa" />
+                      <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                          <span class="font-label text-xs font-bold text-on-surface">Sam Moore</span>
+                          <span
+                            class="px-1.5 py-0.2 rounded bg-outline-variant text-on-surface-variant font-mono text-[10px] font-bold">표적
+                            대상</span>
+                        </div>
+                        <span class="font-body text-[12px] text-on-surface-variant">전직 교장 • 마을 시장 후보</span>
+                      </div>
+                    </div>
+                    <span class="font-mono text-mono-code text-rose-700 font-bold">-0.38 급락</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-rose-600 h-full rounded-full" style="width: 28%;"></div>
+                  </div>
+                </div>
+                <!-- Latoya -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-space-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center font-bold font-mono text-mono-code">
+                        LW</div>
+                      <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                          <span class="font-label text-xs font-bold text-on-surface">Latoya Williams</span>
+                          <span
+                            class="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] font-bold">팩트체크형</span>
+                        </div>
+                        <span class="font-body text-[12px] text-on-surface-variant">지역 기자 • 출처 검증 지향</span>
+                      </div>
+                    </div>
+                    <span class="font-mono text-mono-code text-emerald-700 font-bold">검증 활성</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-600 h-full rounded-full" style="width: 45%;"></div>
+                  </div>
+                </div>
+                <!-- Abigail -->
+                <div
+                  class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/50 flex items-center justify-between">
+                  <div class="flex items-center gap-space-sm">
+                    <div
+                      class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold font-mono text-mono-code">
+                      AC</div>
+                    <div class="flex flex-col">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-label text-xs font-bold text-on-surface">Abigail Chen</span>
+                        <span
+                          class="px-1.5 py-0.2 rounded bg-surface-container-highest text-on-surface-variant font-mono text-[10px]">중립
+                          청자</span>
+                      </div>
+                      <span class="font-body text-[12px] text-on-surface-variant">음악 강사 • 관조적 수용자</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-mono-code text-on-surface-variant">대기</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- RIGHT COLUMN: Step Dialogue Timeline & Realtime Deep Analysis (8 cols in 12-grid) -->
+          <div class="lg:col-span-8 flex flex-col gap-space-lg">
+            <!-- Top Step Pipeline Indicator & Aggregated Health Bar -->
+            <div
+              class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-space-xs">
+                  <span class="material-symbols-outlined text-primary text-[20px]">account_tree</span>
+                  <span class="font-headline text-base font-bold text-on-surface">실시간 확산 파이프라인 진행도</span>
+                </div>
+                <div class="flex items-center gap-space-xs font-mono text-mono-code">
+                  <span class="text-on-surface-variant">총 소요:</span>
+                  <span class="font-bold text-on-surface">1분 42초</span>
+                </div>
+              </div>
+              <!-- Horizontal Step Breadcrumbs -->
+              <div class="grid grid-cols-5 gap-space-xs text-center">
+                <!-- Step 1 -->
+                <div class="flex flex-col gap-1 items-center">
+                  <div
+                    class="w-full py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[14px]">check</span>STEP 01
+                  </div>
+                  <span class="font-label text-[11px] text-on-surface-variant">발화 생성 (완료)</span>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex flex-col gap-1 items-center">
+                  <div
+                    class="w-full py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[14px]">check</span>STEP 02
+                  </div>
+                  <span class="font-label text-[11px] text-on-surface-variant">1차 전파 (완료)</span>
+                </div>
+                <!-- Step 3 (Active) -->
+                <div class="flex flex-col gap-1 items-center">
+                  <div
+                    class="w-full py-1.5 rounded-lg bg-primary text-on-primary font-mono text-mono-code font-bold flex items-center justify-center gap-1 shadow-md">
+                    <span class="w-2 h-2 rounded-full bg-surface-container-lowest animate-ping"></span>STEP 03
+                  </div>
+                  <span class="font-label text-[11px] text-primary font-bold">2차 증폭 (일시정지)</span>
+                </div>
+                <!-- Step 4 -->
+                <div class="flex flex-col gap-1 items-center opacity-45">
+                  <div
+                    class="w-full py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-mono text-mono-code border border-outline-variant/40">
+                    STEP 04
+                  </div>
+                  <span class="font-label text-[11px] text-on-surface-variant">팩트체크 대질</span>
+                </div>
+                <!-- Step 5 -->
+                <div class="flex flex-col gap-1 items-center opacity-45">
+                  <div
+                    class="w-full py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-mono text-mono-code border border-outline-variant/40">
+                    STEP 05
+                  </div>
+                  <span class="font-label text-[11px] text-on-surface-variant">평판 수렴/고착</span>
+                </div>
+              </div>
+              <!-- Metric Badges Row -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-xs">
+                <div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
+                  <span class="font-label text-[11px] text-on-surface-variant">누적 대화량</span>
+                  <span class="font-mono text-mono-metric font-bold text-on-surface">3 회 완료</span>
+                </div>
+                <div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
+                  <span class="font-label text-[11px] text-on-surface-variant">신규 기억 생성</span>
+                  <span class="font-mono text-mono-metric font-bold text-primary">4 개 노드</span>
+                </div>
+                <div class="bg-rose-50 border border-rose-200 p-2.5 rounded-lg flex flex-col">
+                  <span class="font-label text-[11px] text-rose-700 font-semibold">누적 소문 왜곡률</span>
+                  <span class="font-mono text-mono-metric font-bold text-rose-700">42% (주의 레벨)</span>
+                </div>
+                <div class="bg-surface-container-low border border-outline-variant/50 p-2.5 rounded-lg flex flex-col">
+                  <span class="font-label text-[11px] text-on-surface-variant">Sam 평판 변동</span>
+                  <span class="font-mono text-mono-metric font-bold text-primary">-0.38 p</span>
+                </div>
+              </div>
+            </div>
+            <!-- TIMELINE LIST CONTAINER -->
+            <div class="flex flex-col gap-space-md">
+              <!-- =================== STEP 01 CARD =================== -->
+              <div
+                class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
+                <!-- Step Header Meta -->
+                <div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
+                  <div class="flex items-center gap-space-sm">
+                    <span
+                      class="px-2.5 py-1 rounded-md bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">STEP
+                      01</span>
+                    <span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">schedule</span>09:15 AM
+                    </span>
+                    <span class="text-outline-variant">•</span>
+                    <span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">storefront</span>홉스 카페 테라스
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-space-xs">
+                    <button
+                      class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">data_object</span>JSON 노드
+                    </button>
+                    <button
+                      class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">visibility</span>기억 세부 보기
+                    </button>
+                  </div>
+                </div>
+                <!-- Interaction Pathway: Isabella -> Klaus -->
+                <div class="flex items-center gap-space-sm text-on-surface">
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-mono text-[10px]">IR</span>
+                    <span>Isabella</span>
+                  </div>
+                  <span class="material-symbols-outlined text-[18px] text-primary font-bold">arrow_forward</span>
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center font-mono text-[10px]">KM</span>
+                    <span>Klaus</span>
+                  </div>
+                  <span class="text-on-surface-variant font-mono text-[12px] ml-auto">사적 담소 발화</span>
+                </div>
+                <!-- Dialogue Bubble -->
+                <div
+                  class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/50 flex flex-col gap-2">
+                  <p class="font-headline text-sm md:text-base text-on-surface font-medium leading-relaxed">
+                    “Klaus, 혹시 들었어? Sam이 이번 마을 회관 리모델링 예산 회계 장부를 안 보여주려고 한대. 선거 자금으로 쓰려는 거 아닐까?”
+                  </p>
+                </div>
+                <!-- Analytical Metadata Badges -->
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <span
+                    class="px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-label text-xs font-semibold flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    판정: 가십 추측 (Speculation)
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-mono-code font-bold">
+                    발화 신뢰도: 0.88 (높음)
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px] text-primary">memory</span>
+                    Klaus 기억함에 [Sam 선거 자금 유용 의혹] 생성 (1개)
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">
+                    Sam 평판 -0.05
+                  </span>
+                </div>
+              </div>
+              <!-- =================== STEP 02 CARD =================== -->
+              <div
+                class="bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
+                <!-- Step Header Meta -->
+                <div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
+                  <div class="flex items-center gap-space-sm">
+                    <span
+                      class="px-2.5 py-1 rounded-md bg-primary-fixed text-primary border border-primary/20 font-mono text-mono-code font-bold">STEP
+                      02</span>
+                    <span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">schedule</span>09:42 AM
+                    </span>
+                    <span class="text-outline-variant">•</span>
+                    <span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">menu_book</span>도서관 앞 벤치
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-space-xs">
+                    <button
+                      class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">data_object</span>JSON 노드
+                    </button>
+                    <button
+                      class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs transition-all border border-outline-variant/40 flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">visibility</span>기억 세부 보기
+                    </button>
+                  </div>
+                </div>
+                <!-- Interaction Pathway: Klaus -> Tom -->
+                <div class="flex items-center gap-space-sm text-on-surface">
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center font-mono text-[10px]">KM</span>
+                    <span>Klaus</span>
+                  </div>
+                  <span class="material-symbols-outlined text-[18px] text-primary font-bold">arrow_forward</span>
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-mono text-[10px]">TM</span>
+                    <span>Tom</span>
+                  </div>
+                  <span class="text-rose-700 font-mono text-[12px] ml-auto font-semibold">1차 왜곡 변형 전달</span>
+                </div>
+                <!-- Dialogue Bubble -->
+                <div
+                  class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/50 flex flex-col gap-2">
+                  <p class="font-headline text-sm md:text-base text-on-surface font-medium leading-relaxed">
+                    “Tom, Isabella한테 들었는데 Sam이 회관 공금으로 자기 선거 운동원들 밥을 샀다더라. 완전 불법 아니야?”
+                  </p>
+                </div>
+                <!-- Semantic Diff / Distortion Analysis Box -->
+                <div class="bg-rose-50/70 border border-rose-200 p-space-md rounded-xl flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-label text-xs font-bold text-rose-900 flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[16px] text-rose-700">change_circle</span>
+                      의미 왜곡(Semantic Distortion) Diff 비교
+                    </span>
+                    <span
+                      class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200 font-mono text-mono-code font-bold">
+                      왜곡율 64% 급증
+                    </span>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm text-body-sm pt-1">
+                    <div
+                      class="p-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/50 flex flex-col">
+                      <span class="font-mono text-[11px] text-on-surface-variant mb-1">원문 (STEP 01 의혹 단계)</span>
+                      <span class="text-on-surface line-through decoration-rose-600 decoration-2">“장부를 안 보여주려 함
+                        (추측)”</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-surface-container-lowest border border-rose-200 flex flex-col">
+                      <span class="font-mono text-[11px] text-rose-700 font-bold mb-1">변형 (STEP 02 기정사실화)</span>
+                      <span class="text-rose-700 font-semibold">“공금으로 운동원 밥을 삼 (불법 왜곡 단정!)”</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Analytical Metadata Badges -->
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <span
+                    class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200 font-label text-xs font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">warning</span>
+                    왜곡 감지 64% (과장 및 허위 단정)
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code font-medium">
+                    신뢰도 하락: 0.88 → 0.65
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant/40 font-mono text-mono-code">
+                    Tom 기억함에 [Sam 공금 횡령 확정] 각인 (2개)
+                  </span>
+                  <span
+                    class="px-3 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 font-mono text-mono-code font-bold">
+                    Sam 평판 -0.22 급락
+                  </span>
+                </div>
+              </div>
+              <!-- =================== STEP 03 CARD (ACTIVE / PAUSED) =================== -->
+              <div
+                class="bg-surface-container-lowest rounded-xl p-space-lg border-2 border-primary/40 shadow-md flex flex-col gap-space-md">
+                <!-- Step Header Meta -->
+                <div class="flex items-center justify-between flex-wrap gap-2 pb-space-xs">
+                  <div class="flex items-center gap-space-sm">
+                    <span
+                      class="px-2.5 py-1 rounded-md bg-primary text-on-primary font-mono text-mono-code font-bold flex items-center gap-1 shadow-sm">
+                      <span class="w-2 h-2 rounded-full bg-surface-container-lowest animate-pulse"></span>
+                      STEP 03 (현재 진행)
+                    </span>
+                    <span class="font-mono text-mono-code text-on-surface-variant flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">schedule</span>10:10 AM
+                    </span>
+                    <span class="text-outline-variant">•</span>
+                    <span class="font-mono text-mono-code text-on-surface flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[15px]">replace_video</span>마을 광장 분수대
+                    </span>
+                  </div>
+                  <span
+                    class="px-2.5 py-1 rounded-full bg-surface-container-high text-primary border border-outline-variant/50 font-mono text-mono-code font-bold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">pause_circle</span>실행 일시정지됨
+                  </span>
+                </div>
+                <!-- Interaction Pathway: Tom -> Latoya & Abigail -->
+                <div class="flex items-center gap-space-sm text-on-surface flex-wrap">
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 border border-rose-300 flex items-center justify-center font-mono text-[10px]">TM</span>
+                    <span>Tom</span>
+                  </div>
+                  <span class="material-symbols-outlined text-[18px] text-rose-600 font-bold">arrow_forward</span>
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center font-mono text-[10px]">LW</span>
+                    <span>Latoya</span>
+                  </div>
+                  <span class="text-on-surface-variant">&amp;</span>
+                  <div class="flex items-center gap-1.5 font-label text-xs font-bold">
+                    <span
+                      class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-mono text-[10px]">AC</span>
+                    <span>Abigail</span>
+                  </div>
+                  <span
+                    class="text-rose-700 font-mono text-[12px] ml-auto font-bold bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">극단적
+                    확산 발화</span>
+                </div>
+                <!-- Dialogue Bubble with Warning Aura -->
+                <div
+                  class="bg-surface-container-low rounded-xl p-space-md border border-rose-200/80 flex flex-col gap-2">
+                  <p class="font-headline text-base md:text-lg text-on-surface font-bold leading-relaxed">
+                    “다들 Sam 찍지 마! Sam이 선거 조작하려고 마을 예산 전부 털어먹었대!”
+                  </p>
+                </div>
+                <!-- Real-time AI Cognitive Reflection & Risk Card -->
+                <div
+                  class="bg-slate-50 border border-outline-variant/70 rounded-xl p-space-md flex flex-col gap-space-sm">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                      <span class="material-symbols-outlined text-primary text-[20px]">psychology</span>
+                      <span class="font-headline text-sm md:text-base font-bold text-on-surface">실시간 AI 인지 분석 및 청자
+                        반추(Reflection)</span>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-rose-700 text-white font-mono text-mono-code font-bold">
+                      위험: 비방 의도 94%
+                    </span>
+                  </div>
+                  <!-- Deep Evidence Text -->
+                  <p class="font-body text-xs md:text-sm text-on-surface leading-normal">
+                    <strong class="font-semibold text-primary font-headline">AI 모델 판정 근거:</strong> 제3자 진술(Klaus)을 2차
+                    인용하며 '선거 조작', '전부 털어먹음'이라는 극단적 과장 어휘를 사용함. 진실 계수(0.12) 대비 과장 왜곡 배율이 4.8배에 도달하여 네트워크 감염 위험군으로 분류됩니다.
+                  </p>
+                  <!-- Latoya Fact-check Cognitive Reaction -->
+                  <div
+                    class="bg-surface-container-lowest border border-outline-variant/60 p-space-sm rounded-lg flex items-start gap-space-sm">
+                    <span class="material-symbols-outlined text-emerald-700 text-[20px] mt-0.5">verified_user</span>
+                    <div class="flex flex-col">
+                      <span class="font-label text-xs font-bold text-on-surface">Latoya의 반추(Cognitive Reaction):</span>
+                      <span class="font-body text-xs text-on-surface-variant leading-relaxed">
+                        “Tom의 발언이 감정적이며 원 출처가 불분명함을 인지함. Sam과의 대질 전까지 정보 수용을 유보하고, 도서관 회계 장부 열람 및 사실 확인 계획을 수립함.”
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Active Intervention Actions Trigger Bar -->
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-space-xs">
+                    <div class="flex items-center gap-space-xs">
+                      <button
+                        class="px-space-md py-2 rounded-lg bg-emerald-700 text-white font-label text-xs font-bold shadow hover:bg-emerald-800 transition-all flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px]">verified</span>
+                        <span>팩트체크 개입(Intervention) 주입</span>
+                      </button>
+                      <button
+                        class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label text-xs font-semibold border border-outline-variant/60 hover:bg-surface-container-high transition-all">
+                        발화 재작성 (Prompt Retune)
+                      </button>
+                    </div>
+                    <button
+                      class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-bold shadow hover:bg-primary/90 transition-all flex items-center gap-1.5">
+                      <span>시뮬레이션 스텝 승인 후 다음 단계로</span>
+                      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Bottom Floating & Visual Flowchart Section -->
+        <section
+          class="mt-space-lg bg-surface-container-lowest rounded-xl p-space-lg border border-outline-variant/60 shadow-sm flex flex-col gap-space-md">
+          <div class="flex items-center justify-between flex-wrap gap-space-md">
+            <div class="flex items-center gap-space-sm">
+              <div
+                class="w-8 h-8 rounded-lg bg-primary-fixed text-primary border border-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[20px]">hub</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-headline text-base font-bold text-on-surface">실시간 전파 다이어그램 &amp; 누적 영향 요약</span>
+                <span class="font-body text-xs text-on-surface-variant">소문이 네트워크 노드를 건너가며 왜곡 증폭 및 저항을 겪는 구조도입니다.</span>
+              </div>
+            </div>
+            <!-- Action Utilities -->
+            <div class="flex items-center gap-space-xs">
+              <button
+                class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label text-xs font-semibold border border-outline-variant/50 transition-all flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                <span>타임라인 로그 CSV/JSON 내보내기</span>
+              </button>
+              <button
+                class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label text-xs font-bold hover:bg-primary/95 shadow transition-all flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[18px]">send</span>
+                <span>리포트로 분석 전송</span>
+              </button>
+            </div>
+          </div>
+          <!-- Interactive Node Flow Vector Diagram -->
+          <div class="p-space-md bg-surface-container-low rounded-xl border border-outline-variant/50 overflow-x-auto">
+            <div class="flex items-center justify-between min-w-[720px] py-space-sm px-space-md relative">
+              <!-- Node 1: Isabella -->
+              <div class="flex flex-col items-center gap-2 z-10">
+                <div
+                  class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center shadow-sm relative">
+                  <span class="font-mono font-bold text-primary text-sm">IR</span>
+                  <span
+                    class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-fixed text-primary border border-primary/20 text-[9px] flex items-center justify-center font-bold">1</span>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                  <span class="font-label text-xs font-bold text-on-surface">Isabella</span>
+                  <span class="font-mono text-[11px] text-on-surface-variant">소문 발원 (+0%)</span>
+                </div>
+              </div>
+              <!-- Edge 1 -> 2 -->
+              <div class="flex-1 flex flex-col items-center px-2">
+                <span class="font-mono text-[11px] text-on-surface-variant font-medium mb-1">장부 미공개 의혹</span>
+                <div class="w-full h-1 bg-slate-200 rounded-full relative">
+                  <div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
+                </div>
+                <span class="font-mono text-[11px] text-primary font-bold mt-1">왜곡 +18%</span>
+              </div>
+              <!-- Node 2: Klaus -->
+              <div class="flex flex-col items-center gap-2 z-10">
+                <div
+                  class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center shadow-sm relative">
+                  <span class="font-mono font-bold text-slate-700 text-sm">KM</span>
+                  <span
+                    class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[9px] flex items-center justify-center font-bold">2</span>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                  <span class="font-label text-xs font-bold text-on-surface">Klaus</span>
+                  <span class="font-mono text-[11px] text-slate-700 font-semibold">2차 가공 (+18%)</span>
+                </div>
+              </div>
+              <!-- Edge 2 -> 3 -->
+              <div class="flex-1 flex flex-col items-center px-2">
+                <span class="font-mono text-[11px] text-rose-700 font-medium mb-1">공금 식대 유용 왜곡</span>
+                <div class="w-full h-1 bg-rose-100 rounded-full relative">
+                  <div class="h-full bg-rose-600 rounded-full" style="width: 100%;"></div>
+                </div>
+                <span class="font-mono text-[11px] text-rose-700 font-bold mt-1">왜곡 +46%</span>
+              </div>
+              <!-- Node 3: Tom -->
+              <div class="flex flex-col items-center gap-2 z-10">
+                <div
+                  class="w-12 h-12 rounded-full bg-surface-container-lowest border border-rose-300 flex items-center justify-center shadow-sm relative">
+                  <span class="font-mono font-bold text-rose-700 text-sm">TM</span>
+                  <span
+                    class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-700 text-white text-[9px] flex items-center justify-center font-bold">3</span>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                  <span class="font-label text-xs font-bold text-on-surface">Tom</span>
+                  <span class="font-mono text-[11px] text-rose-700 font-bold">극단 증폭 (64%)</span>
+                </div>
+              </div>
+              <!-- Edge 3 -> 4 (Interrupted by Verification) -->
+              <div class="flex-1 flex flex-col items-center px-2">
+                <span class="font-mono text-[11px] text-emerald-800 font-bold mb-1">방어 기제 작동 (검증)</span>
+                <div class="w-full h-1 bg-emerald-100 rounded-full relative flex items-center justify-center">
+                  <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
+                </div>
+                <span class="font-mono text-[11px] text-emerald-800 font-bold mt-1">확산 차단 시도</span>
+              </div>
+              <!-- Node 4: Latoya -->
+              <div class="flex flex-col items-center gap-2 z-10">
+                <div
+                  class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center shadow-md relative">
+                  <span class="font-mono font-bold text-sm">LW</span>
+                  <span
+                    class="material-symbols-outlined text-[14px] absolute -bottom-1 -right-1 bg-surface-container-lowest text-emerald-700 rounded-full p-0.5 border border-emerald-300">verified</span>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                  <span class="font-label text-xs font-bold text-on-surface">Latoya</span>
+                  <span class="font-mono text-[11px] text-emerald-800 font-bold">팩트체커 (방어선)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <script>
+        /**
+         * EchoChamber Alexandria Standalone Interactive Engine
+         * 서버 없이 브라우저에서 100% 동작하는 모의 시뮬레이션 엔진
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+          // 토스트 알림 함수
+          function showToast(msg, type = 'info') {
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+              toastContainer = document.createElement('div');
+              toastContainer.id = 'toast-container';
+              toastContainer.className = 'fixed bottom-5 right-5 z-[300] flex flex-col gap-2 pointer-events-none';
+              document.body.appendChild(toastContainer);
+            }
+            const toast = document.createElement('div');
+            const borderCol = type === 'error' ? 'border-error text-error bg-red-50' : type === 'success' ? 'border-emerald-500 text-emerald-800 bg-emerald-50' : 'border-primary text-primary bg-blue-50';
+            toast.className = `px-4 py-3 rounded-lg border ${borderCol} shadow-xl font-label text-[13px] font-semibold pointer-events-auto flex items-center gap-2 animate-bounce`;
+            toast.innerHTML = `<span class="material-symbols-outlined text-[18px]">info</span> <span>${msg}</span>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+          }
 
-    // 시뮬레이션 컨트롤
-    const btnPlay = document.getElementById('btn-play');
-    const btnPause = document.getElementById('btn-pause');
-    const btnStep = document.getElementById('btn-step');
-    const btnReset = document.getElementById('btn-reset');
+          // 시뮬레이션 컨트롤
+          const btnPlay = document.getElementById('btn-play');
+          const btnPause = document.getElementById('btn-pause');
+          const btnStep = document.getElementById('btn-step');
+          const btnReset = document.getElementById('btn-reset');
 
-    const stepsData = [
-      {
-        step: 1,
-        title: "Step 1: 최초 발화 (Isabella Rodriguez)",
-        speaker: "Isabella",
-        distortion: 0,
-        text: "“어제 Sam이 선거 자금을 마련하려고 장부를 안 보여줬다는 소문이 있던데, 진짜일까?”",
-        desc: "최초 의혹 제기 (추측성 발화 생성, 왜곡도 0%)",
-        activeNode: "node-isabella"
-      },
-      {
-        step: 2,
-        title: "Step 2: 2차 전달 및 주관 왜곡 (Klaus Mueller)",
-        speaker: "Klaus",
-        distortion: 18,
-        text: "“Isabella한테 들었는데, Sam이 마을 회관 공금으로 자기 선거 운동원들에게 밥을 샀대!”",
-        desc: "주관적 과장 및 살붙이기 (+18% 변형)",
-        activeNode: "node-klaus"
-      },
-      {
-        step: 3,
-        title: "Step 3: 극단 증폭 및 악의적 확산 (Tom Moreno)",
-        speaker: "Tom",
-        distortion: 64,
-        text: "“Sam이 주민들 세금인 공금을 횡령해서 비자금을 굴리고 있답니다! 당장 사퇴해야 합니다!”",
-        desc: "확증 편향 및 악의적 프레임 씌우기 (+64% 극단 왜곡)",
-        activeNode: "node-tom"
-      },
-      {
-        step: 4,
-        title: "Step 4: 팩트체크 및 방어선 가동 (Latoya Williams)",
-        speaker: "Latoya",
-        distortion: 12,
-        text: "“회계 감사 기록을 직접 확인해보니 전액 정상 집행 영수증이 증빙되어 있습니다. 허위 사실입니다.”",
-        desc: "공식 팩트체크 및 소문 확산 방어 기제 작동 (왜곡 억제)",
-        activeNode: "node-latoya"
-      }
-    ];
+          const stepsData = [
+            {
+              step: 1,
+              title: "Step 1: 최초 발화 (Isabella Rodriguez)",
+              speaker: "Isabella",
+              distortion: 0,
+              text: "“어제 Sam이 선거 자금을 마련하려고 장부를 안 보여줬다는 소문이 있던데, 진짜일까?”",
+              desc: "최초 의혹 제기 (추측성 발화 생성, 왜곡도 0%)",
+              activeNode: "node-isabella"
+            },
+            {
+              step: 2,
+              title: "Step 2: 2차 전달 및 주관 왜곡 (Klaus Mueller)",
+              speaker: "Klaus",
+              distortion: 18,
+              text: "“Isabella한테 들었는데, Sam이 마을 회관 공금으로 자기 선거 운동원들에게 밥을 샀대!”",
+              desc: "주관적 과장 및 살붙이기 (+18% 변형)",
+              activeNode: "node-klaus"
+            },
+            {
+              step: 3,
+              title: "Step 3: 극단 증폭 및 악의적 확산 (Tom Moreno)",
+              speaker: "Tom",
+              distortion: 64,
+              text: "“Sam이 주민들 세금인 공금을 횡령해서 비자금을 굴리고 있답니다! 당장 사퇴해야 합니다!”",
+              desc: "확증 편향 및 악의적 프레임 씌우기 (+64% 극단 왜곡)",
+              activeNode: "node-tom"
+            },
+            {
+              step: 4,
+              title: "Step 4: 팩트체크 및 방어선 가동 (Latoya Williams)",
+              speaker: "Latoya",
+              distortion: 12,
+              text: "“회계 감사 기록을 직접 확인해보니 전액 정상 집행 영수증이 증빙되어 있습니다. 허위 사실입니다.”",
+              desc: "공식 팩트체크 및 소문 확산 방어 기제 작동 (왜곡 억제)",
+              activeNode: "node-latoya"
+            }
+          ];
 
-    let currentStepIdx = 0;
-    let isPlaying = false;
-    let playInterval = null;
+          let currentStepIdx = 0;
+          let isPlaying = false;
+          let playInterval = null;
 
-    function renderStep(idx) {
-      if (idx < 0 || idx >= stepsData.length) return;
-      const data = stepsData[idx];
-      currentStepIdx = idx;
+          function renderStep(idx) {
+            if (idx < 0 || idx >= stepsData.length) return;
+            const data = stepsData[idx];
+            currentStepIdx = idx;
 
-      // 상단 상태 텍스트 갱신
-      const simStateText = document.querySelector('.font-label.text-sm.font-semibold.text-on-surface');
-      if (simStateText && simStateText.innerText.includes('STEP')) {
-        simStateText.innerText = `STEP ${data.step} / ${stepsData.length} 진행 중`;
-      }
+            // 상단 상태 텍스트 갱신
+            const simStateText = document.querySelector('.font-label.text-sm.font-semibold.text-on-surface');
+            if (simStateText && simStateText.innerText.includes('STEP')) {
+              simStateText.innerText = `STEP ${data.step} / ${stepsData.length} 진행 중`;
+            }
 
-      showToast(`[${data.step}단계] ${data.speaker}: ${data.desc}`, 'info');
-    }
+            showToast(`[${data.step}단계] ${data.speaker}: ${data.desc}`, 'info');
+          }
 
-    function playSimulation() {
-      if (isPlaying) return;
-      isPlaying = true;
-      if (btnPlay && btnPause) {
-        btnPlay.classList.replace('bg-primary', 'bg-surface-container-high');
-        btnPlay.classList.replace('text-on-primary', 'text-on-surface');
-        btnPause.classList.replace('bg-surface-container-lowest', 'bg-primary');
-        btnPause.classList.replace('text-on-surface', 'text-on-primary');
-      }
-      showToast('소문 전파 시뮬레이션이 자동 재생됩니다.', 'success');
+          function playSimulation() {
+            if (isPlaying) return;
+            isPlaying = true;
+            if (btnPlay && btnPause) {
+              btnPlay.classList.replace('bg-primary', 'bg-surface-container-high');
+              btnPlay.classList.replace('text-on-primary', 'text-on-surface');
+              btnPause.classList.replace('bg-surface-container-lowest', 'bg-primary');
+              btnPause.classList.replace('text-on-surface', 'text-on-primary');
+            }
+            showToast('소문 전파 시뮬레이션이 자동 재생됩니다.', 'success');
 
-      playInterval = setInterval(() => {
-        currentStepIdx = (currentStepIdx + 1) % stepsData.length;
-        renderStep(currentStepIdx);
-        if (currentStepIdx === stepsData.length - 1) {
-          pauseSimulation();
-          showToast('1회 시뮬레이션 전파 주기가 완료되었습니다!', 'success');
-        }
-      }, 2000);
-    }
+            playInterval = setInterval(() => {
+              currentStepIdx = (currentStepIdx + 1) % stepsData.length;
+              renderStep(currentStepIdx);
+              if (currentStepIdx === stepsData.length - 1) {
+                pauseSimulation();
+                showToast('1회 시뮬레이션 전파 주기가 완료되었습니다!', 'success');
+              }
+            }, 2000);
+          }
 
-    function pauseSimulation() {
-      isPlaying = false;
-      if (playInterval) clearInterval(playInterval);
-      if (btnPlay && btnPause) {
-        btnPause.classList.replace('bg-primary', 'bg-surface-container-lowest');
-        btnPause.classList.replace('text-on-primary', 'text-on-surface');
-        btnPlay.classList.replace('bg-surface-container-high', 'bg-primary');
-        btnPlay.classList.replace('text-on-surface', 'text-on-primary');
-      }
-    }
+          function pauseSimulation() {
+            isPlaying = false;
+            if (playInterval) clearInterval(playInterval);
+            if (btnPlay && btnPause) {
+              btnPause.classList.replace('bg-primary', 'bg-surface-container-lowest');
+              btnPause.classList.replace('text-on-primary', 'text-on-surface');
+              btnPlay.classList.replace('bg-surface-container-high', 'bg-primary');
+              btnPlay.classList.replace('text-on-surface', 'text-on-primary');
+            }
+          }
 
-    if (btnPlay) btnPlay.addEventListener('click', playSimulation);
-    if (btnPause) btnPause.addEventListener('click', pauseSimulation);
-    if (btnStep) {
-      btnStep.addEventListener('click', () => {
-        pauseSimulation();
-        currentStepIdx = (currentStepIdx + 1) % stepsData.length;
-        renderStep(currentStepIdx);
-      });
-    }
-    if (btnReset) {
-      btnReset.addEventListener('click', () => {
-        pauseSimulation();
-        currentStepIdx = 0;
-        renderStep(0);
-        showToast('시뮬레이션 상태가 초기화되었습니다.', 'info');
-      });
-    }
+          if (btnPlay) btnPlay.addEventListener('click', playSimulation);
+          if (btnPause) btnPause.addEventListener('click', pauseSimulation);
+          if (btnStep) {
+            btnStep.addEventListener('click', () => {
+              pauseSimulation();
+              currentStepIdx = (currentStepIdx + 1) % stepsData.length;
+              renderStep(currentStepIdx);
+            });
+          }
+          if (btnReset) {
+            btnReset.addEventListener('click', () => {
+              pauseSimulation();
+              currentStepIdx = 0;
+              renderStep(0);
+              showToast('시뮬레이션 상태가 초기화되었습니다.', 'info');
+            });
+          }
 
-    // 네비게이션 상대 경로 지원 (서버 유무 자동 분기)
-    const isFileProto = window.location.protocol === 'file:';
-    document.querySelectorAll('a[data-path], button').forEach(el => {
-      const text = el.innerText || '';
-      if (text.includes('마을 보기') || text.includes('가상 마을')) {
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.location.href = isFileProto ? '../code.html' : '/';
+          // 네비게이션 상대 경로 지원 (GitHub Pages, 로컬 파일 및 서버 프로토콜 동시 지원)
+          function getNavUrl(target) {
+            const isServer = (window.location.port === '8008') || (window.location.hostname === 'localhost' && window.location.port === '8008');
+            if (isServer) {
+              if (target === 'home') return '/';
+              if (target === 'real-lab') return '/real-lab';
+              if (target === 'education') return '/education';
+              return '/alexandria';
+            }
+            if (target === 'home') return '../../index.html';
+            if (target === 'real-lab') return '../code_01.html';
+            if (target === 'education') return '../code_02.html';
+            return './code.html';
+          }
+
+          document.querySelectorAll('a[data-path], button').forEach(el => {
+            const text = el.innerText || '';
+            if (text.includes('마을 보기') || text.includes('가상 마을') || text.includes('대시보드')) {
+              el.style.cursor = 'pointer';
+              el.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = getNavUrl('home');
+              });
+            } else if (text.includes('현실 댓글')) {
+              el.style.cursor = 'pointer';
+              el.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = getNavUrl('real-lab');
+              });
+            } else if (text.includes('학습') || text.includes('교육')) {
+              el.style.cursor = 'pointer';
+              el.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = getNavUrl('education');
+              });
+            }
+          });
         });
-      } else if (text.includes('현실 댓글')) {
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.location.href = isFileProto ? '../code_01.html' : '/real-lab';
-        });
-      } else if (text.includes('학습') || text.includes('교육')) {
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.location.href = isFileProto ? '../code_02.html' : '/education';
-        });
-      }
-    });
-  });
-</script></main></div></body></html>
+      </script>
+    </main>
+  </div>
+</body>
+
+</html>
