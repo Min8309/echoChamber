@@ -491,7 +491,11 @@ function SimulationLab() {
                     label="마을 에이전트"
                     value={displayAgents.length}
                     unit="명"
-                    note="서버에 저장된 에이전트"
+                    note={
+                      run?.source_data?.discussion
+                        ? "선택된 실험 참여 인물"
+                        : "서버에 저장된 에이전트"
+                    }
                   />
                   <Metric
                     label="전달 횟수"
@@ -586,7 +590,11 @@ function SimulationLab() {
                 </div>
                 <section className="panel network-panel restored-network">
                   <div className="section-heading">
-                    <h2>소문 확산 네트워크</h2>
+                    <h2>
+                      {run?.source_data?.discussion
+                        ? "자료 토론 관계망"
+                        : "소문 확산 네트워크"}
+                    </h2>
                     <span className="badge">
                       {run ? `${run.completed_steps} STEPS` : "READY"}
                     </span>
