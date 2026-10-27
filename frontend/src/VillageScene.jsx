@@ -220,6 +220,28 @@ export default function VillageScene({ agents, run, busy, names }) {
         </div>
         <span className="village-state">{status}</span>
       </div>
+      {run?.source_data && (
+        <div className="village-source">
+          <strong>
+            실제 {run.source_data.source === "review" ? "리뷰" : "댓글"}에서
+            시작 · {run.source_data.title}
+          </strong>
+          <p>원문: {run.source_data.text}</p>
+          {run.source_data.analysis ? (
+            <small>
+              실험 시작 당시 원문 AI 분석:{" "}
+              {run.source_data.analysis.is_gossip ? "가십" : "일반 내용"} · 감정{" "}
+              {run.source_data.analysis.sentiment} · 평판 영향{" "}
+              {run.source_data.analysis.reputation_impact}
+            </small>
+          ) : (
+            <small>
+              실험 시작 당시 원문 AI 의미 분석 없음 · 기초 수치로 비교할 수
+              있습니다.
+            </small>
+          )}
+        </div>
+      )}
       <div className="village-stage interactive-town">
         <canvas
           ref={canvas}

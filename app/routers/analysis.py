@@ -65,16 +65,7 @@ def analyze_messages():
 
     for message in messages:
         try:
-            analysis_request = (
-                DialogueAnalysisRequest(
-                    text=message.text,
-                    speaker_name=message.author_id,
-                )
-            )
-
-            analysis = analyze_dialogue(
-                analysis_request
-            )
+            analysis = analyze_dialogue(text=message.text, speaker_name=message.author_id)
 
             results.append(
                 {
@@ -104,6 +95,8 @@ def analyze_messages():
 
             success_count += 1
 
+        except HTTPException:
+            raise
         except Exception as error:
             results.append(
                 {

@@ -21,6 +21,9 @@ def connect():
     db.execute(
         "CREATE TABLE IF NOT EXISTS agents (id TEXT PRIMARY KEY, payload TEXT NOT NULL)"
     )
+    db.execute(
+        "CREATE TABLE IF NOT EXISTS run_access (run_id TEXT PRIMARY KEY REFERENCES runs(id) ON DELETE CASCADE, owner TEXT NOT NULL)"
+    )
     # Seed only once, including when all agents are intentionally removed later.
     db.execute("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY)")
     with db:
@@ -52,32 +55,52 @@ def list_agents():
         db.close()
 
 
-def save_run(run):
+def save_run(run, owner=None):
     db = connect()
     try:
         with db:
+            if run.get("source_data"):
+                from fastapi import HTTPException
+
+                db.execute("BEGIN IMMEDIATE")
+                source = run["source_data"]
+                if not db.execute(
+                    "SELECT 1 FROM datasets WHERE id = ? AND owner = ?",
+                    (source["dataset_id"], owner),
+                ).fetchone():
+                    raise HTTPException(
+                        404, "연결된 실제 데이터가 삭제돼 실험을 저장하지 않았습니다."
+                    )
             db.execute(
                 "INSERT INTO runs VALUES (?, ?, ?)",
                 (run["run_id"], run["created_at"], json.dumps(run, ensure_ascii=False)),
             )
+            if owner:
+                db.execute(
+                    "INSERT INTO run_access VALUES (?, ?)", (run["run_id"], owner)
+                )
     finally:
         db.close()
 
 
-def get_run(run_id):
+def get_run(run_id, owner=None):
     db = connect()
     try:
-        row = db.execute("SELECT payload FROM runs WHERE id = ?", (run_id,)).fetchone()
+        row = db.execute(
+            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE runs.id = ? AND (run_access.owner IS NULL OR run_access.owner = ?)",
+            (run_id, owner),
+        ).fetchone()
         return json.loads(row[0]) if row else None
     finally:
         db.close()
 
 
-def list_runs():
+def list_runs(owner=None):
     db = connect()
     try:
         rows = db.execute(
-            "SELECT payload FROM runs ORDER BY created_at DESC, id DESC LIMIT 100"
+            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE run_access.owner IS NULL OR run_access.owner = ? ORDER BY runs.created_at DESC, runs.id DESC LIMIT 100",
+            (owner,),
         )
         return [
             {

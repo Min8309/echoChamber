@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pathlib import Path
 from app.routers.workbench import router as workbench_router
+from app.routers.datasets import router as datasets_router
 
 from app.routers.reflections import router as reflections_router
 from app.routers.agents import router as agents_router
@@ -35,10 +36,11 @@ app = FastAPI(
 
 cors_origins = [value.strip() for value in os.getenv("CORS_ORIGINS", "").split(",") if value.strip()]
 if cors_origins:
-    app.add_middleware(CORSMiddleware, allow_origins=cors_origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"], expose_headers=["Retry-After"])
+    app.add_middleware(CORSMiddleware, allow_origins=cors_origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type", "X-Dataset-Key"], expose_headers=["Retry-After"])
 
 
 app.include_router(workbench_router)
+app.include_router(datasets_router)
 app.include_router(agents_router)
 app.include_router(memories_router)
 app.include_router(conversations_router)

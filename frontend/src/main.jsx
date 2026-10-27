@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 import VillageScene from "./VillageScene.jsx";
+import RealDataLab from "./RealDataLab.jsx";
+import { LinkedResults } from "./Comparison.jsx";
+import { dataHeaders } from "./dataApi.js";
 import {
   StatusBar,
   ErrorBanner,
@@ -12,7 +15,11 @@ import {
 async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, {
     ...options,
-    headers: { "Content-Type": "application/json", ...options.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...dataHeaders(),
+      ...options.headers,
+    },
   });
   const data = await response.json().catch(() => null);
   if (!response.ok)
@@ -136,6 +143,7 @@ function SimulationLab() {
     [error, setError] = useState("");
   const [notice, setNotice] = useState(""),
     [view, setView] = useState("dashboard");
+  const [sourceSeed, setSourceSeed] = useState(null);
   const [mode, setMode] = useState("topic"),
     [slow, setSlow] = useState(false),
     [readOnly, setReadOnly] = useState(false),
@@ -201,8 +209,19 @@ function SimulationLab() {
       const response = await fetch("/api/runs/stream", {
         signal: controller.signal,
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic, mode, steps: Number(steps), engine }),
+        headers: { "Content-Type": "application/json", ...dataHeaders() },
+        body: JSON.stringify({
+          topic,
+          mode,
+          steps: Number(steps),
+          engine,
+          ...(sourceSeed
+            ? {
+                dataset_id: sourceSeed.dataset_id,
+                dataset_row_id: sourceSeed.dataset_row_id,
+              }
+            : {}),
+        }),
       });
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
@@ -339,6 +358,21 @@ function SimulationLab() {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
+  function seedVillage(source) {
+    if (busy) return;
+    setSourceSeed(source);
+    setTopic(source.text);
+    setMode("topic");
+    setNotice(
+      "실제 데이터가 연결됐습니다. 시뮬레이션 실행을 누르면 선택한 문장에서 시작하고 결과를 비공개로 저장합니다.",
+    );
+    nav("dashboard");
+  }
+  function clearSource() {
+    setSourceSeed(null);
+    setTopic("이번 주말 Hobbs Cafe에서 마을 파티가 열린대요.");
+  }
+
   return (
     <div className="shell">
       <aside className="sidebar">
@@ -379,6 +413,13 @@ function SimulationLab() {
           >
             <span>▷</span>시뮬레이션 실행
           </button>
+          <p className="nav-label">REAL DATA</p>
+          <button
+            className={view === "real-data" ? "nav active" : "nav"}
+            onClick={() => nav("real-data")}
+          >
+            <span>▤</span>실제 데이터 비교
+          </button>
           <p className="nav-label">ARCHIVE</p>
           <button
             className={view === "history" ? "nav active" : "nav"}
@@ -402,215 +443,251 @@ function SimulationLab() {
           <span className="badge">SMALLVILLE</span>
         </header>
         <main id="workspace">
-          <div className="page-heading">
-            <div>
-              <div className="eyebrow">ECHOCHAMBER / LIVE WORKSPACE</div>
-              <h1>EchoChamber : 살아 움직이는 소문 연구실</h1>
-              <p>한 사람의 이야기가 마을 전체로 퍼지는 과정을 관찰하세요.</p>
-            </div>
-            <span className="mode-tag">가상 마을 시뮬레이션</span>
-          </div>
-          <ErrorBanner
-            error={error}
-            onRetry={() => retryAction.current?.()}
-            disabled={busy || loading}
-            cooldown={cooldown}
-          />
-          <StatusBar
-            busy={busy}
-            loading={loading}
-            slow={slow}
-            notice={notice}
-            error={error}
-            readOnly={readOnly}
-          />
-          {loading ? (
-            <div className="panel loading" role="status">
-              에이전트와 실행 기록을 불러오는 중입니다…
-            </div>
-          ) : (
-            <>
-              <section className="metrics" aria-label="실행 통계">
-                <Metric
-                  label="마을 에이전트"
-                  value={displayAgents.length}
-                  unit="명"
-                  note="서버에 저장된 에이전트"
-                />
-                <Metric
-                  label="전달 횟수"
-                  value={run?.completed_steps || 0}
-                  unit="회"
-                  note="선택한 실행의 대화 단계"
-                />
-                <Metric
-                  label="전달 신뢰도"
-                  value={last ? (last.confidence * 100).toFixed(1) : "—"}
-                  unit={last ? "%" : ""}
-                  note="성향 기반 감쇠 지표"
-                />
-                <Metric
-                  label="문자열 변화율"
-                  value={last ? (last.distortion * 100).toFixed(1) : "—"}
-                  unit={last ? "%" : ""}
-                  note="원문 대비 마지막 발화 차이"
-                />
-              </section>
-              <ControlPanel
-                mode={mode}
-                setMode={setMode}
-                topic={topic}
-                setTopic={setTopic}
-                steps={steps}
-                setSteps={setSteps}
-                engine={engine}
-                setEngine={setEngine}
-                engines={engines}
-                busy={busy}
-                agents={agents}
-                onStart={start}
-                onStop={() => abort.current?.abort()}
-              />
-              <div className="workspace-grid">
-                <VillageScene
-                  agents={displayAgents}
-                  run={run}
-                  busy={busy}
-                  names={names}
-                />
-                <ConversationFeed run={run} busy={busy} names={names} />
+          <div hidden={view === "real-data"}>
+            <div className="page-heading">
+              <div>
+                <div className="eyebrow">ECHOCHAMBER / LIVE WORKSPACE</div>
+                <h1>EchoChamber : 살아 움직이는 소문 연구실</h1>
+                <p>한 사람의 이야기가 마을 전체로 퍼지는 과정을 관찰하세요.</p>
               </div>
-              <section className="panel network-panel restored-network">
-                <div className="section-heading">
-                  <h2>소문 확산 네트워크</h2>
-                  <span className="badge">
-                    {run ? `${run.completed_steps} STEPS` : "READY"}
-                  </span>
-                </div>
-                <Network network={network} />
-                <div className="legend">
-                  <span className="live-dot" /> 에이전트{" "}
-                  <span className="line-key" /> 전달 방향 · 선 위 숫자는 전달
-                  횟수
-                </div>
-              </section>
-              <section className="panel" id="agents">
-                <div className="section-heading">
-                  <h2>마을 에이전트</h2>
-                  <span className="caption">
-                    {run
-                      ? "선택한 실행 당시의 에이전트"
-                      : "현재 저장된 에이전트"}{" "}
-                    · {displayAgents.length}명
-                  </span>
-                </div>
-                <div className="agent-grid">
-                  {displayAgents.map((agent, i) => (
-                    <article className="agent" key={agent.agent_id}>
-                      <div className={`avatar color-${i % 4}`}>
-                        {agent.name[0]}
-                      </div>
-                      <div>
-                        <h3>
-                          {agent.name} <small>#{i + 1}</small>
-                        </h3>
-                        <p>
-                          {agent.occupation} · {agent.age}세
-                        </p>
-                        <small>{agent.current_location}</small>
-                      </div>
-                      <div className="traits">
-                        {[
-                          ["사교성", "sociability"],
-                          ["전파 성향", "gossip_tendency"],
-                          ["수용 성향", "credulity"],
-                        ].map(([label, key]) => (
-                          <div key={key}>
-                            <span>{label}</span>
-                            <meter
-                              min="0"
-                              max="1"
-                              value={agent.personality[key]}
-                            />
-                            {Math.round(agent.personality[key] * 100)}%
-                          </div>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-              <section className="panel" id="history">
-                <div className="section-heading">
-                  <h2>실행 아카이브</h2>
-                  <span className="caption">
-                    최근 100개 · 저장된 기록을 다시 열어보세요
-                  </span>
-                </div>
-                {history.length ? (
-                  <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>실행 시간</th>
-                          <th>시작 이야기</th>
-                          <th>모드</th>
-                          <th>단계</th>
-                          <th>결과</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {history.map((item) => (
-                          <tr
-                            key={item.run_id}
-                            className={
-                              run?.run_id === item.run_id ? "selected" : ""
-                            }
-                          >
-                            <td>
-                              {new Date(item.created_at).toLocaleString(
-                                "ko-KR",
-                                { timeZone: "Asia/Seoul" },
-                              )}
-                            </td>
-                            <td className="history-topic">{item.topic}</td>
-                            <td>
-                              {item.engine === "rules" ? "규칙 기반" : "OpenAI"}
-                            </td>
-                            <td>{item.completed_steps}회</td>
-                            <td>
-                              <button
-                                disabled={busy}
-                                className="text-button"
-                                onClick={() => selectRun(item.run_id)}
-                                aria-label={`${item.topic} 결과 보기`}
-                              >
-                                {run?.run_id === item.run_id
-                                  ? "선택됨"
-                                  : "결과 보기"}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="empty-history">저장된 실행 기록이 없습니다.</p>
+              <span className="mode-tag">가상 마을 시뮬레이션</span>
+            </div>
+            <ErrorBanner
+              error={error}
+              onRetry={() => retryAction.current?.()}
+              disabled={busy || loading}
+              cooldown={cooldown}
+            />
+            <StatusBar
+              busy={busy}
+              loading={loading}
+              slow={slow}
+              notice={notice}
+              error={error}
+              readOnly={readOnly}
+            />
+            {loading ? (
+              <div className="panel loading" role="status">
+                에이전트와 실행 기록을 불러오는 중입니다…
+              </div>
+            ) : (
+              <>
+                <section className="metrics" aria-label="실행 통계">
+                  <Metric
+                    label="마을 에이전트"
+                    value={displayAgents.length}
+                    unit="명"
+                    note="서버에 저장된 에이전트"
+                  />
+                  <Metric
+                    label="전달 횟수"
+                    value={run?.completed_steps || 0}
+                    unit="회"
+                    note="선택한 실행의 대화 단계"
+                  />
+                  <Metric
+                    label="전달 신뢰도"
+                    value={last ? (last.confidence * 100).toFixed(1) : "—"}
+                    unit={last ? "%" : ""}
+                    note="성향 기반 감쇠 지표"
+                  />
+                  <Metric
+                    label="문자열 변화율"
+                    value={last ? (last.distortion * 100).toFixed(1) : "—"}
+                    unit={last ? "%" : ""}
+                    note="원문 대비 마지막 발화 차이"
+                  />
+                </section>
+                {sourceSeed && (
+                  <section className="source-seed panel">
+                    <div>
+                      <strong>실제 데이터 연결 · {sourceSeed.title}</strong>
+                      <p>
+                        선택한 익명화 문장에서 시작합니다. 원문·분석과 연결
+                        실험은 이 브라우저의 접근 키로만 조회합니다.
+                      </p>
+                    </div>
+                    <button type="button" disabled={busy} onClick={clearSource}>
+                      연결 해제 · 기본 주제로
+                    </button>
+                  </section>
                 )}
-              </section>
-              {run && (
-                <p className="run-id">
-                  RUN ID · {run.run_id} ·{" "}
-                  {run.pending
-                    ? run.interrupted
-                      ? "실행 중단 · 저장되지 않음"
-                      : "수신 중 · 아직 저장되지 않음"
-                    : "서버 저장 완료"}
-                </p>
-              )}
-            </>
-          )}
+                <ControlPanel
+                  topicLocked={Boolean(sourceSeed)}
+                  mode={mode}
+                  setMode={setMode}
+                  topic={topic}
+                  setTopic={setTopic}
+                  steps={steps}
+                  setSteps={setSteps}
+                  engine={engine}
+                  setEngine={setEngine}
+                  engines={engines}
+                  busy={busy}
+                  agents={agents}
+                  onStart={start}
+                  onStop={() => abort.current?.abort()}
+                />
+                <div className="workspace-grid">
+                  <VillageScene
+                    agents={displayAgents}
+                    run={run}
+                    busy={busy}
+                    names={names}
+                  />
+                  <ConversationFeed run={run} busy={busy} names={names} />
+                </div>
+                <section className="panel network-panel restored-network">
+                  <div className="section-heading">
+                    <h2>소문 확산 네트워크</h2>
+                    <span className="badge">
+                      {run ? `${run.completed_steps} STEPS` : "READY"}
+                    </span>
+                  </div>
+                  <Network network={network} />
+                  <div className="legend">
+                    <span className="live-dot" /> 에이전트{" "}
+                    <span className="line-key" /> 전달 방향 · 선 위 숫자는 전달
+                    횟수
+                  </div>
+                </section>
+                <LinkedResults run={run} active={view !== "real-data"} />
+                <section className="panel" id="agents">
+                  <div className="section-heading">
+                    <h2>마을 에이전트</h2>
+                    <span className="caption">
+                      {run
+                        ? "선택한 실행 당시의 에이전트"
+                        : "현재 저장된 에이전트"}{" "}
+                      · {displayAgents.length}명
+                    </span>
+                  </div>
+                  <div className="agent-grid">
+                    {displayAgents.map((agent, i) => (
+                      <article className="agent" key={agent.agent_id}>
+                        <div className={`avatar color-${i % 4}`}>
+                          {agent.name[0]}
+                        </div>
+                        <div>
+                          <h3>
+                            {agent.name} <small>#{i + 1}</small>
+                          </h3>
+                          <p>
+                            {agent.occupation} · {agent.age}세
+                          </p>
+                          <small>{agent.current_location}</small>
+                        </div>
+                        <div className="traits">
+                          {[
+                            ["사교성", "sociability"],
+                            ["전파 성향", "gossip_tendency"],
+                            ["수용 성향", "credulity"],
+                          ].map(([label, key]) => (
+                            <div key={key}>
+                              <span>{label}</span>
+                              <meter
+                                min="0"
+                                max="1"
+                                value={agent.personality[key]}
+                              />
+                              {Math.round(agent.personality[key] * 100)}%
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+                <section className="panel" id="history">
+                  <div className="section-heading">
+                    <h2>실행 아카이브</h2>
+                    <span className="caption">
+                      최근 100개 · 저장된 기록을 다시 열어보세요
+                    </span>
+                  </div>
+                  {history.length ? (
+                    <div className="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>실행 시간</th>
+                            <th>시작 이야기</th>
+                            <th>모드</th>
+                            <th>단계</th>
+                            <th>결과</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {history.map((item) => (
+                            <tr
+                              key={item.run_id}
+                              className={
+                                run?.run_id === item.run_id ? "selected" : ""
+                              }
+                            >
+                              <td>
+                                {new Date(item.created_at).toLocaleString(
+                                  "ko-KR",
+                                  { timeZone: "Asia/Seoul" },
+                                )}
+                              </td>
+                              <td className="history-topic">{item.topic}</td>
+                              <td>
+                                {item.engine === "rules"
+                                  ? "규칙 기반"
+                                  : "OpenAI"}
+                              </td>
+                              <td>{item.completed_steps}회</td>
+                              <td>
+                                <button
+                                  disabled={busy}
+                                  className="text-button"
+                                  onClick={() => selectRun(item.run_id)}
+                                  aria-label={`${item.topic} 결과 보기`}
+                                >
+                                  {run?.run_id === item.run_id
+                                    ? "선택됨"
+                                    : "결과 보기"}
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : (
+                    <p className="empty-history">
+                      저장된 실행 기록이 없습니다.
+                    </p>
+                  )}
+                </section>
+                {run && (
+                  <p className="run-id">
+                    RUN ID · {run.run_id} ·{" "}
+                    {run.pending
+                      ? run.interrupted
+                        ? "실행 중단 · 저장되지 않음"
+                        : "수신 중 · 아직 저장되지 않음"
+                      : "서버 저장 완료"}
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+          <div hidden={view !== "real-data"}>
+            <RealDataLab
+              active={view === "real-data"}
+              runs={history}
+              engines={engines}
+              onVillage={seedVillage}
+              villageBusy={busy}
+              onDeleted={(id) => {
+                if (run?.source_data?.dataset_id === id) setRun(null);
+                if (sourceSeed?.dataset_id === id) clearSource();
+                load();
+              }}
+            />
+          </div>
         </main>
       </div>
     </div>

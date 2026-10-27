@@ -138,6 +138,9 @@ async def guard_llm_request(request: Request):
         steps = 1  # The endpoint's Pydantic model rejects invalid input.
     if workbench or path.startswith("/simulation/"):
         minimum = steps * (3 if "autonomous" in path else 2)
+    elif path == "/analysis/messages":
+        from app.routers.ingestion import messages
+        minimum = max(1, len(messages))
     elif path == "/conversations":
         minimum = 2
     else:

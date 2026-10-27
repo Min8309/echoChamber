@@ -24,10 +24,7 @@ class DialogueAnalysisRequest(BaseModel):
         min_length=1,
         description="말한 에이전트 이름",
     )
-    listener_name: str = Field(
-        min_length=1,
-        description="들은 에이전트 이름",
-    )
+    listener_name: str | None = Field(default=None, description="수신자가 없는 댓글·리뷰는 생략")
 
 
 class DialogueAnalysis(BaseModel):

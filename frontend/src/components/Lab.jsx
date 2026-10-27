@@ -41,6 +41,7 @@ export function ErrorBanner({ error, onRetry, disabled, cooldown }) {
 }
 
 export function ControlPanel({
+  topicLocked = false,
   mode,
   setMode,
   topic,
@@ -72,7 +73,7 @@ export function ControlPanel({
             aria-label="대화 방식"
             value={mode}
             onChange={(e) => setMode(e.target.value)}
-            disabled={busy}
+            disabled={busy || topicLocked}
           >
             <option value="topic">주제 모드</option>
             <option value="autonomous">자율 모드</option>
@@ -91,7 +92,7 @@ export function ControlPanel({
             required={mode === "topic"}
             maxLength={1000}
             placeholder="마을에 퍼뜨릴 이야기를 입력하세요"
-            disabled={busy || mode === "autonomous"}
+            disabled={busy || mode === "autonomous" || topicLocked}
           />
         </label>
         <label>

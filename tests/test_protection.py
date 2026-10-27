@@ -67,6 +67,10 @@ class LiveServer:
 
     def units(self):
         with sqlite3.connect(self.db) as db:
+            if not db.execute(
+                "SELECT 1 FROM sqlite_master WHERE type='table' AND name='llm_daily'"
+            ).fetchone():
+                return 0
             return db.execute(
                 "SELECT coalesce(sum(units), 0) FROM llm_daily"
             ).fetchone()[0]
