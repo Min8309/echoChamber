@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import guard_llm_request
 from fastapi import APIRouter, HTTPException, status
 from openai import OpenAIError
 
@@ -44,6 +46,7 @@ def get_gossip_events():
 
 @router.post(
     "",
+    dependencies=[Depends(guard_llm_request)],
     response_model=ConversationResponse,
     status_code=status.HTTP_201_CREATED,
 )

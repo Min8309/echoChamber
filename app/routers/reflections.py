@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import guard_llm_request
 from fastapi import (
     APIRouter,
     HTTPException,
@@ -27,7 +29,7 @@ def find_agent(agent_id: str):
     return None
 
 
-@router.post("/{agent_id}/reflect")
+@router.post("/{agent_id}/reflect", dependencies=[Depends(guard_llm_request)])
 def reflect_on_memories(
     agent_id: str,
     threshold: int = Query(

@@ -955,7 +955,12 @@
     const toast = document.createElement('div');
     const borderCol = type === 'error' ? 'border-red-500 text-red-600' : type === 'success' ? 'border-teal-500 text-teal-600' : 'border-blue-500 text-blue-600';
     toast.className = `px-4 py-3 rounded-lg bg-white border ${borderCol} shadow-lg font-label text-[13px] font-semibold pointer-events-auto flex items-center gap-2 animate-bounce`;
-    toast.innerHTML = `<span class="material-symbols-outlined text-[18px]">info</span> <span>${msg}</span>`;
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined text-[18px]';
+    icon.textContent = type === 'error' ? 'error' : 'info';
+    const label = document.createElement('span');
+    label.textContent = String(msg);
+    toast.append(icon, label);
     container.appendChild(toast);
     setTimeout(() => { toast.remove(); }, 3500);
   }
@@ -1022,6 +1027,8 @@
             message_id: `msg_${Date.now()}_${idx}`,
             thread_id: 'thread_real_01',
             author_id: `user_${idx + 1}`,
+            source_type: 'naver_comment',
+            created_at: new Date().toISOString(),
             text: msgText || line
           });
         });
@@ -1052,23 +1059,19 @@
 
     // 백엔드 REST API 및 브라우저 자체 분석 겸용 처리 함수
     async function sendCommentsToBackend(messages) {
-      showToast('댓글 데이터 수집 및 실시간 텍스트 왜곡 분석 파이프라인 가동 중...', 'info');
+      showToast('댓글 데이터를 서버에 저장하는 중입니다...', 'info');
       try {
-        const response = await fetch('/ingestion/comments', {
+        const response = await fetch('/ingest/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: messages.slice(0, 100) })
         });
-        if (response.ok) {
-          showToast('백엔드 댓글 수집 및 언어학 심층 파이프라인 분석이 완료되었습니다!', 'success');
-          return;
-        }
-      } catch (err) { }
-
-      // 브라우저 단독 모드 (서버 미연결 시)
-      setTimeout(() => {
-        showToast(`[단독 실행 모드] 총 ${messages.length}건의 댓글 분석이 완료되었습니다. (왜곡 감지율 28.4%, 극단성 지수 0.42)`, 'success');
-      }, 800);
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : `댓글 수집 실패 (HTTP ${response.status})`);
+        showToast(`댓글 ${result.saved_count}건 저장 완료 · 중복 ${result.duplicate_count}건. AI 분석은 별도 실행해야 합니다.`, 'success');
+      } catch (error) {
+        showToast(error.message || '댓글 수집 서버에 연결할 수 없습니다.', 'error');
+      }
     }
 
     // 네비게이션 링크 상대 경로 처리 (GitHub Pages, 로컬 파일 및 서버 프로토콜 동시 지원)

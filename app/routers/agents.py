@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import require_writable
 from fastapi import APIRouter, HTTPException, status
 
 from app.models.agent import Agent
@@ -17,6 +19,7 @@ agents: list[Agent] = load_agents()
 
 @router.post(
     "",
+    dependencies=[Depends(require_writable)],
     response_model=Agent,
     status_code=status.HTTP_201_CREATED,
 )

@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import guard_llm_request
 from fastapi import (
     APIRouter,
     HTTPException,
@@ -28,6 +30,7 @@ def find_agent(agent_id: str):
 
 @router.post(
     "/{agent_id}",
+    dependencies=[Depends(guard_llm_request)],
     status_code=status.HTTP_201_CREATED,
 )
 def create_agent_plan(agent_id: str):

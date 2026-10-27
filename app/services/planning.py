@@ -1,7 +1,8 @@
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI, OpenAIError
+from openai import OpenAIError
+from app.services.ai_client import get_ai_client
 
 from app.models.agent import Agent
 from app.models.memory import Memory, MemoryType
@@ -114,7 +115,7 @@ ID: {agent.agent_id}
 대화할 것인지 하나의 계획을 생성하라.
 """
 
-    client = OpenAI(api_key=api_key)
+    client = get_ai_client()
 
     try:
         response = client.responses.parse(

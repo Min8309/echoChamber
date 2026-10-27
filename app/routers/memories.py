@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import require_writable
 from datetime import datetime, timezone
 
 from fastapi import (
@@ -33,6 +35,7 @@ def agent_exists(agent_id: str) -> bool:
 
 @router.post(
     "/{agent_id}/memories",
+    dependencies=[Depends(require_writable)],
     response_model=Memory,
     status_code=status.HTTP_201_CREATED,
 )

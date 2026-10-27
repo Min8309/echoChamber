@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import guard_llm_request
 from fastapi import (
     APIRouter,
     HTTPException,
@@ -20,6 +22,7 @@ router = APIRouter(
 
 @router.post(
     "/dialogue",
+    dependencies=[Depends(guard_llm_request)],
     response_model=DialogueAnalysis,
 )
 def analyze_dialogue_endpoint(
@@ -44,7 +47,7 @@ def analyze_dialogue_endpoint(
             detail=str(error),
         ) from error
     
-@router.post("/messages")
+@router.post("/messages", dependencies=[Depends(guard_llm_request)])
 def analyze_messages():
     if not messages:
         raise HTTPException(

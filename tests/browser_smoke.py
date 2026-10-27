@@ -12,17 +12,28 @@ def check_browser(base_url):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(base_url)
-        expect(page.get_by_role("heading", name="EchoChamber : 살아 움직이는 소문 연구실")).to_be_visible()
+        expect(
+            page.get_by_role("heading", name="EchoChamber : 살아 움직이는 소문 연구실")
+        ).to_be_visible()
         expect(page.locator(".agent")).to_have_count(3)
-        expect(page.get_by_role("heading", name="Smallville Live Environment")).to_be_visible()
-        expect(page.locator(".village-stage .village-artwork")).to_be_visible()
-        asset = page.request.get(base_url + "/assets/smallville-reference.png")
+        expect(
+            page.get_by_role("heading", name="Smallville Live Environment")
+        ).to_be_visible()
+        town = page.locator(".interactive-town canvas")
+        expect(town).to_be_visible()
+        expect(town).to_have_attribute("data-sprites-ready", "true")
+        asset = page.request.get(base_url + "/assets/pixel-agents/char_0.png")
         assert asset.ok and asset.headers["content-type"].startswith("image/")
-        assert page.locator(".village-panel").bounding_box()["y"] < page.locator(".restored-network").bounding_box()["y"]
+        assert page.request.get(base_url + "/assets/pixel-agents/LICENSE.txt").ok
+        assert (
+            page.locator(".village-panel").bounding_box()["y"]
+            < page.locator(".restored-network").bounding_box()["y"]
+        )
         page.get_by_role("button", name="마을 공간 확대").click()
-        expect(page.get_by_role("dialog", name="Smallville 마을 확대 보기")).to_be_visible()
-        page.get_by_role("button", name="닫기").click()
-        expect(page.get_by_role("dialog")).not_to_be_visible()
+        expect(page.get_by_role("button", name="확대 닫기")).to_be_visible()
+        page.get_by_role("button", name="확대 닫기").click()
+        page.get_by_role("button", name="Klaus 캐릭터 선택").click()
+        expect(page.locator(".resident-detail strong")).to_contain_text("Klaus")
         page.get_by_label("소문의 시작점").fill(
             "브라우저 검증: 토요일 도서관 행사가 열립니다."
         )
@@ -32,6 +43,24 @@ def check_browser(base_url):
             page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
         ).to_be_visible()
         expect(page.locator(".feed li")).to_have_count(3)
+        expect(town).to_have_attribute("data-step", "1")
+        page.get_by_role("button", name="일시정지", exact=True).click()
+        page.wait_for_timeout(350)
+        frozen = page.locator(".village-agents button").evaluate_all(
+            "els => els.map(el => el.dataset.position)"
+        )
+        page.wait_for_timeout(400)
+        assert (
+            page.locator(".village-agents button").evaluate_all(
+                "els => els.map(el => el.dataset.position)"
+            )
+            == frozen
+        )
+        page.get_by_role("button", name="계속 재생", exact=True).click()
+        page.wait_for_function(
+            "before => JSON.stringify([...document.querySelectorAll('.village-agents button')].map(el => el.dataset.position)) !== JSON.stringify(before)",
+            arg=frozen,
+        )
         assert page.locator(".network path[marker-end]").count() > 0
         first = page.locator(".run-id").inner_text()
         page.reload()

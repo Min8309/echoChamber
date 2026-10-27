@@ -1,7 +1,10 @@
 # EchoChamber · React + FastAPI 실험 도구
 
 기존 파란색·흰색 대시보드 디자인을 유지한 최소 기능 버전입니다.
-**에이전트 3명 → 단계별 대화 스트리밍 → 방향성 관계망 → 실행 히스토리**에 집중합니다.
+**실제 픽셀 마을의 에이전트 3명 → 대화/분석 스트리밍 → 방향성 관계망 → 실행 히스토리**에 집중합니다.
+Pixel Agents의 프레임 루프·BFS·캐릭터 자산을 MIT 고지와 함께 이식했습니다.
+캐릭터가 카페·도서관·광장 사이를 이동하고 실제 실행 기록을 말풍선으로 표시합니다.
+캐릭터 선택, 재생 일시정지/재개, 처음부터 재생, 확대를 지원합니다.
 
 ## 실행
 
@@ -25,7 +28,7 @@ React 빌드가 없는 경우 `/`는 기존 HTML 화면을 제공합니다.
 
 1. 기존 JSON 에이전트 중 이름이 서로 다른 3명을 SQLite에 최초 한 번 복사합니다.
 2. 소문 주제, 전달 단계(1~20), 모드를 선택하고 실행합니다.
-3. POST `/api/runs/stream`의 SSE 이벤트로 각 발화가 끝날 때마다 대화와 관계망을 갱신합니다.
+3. POST `/api/runs/stream`의 SSE 이벤트로 발화를 먼저 표시하고, AI 분석이 도착하면 같은 말풍선에 병합합니다.
    현재 스트리밍 단위는 **완성된 발화 한 건**이며 토큰 단위가 아닙니다.
 4. 모든 단계가 성공하면 에이전트 스냅샷·대화·관계망을 한 트랜잭션으로 저장합니다.
 5. 새로고침하거나 서버를 재시작해도 히스토리에서 같은 결과를 다시 엽니다.
@@ -35,7 +38,7 @@ React 빌드가 없는 경우 `/`는 기존 HTML 화면을 제공합니다.
 - **규칙 기반**: API 키 없이 동작. 이전 수신자가 다음 전달자가 되고, 이전 발화에 전언·추측 표현을 덧붙입니다.
   전달자와 수신자는 성향에 따른 가중치로 선택합니다. AI 생성으로 표시하지 않습니다.
 - **OpenAI**: 서버의 `OPENAI_API_KEY` 또는 `ECHOCHAMBER_API_KEY`가 있을 때 선택 가능합니다.
-  모델은 `OPENAI_MODEL`(기본 `gpt-4o-mini`)입니다. 단계마다 API 호출 1회가 발생합니다.
+  모델은 `OPENAI_MODEL`(기본 `gpt-4o-mini`)입니다. 단계마다 대화 생성 1회와 분석 1회, 총 2회가 발생합니다. 주제 모드는 입력 주제, 자율 모드는 선택된 에이전트의 저장된 목표에서 시작합니다.
   키는 브라우저로 보내지 않습니다. 키가 없어도 서버·조회·규칙 기반 실험은 작동합니다.
 - 신뢰도는 수용 성향에 따른 감쇠값이며, 변화율은 원문과의 문자열 유사도 차이입니다.
   **사실성·의미 왜곡을 검증하는 과학적 척도가 아닙니다.** AI 모드에서도 같은 실험용 지표를 사용합니다.
@@ -49,7 +52,7 @@ SQLite 기본 위치는 `data/echochamber.sqlite3`입니다. `ECHOCHAMBER_DB_PAT
 실행 히스토리 목록은 최근 100개를 표시하며 각 기록에는 당시 에이전트 스냅샷이 있습니다.
 
 - `GET /api/agents`, `GET /api/capabilities`
-- `POST /api/runs/stream` — `start`, `step`, `complete`, `error` SSE 이벤트
+- `POST /api/runs/stream` — `start`, `step`, `analysis`, `complete`, `error` SSE 이벤트
 - `POST /api/runs` — 동일한 실행의 일반 JSON 응답
 - `GET /api/runs`, `GET /api/runs/{id}`, `GET /api/runs/{id}/network`
 
@@ -66,14 +69,57 @@ npm --prefix frontend run build
 테스트는 임시 DB와 실제 Uvicorn HTTP 서버로 API 키 없는 시작, 입력 검증,
 전파 체인, SSE 순서, 저장·재조회, AI 실패의 부분 저장 방지와 모의 AI 성공 경로를 확인합니다.
 실제 OpenAI 호출은 유효한 키와 네트워크 접근이 있어야 별도 검증할 수 있습니다.
+
+```bash
+node --test tests/town.test.mjs
+.venv/bin/python -m pip install -r requirements-dev.txt
+.venv/bin/python tests/browser_smoke.py
+.venv/bin/python tests/browser_protection.py
+```
+
+Playwright 검증에는 시스템 Chromium(`/usr/bin/chromium`)이 필요합니다.
+보호 검증의 SDK는 네트워크를 열지 않는 테스트 대역이며, 실제 FastAPI HTTP·브라우저·SQLite를 사용합니다.
 브라우저 검증은 Playwright가 설치된 Python과 시스템 Chromium(`/usr/bin/chromium`)이 있는 환경에서
-`python3 tests/browser_smoke.py`로 실행합니다. 임시 DB·서버를 사용하며 실행·관계망·새로고침·히스토리·모바일·요청 실패 화면을 검증합니다.
+`.venv/bin/python tests/browser_smoke.py`로 실행합니다. 임시 DB·서버를 사용하며 실행·관계망·새로고침·히스토리·모바일·요청 실패 화면을 검증합니다.
+
+## 호출 보호와 데모 설정
+
+| 환경 변수 | 기본값 | 의미 |
+| --- | --- | --- |
+| `LLM_DAILY_UNIT_CAP` | `100` | 서버 전체의 UTC 일일 SDK 호출 시도 수. 0은 AI 호출 차단 |
+| `LLM_REQUESTS_PER_HOUR` | `10` | IP별 최근 60분 AI HTTP 요청 수. 모든 AI 라우트가 공유 |
+| `DEMO_READ_ONLY` | `true` | 에이전트·기억·메시지 직접 추가를 403으로 차단 |
+| `DISABLE_DOCS` | `true` | `/docs`, `/redoc`, `/openapi.json` 비활성 |
+| `CORS_ORIGINS` | 빈 값 | 별도 프론트엔드의 허용 Origin을 쉼표로 구분. 같은 Origin 배포는 불필요 |
+| `ECHOCHAMBER_LIMITS_DB_PATH` | 실행 DB와 동일 | 쿼터를 공유·보존할 SQLite 경로 |
+
+새 `/api/runs`·`/api/runs/stream`과 레거시 시뮬레이션·대화·반추·계획·분석 API 모두 적용됩니다.
+규칙 기반 실행은 LLM 예산을 소비하지 않습니다. 읽기 전용은 **직접 추가 API**에 대한 설정이며,
+실험 결과와 AI가 생성한 기억/히스토리는 계속 저장합니다. 로컬 데이터 편집·문서가 필요하면 두 플래그를 `false`로 설정하세요.
+
+요청 시 단계 수에 필요한 최소 예산을 확인하고, 각 외부 SDK 호출 직전에 SQLite 트랜잭션으로
+실제 일일 사용량을 확인·차감합니다. 재시도와 실패한 호출 시도도 카운트하며 SDK 자동 재시도는 끕니다.
+동시 실행 중 남은 예산이 없어지면 스트림은 `error` 이벤트에 `status:429`와 `retry_after`를 보냅니다.
+HTTP 시작 전 한도 초과는 HTTP 429와 `Retry-After` 헤더입니다. 새 `/api/runs`의 부분 실행은 저장하지 않습니다. 레거시 반복 API는 기존 단계별 저장 방식이므로 앞서 완료한 단계의 데이터가 남을 수 있습니다.
+일일 단위는 **돈·토큰 한도가 아닌 호출 시도 수**이며 UTC 자정(한국 시각 오전 9시)에 새 날짜를 사용합니다.
+
+IP는 `request.client.host`를 사용하며 임의의 `X-Forwarded-For`를 직접 신뢰하지 않습니다.
+프록시 환경은 Uvicorn의 `FORWARDED_ALLOW_IPS`를 실제 신뢰하는 프록시에 맞춰 설정해야 합니다.
+신뢰할 수 없는 프록시 헤더를 허용하면 IP 한도를 우회할 수 있습니다. 주소를 확인할 수 없다면 공통 IP 한도로 보수적으로 제한됩니다.
+SQLite 파일이 보존되는 한 재시작 후에도 한도가 유지되지만, 서로 다른 DB를 쓰는 여러 인스턴스나
+임시 파일시스템의 재배포까지 전역 한도를 보장하지는 않습니다. 운영에서는 공유/영속 저장소와 OpenAI 프로젝트 예산·알림을 별도로 설정하세요.
+
+UI **중단**은 연결을 취소해 다음 단계 호출을 막습니다. 이미 진행 중인 호출은 과금될 수 있고,
+저장 직후 연결이 끊긴 경우 히스토리에 완료 기록이 남을 수 있습니다. **재생 일시정지**는 지도 재생만 멈춥니다.
+사용자가 대화를 위로 스크롤해 읽는 동안에는 새 대화가 자동으로 화면을 아래로 끌어내리지 않습니다.
+
+기존 `/analysis/messages`의 필수 `listener_name` 누락/잘못된 함수 인자 버그는 이번에 수정하지 않았습니다.
+한도는 적용하되, 이를 복구해 메시지 수만큼 AI 호출을 활성화하는 작업은 별도로 검토해야 합니다.
 
 ## 배포
 
 Dockerfile은 React를 빌드한 다음 FastAPI와 함께 제공합니다. `render.yaml`도 같은 Docker 배포를 사용합니다.
-공개 운영 전에는 인증·호출 제한을 추가해야 합니다. 현재는 신뢰할 수 있는 사용자용 단일 서버 프로토타입이며,
-공개 API에 서버 키를 연결하면 방문자가 비용이 발생하는 AI 실행을 요청할 수 있습니다.
+공개 운영 전에는 인증·호출 제한을 추가해야 합니다. 공개 방문자는 한도 안에서 비용이 발생하는 AI 실행을 요청할 수 있으므로 인증이 필요한 운영에는 별도 접근 제어를 추가하세요.
 SQLite 히스토리를 재배포 후에도 유지하려면 **영속 볼륨**을 연결하고 `ECHOCHAMBER_DB_PATH`를 해당 경로로 설정해야 합니다.
 Render 무료 플랜의 임시 파일시스템만으로는 영속성을 보장할 수 없습니다.
 

@@ -952,3 +952,198 @@ td {
     flex-wrap: wrap;
   }
 }
+
+.lab-status {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #475569;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 7px;
+  margin-bottom: 18px;
+}
+.lab-status > .live-dot {
+  margin-right: 8px;
+}
+.lab-status .badge {
+  margin-left: 10px;
+}
+.lab-status p {
+  color: #b45309;
+  font-size: 11px;
+  padding-top: 5px;
+}
+.stop-button {
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  background: #fff1f2;
+  border-radius: 5px;
+  padding: 11px 14px;
+  height: 41px;
+  font-size: 12px;
+}
+.bubble-body {
+  min-width: 0;
+}
+.analysis-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.analysis-tags span {
+  font-size: 9px;
+  padding: 3px 6px;
+  background: #eef3ff;
+  color: #204fa6;
+  border-radius: 4px;
+}
+.analysis-pending {
+  color: #64748b;
+}
+
+.interactive-town {
+  position: relative;
+}
+.interactive-town canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  image-rendering: pixelated;
+  cursor: pointer;
+}
+.town-location-tags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  pointer-events: none;
+}
+.town-location-tags span {
+  background: #203a35e8;
+  color: #f6ebcd;
+  font-size: 9px;
+  padding: 6px 8px;
+  border: 1px solid #d7e4c83d;
+  border-radius: 4px;
+}
+.town-speech {
+  position: absolute;
+  bottom: 20px;
+  left: 12%;
+  right: 12%;
+  background: #fffdf0f5;
+  color: #334c3a;
+  border: 2px solid #b7c59a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px #203a3544;
+  max-height: 130px;
+  overflow-y: auto;
+}
+.town-speech strong {
+  font-size: 10px;
+  color: #3366cc;
+}
+.town-speech p {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  margin-top: 6px;
+}
+.village-playback {
+  padding: 11px 15px;
+  background: #f4f7f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #456044;
+}
+.village-playback button {
+  font-size: 10px;
+  padding: 6px 8px;
+  margin-left: 4px;
+  background: white;
+  border: 1px solid #cbd5c0;
+  border-radius: 4px;
+  color: #456044;
+}
+.village-agents > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 5px;
+  font-size: 10px;
+}
+.village-agents > button[aria-pressed="true"] {
+  border-color: #3366cc;
+  background: #eef3ff;
+}
+.resident-detail {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 11px;
+}
+.resident-detail p {
+  margin-top: 6px;
+  color: #475569;
+}
+.resident-detail small {
+  display: block;
+  color: #64748b;
+  font-size: 9px;
+  margin-top: 6px;
+}
+.village-footer a {
+  font-size: 9px;
+  color: #64748b;
+  text-decoration: underline;
+}
+.village-panel:fullscreen,
+.village-panel.is-expanded {
+  width: 100%;
+  max-width: none;
+  background: white;
+  overflow-y: auto;
+}
+.village-panel.is-expanded:not(:fullscreen) {
+  position: fixed;
+  inset: 12px;
+  width: auto;
+  height: calc(100vh - 24px);
+  z-index: 50;
+  box-shadow: 0 0 0 24px #0f172ab3;
+}
+.village-panel.is-expanded .village-stage {
+  max-width: 1100px;
+  margin: auto;
+}
+@media (max-width: 760px) {
+  .town-speech {
+    left: 5%;
+    right: 5%;
+    bottom: 8px;
+    padding: 7px;
+    max-height: 100px;
+  }
+  .town-speech p {
+    font-size: 10px;
+  }
+  .town-location-tags span {
+    font-size: 8px;
+    padding: 5px;
+  }
+  .village-playback {
+    font-size: 9px;
+  }
+}

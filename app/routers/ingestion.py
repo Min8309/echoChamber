@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import require_writable
 import hashlib
 import os
 
@@ -40,6 +42,7 @@ def pseudonymize_author(author_id: str) -> str:
 
 @router.post(
     "/messages",
+    dependencies=[Depends(require_writable)],
     response_model=MessageBatchResponse,
     status_code=status.HTTP_201_CREATED,
 )

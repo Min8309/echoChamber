@@ -9,3 +9,13 @@ services:
     envVars:
       - key: OPENAI_MODEL
         value: gpt-4o-mini
+      - key: LLM_DAILY_UNIT_CAP
+        value: "100"
+      - key: LLM_REQUESTS_PER_HOUR
+        value: "10"
+      - key: DEMO_READ_ONLY
+        value: "true"
+      - key: DISABLE_DOCS
+        value: "true"
+      - key: CORS_ORIGINS
+        value: ""

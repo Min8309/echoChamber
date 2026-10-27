@@ -1,3 +1,5 @@
+from fastapi import Depends
+from app.services.limits import guard_llm_request
 import random
 
 from fastapi import APIRouter, HTTPException
@@ -29,7 +31,7 @@ router = APIRouter(
 )
 
 
-@router.post("/step")
+@router.post("/step", dependencies=[Depends(guard_llm_request)])
 def run_simulation_step(
     request: SimulationStepRequest,
 ):
@@ -154,7 +156,7 @@ def run_simulation_step(
     }
 
 
-@router.post("/run")
+@router.post("/run", dependencies=[Depends(guard_llm_request)])
 def run_simulation(
     request: SimulationRunRequest,
 ):
@@ -215,7 +217,7 @@ def run_simulation(
         "reflection_count": reflection_count,
         "results": results,
     }
-@router.post("/autonomous-step")
+@router.post("/autonomous-step", dependencies=[Depends(guard_llm_request)])
 def run_autonomous_simulation_step():
     if len(agents) < 2:
         raise HTTPException(
@@ -388,7 +390,7 @@ def run_autonomous_simulation_step():
             "new_memories": new_reflections,
         },
     }
-@router.post("/autonomous-run")
+@router.post("/autonomous-run", dependencies=[Depends(guard_llm_request)])
 def run_autonomous_simulation(
     request: AutonomousRunRequest,
 ):
@@ -407,6 +409,8 @@ def run_autonomous_simulation(
             results.append(step_result)
 
         except HTTPException as error:
+            if error.status_code == 429:
+                raise
             errors.append(
                 {
                     "step": step_number,

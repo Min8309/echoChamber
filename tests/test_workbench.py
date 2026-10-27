@@ -128,7 +128,17 @@ class WorkbenchHTTPTests(unittest.TestCase):
             if line.startswith("data: "):
                 frames.append((kind, json.loads(line[6:])))
         self.assertEqual(
-            [f[0] for f in frames], ["start", "step", "step", "step", "complete"]
+            [f[0] for f in frames],
+            [
+                "start",
+                "step",
+                "analysis",
+                "step",
+                "analysis",
+                "step",
+                "analysis",
+                "complete",
+            ],
         )
         self.assertEqual(
             [f[1]["event"]["step"] for f in frames if f[0] == "step"], [1, 2, 3]
@@ -212,6 +222,18 @@ class RunTransactionTests(unittest.TestCase):
             ).load_agents()
         ][:2]
         client = Mock()
+        from app.models.analysis import DialogueAnalysis
+
+        client.responses.parse.return_value.output_parsed = DialogueAnalysis(
+            is_gossip=True,
+            subject="마을",
+            claim="행사 소식",
+            sentiment="neutral",
+            certainty="hearsay",
+            confidence=0.6,
+            reputation_impact=0,
+            reason="테스트용 모의 분석",
+        )
         client.responses.create.side_effect = [
             Mock(output_text="첫 발화"),
             RuntimeError("upstream failed"),
@@ -228,6 +250,7 @@ class RunTransactionTests(unittest.TestCase):
             )
             self.assertEqual(next(stream)[0], "start")
             self.assertEqual(next(stream)[0], "step")
+            self.assertEqual(next(stream)[0], "analysis")
             self.assertEqual(runs.list_runs(), [])
             with self.assertRaises(HTTPException) as error:
                 next(stream)
@@ -241,6 +264,18 @@ class RunTransactionTests(unittest.TestCase):
 
         roster = [a.model_dump() for a in load_agents()][:2]
         client = Mock()
+        from app.models.analysis import DialogueAnalysis
+
+        client.responses.parse.return_value.output_parsed = DialogueAnalysis(
+            is_gossip=True,
+            subject="마을",
+            claim="행사 소식",
+            sentiment="neutral",
+            certainty="hearsay",
+            confidence=0.6,
+            reputation_impact=0,
+            reason="테스트용 모의 분석",
+        )
         client.responses.create.side_effect = [
             Mock(output_text="도서관에서 행사가 열린대요"),
             Mock(output_text="행사 소식 들으셨어요?"),

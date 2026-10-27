@@ -2,6 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 import VillageScene from "./VillageScene.jsx";
+import {
+  StatusBar,
+  ErrorBanner,
+  ControlPanel,
+  ConversationFeed,
+} from "./components/Lab.jsx";
 
 async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, {
@@ -115,7 +121,7 @@ function Network({ network }) {
   );
 }
 
-function App() {
+function SimulationLab() {
   const [agents, setAgents] = useState([]),
     [history, setHistory] = useState([]);
   const [run, setRun] = useState(null),
@@ -130,10 +136,33 @@ function App() {
     [error, setError] = useState("");
   const [notice, setNotice] = useState(""),
     [view, setView] = useState("dashboard");
+  const [mode, setMode] = useState("topic"),
+    [slow, setSlow] = useState(false),
+    [readOnly, setReadOnly] = useState(false),
+    [cooldown, setCooldown] = useState(0);
+  const abort = useRef(null),
+    retryAction = useRef(null),
+    latestStart = useRef(null);
   const inFlight = useRef(false),
     requestVersion = useRef(0);
+  useEffect(() => {
+    setSlow(false);
+    if (!loading && !busy) return;
+    const timer = setTimeout(() => setSlow(true), 4000);
+    return () => clearTimeout(timer);
+  }, [loading, busy]);
+  useEffect(() => {
+    if (!cooldown) return;
+    const timer = setTimeout(
+      () => setCooldown((value) => Math.max(0, value - 1)),
+      1000,
+    );
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+  useEffect(() => () => abort.current?.abort(), []);
 
   async function load() {
+    retryAction.current = load;
     setLoading(true);
     setError("");
     try {
@@ -145,6 +174,7 @@ function App() {
       setAgents(roster);
       setHistory(saved);
       setEngines(capabilities.engines);
+      setReadOnly(capabilities.read_only || false);
       setRun(saved.length ? await api(`/runs/${saved[0].run_id}`) : null);
     } catch (err) {
       setError(err.message);
@@ -157,26 +187,32 @@ function App() {
   }, []);
 
   async function start(event) {
-    event.preventDefault();
+    event?.preventDefault();
+    retryAction.current = () => latestStart.current?.();
     if (inFlight.current) return;
     inFlight.current = true;
     requestVersion.current += 1;
+    const controller = new AbortController();
+    abort.current = controller;
     setBusy(true);
     setError("");
     setNotice("");
     try {
       const response = await fetch("/api/runs/stream", {
+        signal: controller.signal,
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic, steps: Number(steps), engine }),
+        body: JSON.stringify({ topic, mode, steps: Number(steps), engine }),
       });
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(
+        const error = new Error(
           typeof data.detail === "string"
             ? data.detail
             : "실행 요청에 실패했습니다.",
         );
+        error.waitSeconds = Number(response.headers.get("Retry-After")) || 0;
+        throw error;
       }
       const reader = response.body.getReader(),
         decoder = new TextDecoder();
@@ -194,7 +230,11 @@ function App() {
             const payload = frame.match(/^data: (.+)$/m)?.[1];
             if (!payload) continue;
             const data = JSON.parse(payload);
-            if (kind === "error") throw new Error(data.detail);
+            if (kind === "error") {
+              const error = new Error(data.detail);
+              error.waitSeconds = Number(data.retry_after) || 0;
+              throw error;
+            }
             if (kind === "start") setRun({ ...data, pending: true });
             if (kind === "step")
               setRun((previous) => ({
@@ -202,6 +242,15 @@ function App() {
                 events: [...previous.events, data.event],
                 completed_steps: data.event.step,
                 network: data.network,
+              }));
+            if (kind === "analysis")
+              setRun((previous) => ({
+                ...previous,
+                events: previous.events.map((event) =>
+                  event.step === data.step
+                    ? { ...event, analysis: data.analysis }
+                    : event,
+                ),
               }));
             if (kind === "complete") saved = data;
           }
@@ -235,14 +284,25 @@ function App() {
       setRun((previous) =>
         previous?.pending ? { ...previous, interrupted: true } : previous,
       );
-      setError(err.message);
+      if (err.name === "AbortError")
+        setNotice(
+          "중단을 요청했습니다. 이미 진행 중인 AI 호출은 과금될 수 있으며, 완료 여부는 실행 기록에서 확인할 수 있습니다.",
+        );
+      else {
+        setError(err.message);
+        setCooldown(err.waitSeconds || 0);
+      }
     } finally {
+      abort.current = null;
       setBusy(false);
       inFlight.current = false;
     }
   }
 
+  latestStart.current = start;
+
   async function selectRun(id) {
+    retryAction.current = () => selectRun(id);
     const version = ++requestVersion.current;
     setError("");
     setNotice("");
@@ -350,25 +410,20 @@ function App() {
             </div>
             <span className="mode-tag">가상 마을 시뮬레이션</span>
           </div>
-          {error && (
-            <div className="alert error" role="alert">
-              {error}{" "}
-              <button disabled={busy} onClick={load}>
-                다시 연결
-              </button>
-            </div>
-          )}
-          {busy && (
-            <div className="alert success" role="status">
-              대화가 도착할 때마다 관계망을 갱신합니다. 완료된 실행만 히스토리에
-              저장됩니다.
-            </div>
-          )}
-          {notice && (
-            <div className="alert success" role="status">
-              {notice}
-            </div>
-          )}
+          <ErrorBanner
+            error={error}
+            onRetry={() => retryAction.current?.()}
+            disabled={busy || loading}
+            cooldown={cooldown}
+          />
+          <StatusBar
+            busy={busy}
+            loading={loading}
+            slow={slow}
+            notice={notice}
+            error={error}
+            readOnly={readOnly}
+          />
           {loading ? (
             <div className="panel loading" role="status">
               에이전트와 실행 기록을 불러오는 중입니다…
@@ -401,73 +456,21 @@ function App() {
                   note="원문 대비 마지막 발화 차이"
                 />
               </section>
-              <form className="panel controls" onSubmit={start}>
-                <div className="section-heading">
-                  <h2>시뮬레이션 설정</h2>
-                  <span className="caption">
-                    주제를 입력하고 전파를 시작하세요
-                  </span>
-                </div>
-                <div className="control-row">
-                  <label className="topic-field" htmlFor="topic">
-                    소문의 시작점
-                    <input
-                      id="topic"
-                      value={topic}
-                      onChange={(e) => setTopic(e.target.value)}
-                      required
-                      maxLength={1000}
-                      placeholder="마을에 퍼뜨릴 이야기를 입력하세요"
-                      disabled={busy}
-                    />
-                  </label>
-                  <label>
-                    전달 단계
-                    <input
-                      aria-label="전달 단계"
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={steps}
-                      onChange={(e) => setSteps(e.target.value)}
-                      required
-                      disabled={busy}
-                    />
-                  </label>
-                  <label>
-                    실행 모드
-                    <select
-                      aria-label="실행 모드"
-                      value={engine}
-                      onChange={(e) => setEngine(e.target.value)}
-                      disabled={busy}
-                    >
-                      <option value="rules">규칙 기반</option>
-                      {engines.includes("openai") && (
-                        <option value="openai">OpenAI</option>
-                      )}
-                    </select>
-                  </label>
-                  <button
-                    className="primary"
-                    type="submit"
-                    disabled={busy || agents.length < 2 || !topic.trim()}
-                  >
-                    {busy ? "전파·저장 중…" : "▷ 시뮬레이션 실행"}
-                  </button>
-                </div>
-                <p className="help">
-                  {engine === "rules"
-                    ? "규칙 기반 모드: 에이전트 성향과 이전 발화를 사용해 서버에서 전파를 계산합니다. AI 생성 결과가 아닙니다."
-                    : "OpenAI 모드: 각 전달 발화를 AI로 생성합니다. 실행 단계 수만큼 API 비용이 발생할 수 있습니다."}{" "}
-                  신뢰도·변화율은 실험용 지표이며 사실 여부를 판정하지 않습니다.
-                </p>
-                {agents.length < 2 && (
-                  <p className="help warning">
-                    저장된 에이전트가 2명 이상이어야 실행할 수 있습니다.
-                  </p>
-                )}
-              </form>
+              <ControlPanel
+                mode={mode}
+                setMode={setMode}
+                topic={topic}
+                setTopic={setTopic}
+                steps={steps}
+                setSteps={setSteps}
+                engine={engine}
+                setEngine={setEngine}
+                engines={engines}
+                busy={busy}
+                agents={agents}
+                onStart={start}
+                onStop={() => abort.current?.abort()}
+              />
               <div className="workspace-grid">
                 <VillageScene
                   agents={displayAgents}
@@ -475,58 +478,7 @@ function App() {
                   busy={busy}
                   names={names}
                 />
-                <section className="panel conversation-panel">
-                  <div className="section-heading">
-                    <h2>마을 메신저</h2>
-                    <span className="caption">
-                      {busy
-                        ? "대화 수신 중…"
-                        : run?.pending
-                          ? "미저장 기록"
-                          : run
-                            ? run.engine === "rules"
-                              ? "규칙 기반 기록"
-                              : "AI 생성 기록"
-                            : "실행 대기"}
-                    </span>
-                  </div>
-                  {run ? (
-                    <>
-                      <div className="source-topic">
-                        <small>최초 이야기</small>
-                        <p>{run.topic}</p>
-                      </div>
-                      <ol className="feed">
-                        {run.events.map((e) => (
-                          <li key={e.step}>
-                            <div className="feed-step">{e.step}</div>
-                            <div>
-                              <div className="feed-meta">
-                                <strong>{names[e.speaker_id]}</strong>
-                                <span>→ {names[e.listener_id]}</span>
-                              </div>
-                              <p>{e.utterance}</p>
-                              <small>
-                                전달 신뢰도 {(e.confidence * 100).toFixed(1)}% ·{" "}
-                                {e.certainty === "hearsay" ? "전언" : "추측"}
-                              </small>
-                            </div>
-                          </li>
-                        ))}
-                      </ol>
-                    </>
-                  ) : (
-                    <div className="empty">
-                      <span>◇</span>
-                      <h3>아직 전달된 이야기가 없습니다</h3>
-                      <p>
-                        위에서 주제를 입력하고 시뮬레이션을 실행하면
-                        <br />
-                        실제 전달 기록이 여기에 표시됩니다.
-                      </p>
-                    </div>
-                  )}
-                </section>
+                <ConversationFeed run={run} busy={busy} names={names} />
               </div>
               <section className="panel network-panel restored-network">
                 <div className="section-heading">
@@ -677,4 +629,4 @@ function Metric({ label, value, unit, note }) {
   );
 }
 
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(<SimulationLab />);

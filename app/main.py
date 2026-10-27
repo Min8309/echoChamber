@@ -1,5 +1,7 @@
 import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.services.limits import enabled
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -22,10 +24,18 @@ from app.routers.ingestion import (
 
 
 app = FastAPI(
+    docs_url=None if enabled("DISABLE_DOCS") else "/docs",
+    redoc_url=None if enabled("DISABLE_DOCS") else "/redoc",
+    openapi_url=None if enabled("DISABLE_DOCS") else "/openapi.json",
     title="EchoChamber API",
     description="가십 역학 시뮬레이션 및 분석 플랫폼",
     version="0.1.0",
 )
+
+
+cors_origins = [value.strip() for value in os.getenv("CORS_ORIGINS", "").split(",") if value.strip()]
+if cors_origins:
+    app.add_middleware(CORSMiddleware, allow_origins=cors_origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"], expose_headers=["Retry-After"])
 
 
 app.include_router(workbench_router)

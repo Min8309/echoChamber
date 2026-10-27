@@ -1,7 +1,8 @@
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI, OpenAIError
+from openai import OpenAIError
+from app.services.ai_client import get_ai_client
 
 from app.models.agent import Agent
 from app.models.memory import Memory, MemoryType
@@ -29,7 +30,7 @@ def generate_ai_utterance(
         "gpt-6-astra",
     )
 
-    client = OpenAI(api_key=api_key)
+    client = get_ai_client()
 
     memory_text = "\n".join(
         f"- {memory.description}"
