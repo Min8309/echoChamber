@@ -1,3 +1,5 @@
+
+
 [README_TOP.md](https://github.com/user-attachments/files/34005001/README_TOP.md)
 # EchoChamber
 
@@ -35,6 +37,10 @@
 ![자료 정렬 선별 화면](docs/images/selection.png)
 
 **2. 발언 기록이 움직임이 되는 픽셀 마을** — 저장된 발언자·청자·단계에 맞춰 인물이 걷고 만납니다.
+
+
+
+https://github.com/user-attachments/assets/107bb591-53a2-4bef-ae0d-afa3b436c3a7
 
 
 
