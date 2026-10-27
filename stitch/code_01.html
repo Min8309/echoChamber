@@ -234,7 +234,7 @@
 <div class="flex items-center gap-4">
 <!-- Lab Dual Tab Switcher -->
 <div class="inline-flex p-1 bg-surface-container rounded-lg items-center" data-active-classes="bg-surface-container-lowest text-on-surface font-bold shadow-xs">
-<a id="btn-tab-virtual" class="px-3.5 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface font-medium transition-all cursor-pointer" data-path="run-simulation" href="/">가상 마을 시뮬레이션</a>
+<a id="btn-tab-virtual" class="px-3.5 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface font-medium transition-all cursor-pointer" data-path="run-simulation" href="../index.html">가상 마을 시뮬레이션</a>
 <a id="btn-tab-real-lab" class="px-3.5 py-1.5 rounded-md font-label text-[12px] bg-surface-container-lowest text-on-surface font-bold shadow-xs transition-all cursor-pointer" data-path="real-comment-lab" href="/real-lab">현실 댓글 연구실</a>
 </div>
 <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface-container-low text-tertiary font-mono-code text-[11px] font-semibold">
@@ -961,17 +961,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. 사이드바 메인 시뮬레이션 복귀 링크 클릭 이벤트
-    document.querySelectorAll('aside nav a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const path = link.getAttribute('data-path');
-        if (path === 'dashboard' || path === 'town-view' || path === 'run-simulation') {
-          e.preventDefault();
-          window.location.href = '/';
-        }
-      });
-    });
-
     // 2. 실제 파일 업로드 드롭존 및 FileReader 파싱 연동
     const dropzoneContainer = document.getElementById('dropzone-container');
     const inputFileCsv = document.getElementById('input-file-csv');
@@ -1097,12 +1086,12 @@
       return './code_01.html';
     }
 
-    document.querySelectorAll('aside nav a, header button, .tab-btn').forEach(link => {
+    document.querySelectorAll('aside nav a, header button, .tab-btn, #btn-tab-virtual').forEach(link => {
       link.addEventListener('click', (e) => {
         const path = link.getAttribute('data-path');
         const btnText = link.innerText || '';
 
-        if (btnText.includes('가상 마을') || btnText.includes('대시보드') || path === 'town-view' || path === 'dashboard') {
+        if (btnText.includes('가상 마을') || btnText.includes('대시보드') || path === 'town-view' || path === 'dashboard' || path === 'run-simulation') {
           e.preventDefault();
           window.location.href = getNavUrl('home');
         } else if (btnText.includes('알렉산드리아') || path === 'alexandria') {

@@ -180,7 +180,7 @@
 </div>
 <div class="flex items-center gap-3">
 <div class="inline-flex p-1 bg-surface-container border border-outline-variant rounded-lg items-center">
-<button class="px-3.5 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface font-medium transition-all" onclick="window.location.href='/'" type="button">가상 마을 시뮬레이션</button>
+<button class="px-3.5 py-1.5 rounded-md font-label text-[12px] text-on-surface-variant hover:text-on-surface font-medium transition-all" data-path="run-simulation" type="button">가상 마을 시뮬레이션</button>
 <button class="px-3.5 py-1.5 rounded-md font-label text-[12px] bg-surface-container-lowest text-accent-navy font-bold shadow-xs border border-outline-variant/60" type="button">EchoChamber Learning Lab</button>
 </div>
 </div>
@@ -432,7 +432,7 @@
         const path = link.getAttribute('data-path');
         const btnText = link.innerText || '';
 
-        if (btnText.includes('마을 보기') || btnText.includes('대시보드') || path === 'town-view' || path === 'dashboard') {
+        if (btnText.includes('마을 보기') || btnText.includes('대시보드') || path === 'town-view' || path === 'dashboard' || path === 'run-simulation') {
           e.preventDefault();
           window.location.href = getNavUrl('home');
         } else if (btnText.includes('알렉산드리아') || path === 'alexandria') {
