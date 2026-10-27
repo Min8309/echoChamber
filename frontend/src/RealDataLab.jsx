@@ -7,6 +7,7 @@ import { previewResearchFile } from "./researchImport.mjs";
 
 export default function RealDataLab({
   active,
+  linkedRun,
   runs,
   engines,
   onVillage,
@@ -42,6 +43,12 @@ export default function RealDataLab({
   useEffect(() => {
     if (active) refresh();
   }, [active]);
+  useEffect(() => {
+    if (active && dataset && linkedRun?.source_data?.dataset_id === dataset.dataset_id) {
+      setRunId(linkedRun.run_id);
+      setComparison(null);
+    }
+  }, [active, dataset?.dataset_id, linkedRun?.run_id]);
   useEffect(() => () => controller.current?.abort(), []);
 
   async function refresh() {
@@ -267,10 +274,31 @@ export default function RealDataLab({
         <div>
           <div className="eyebrow">ECHOCHAMBER / REAL DATA LAB</div>
           <h1>실제 데이터 비교 연구실</h1>
-          <p>실제 댓글·리뷰를 익명화해 분석하고 가상 마을 실험과 연결하세요.</p>
+          <p>실제 댓글이 마을의 이야기가 됩니다. 데이터를 가져오고, AI 에이전트가 전달하는 과정을 관찰하세요.</p>
         </div>
-        <span className="mode-tag">기존 마을 화면 유지</span>
+        <span className="mode-tag">REAL DATA → SMALLVILLE</span>
       </div>
+      <section className="research-journey panel" aria-label="실제 데이터에서 가상 마을까지">
+        <div className="research-journey-intro">
+          <div className="eyebrow">FROM COMMENTS TO CONVERSATIONS</div>
+          <h2>실제 목소리를, 가상 마을에서 실험하세요.</h2>
+          <p>댓글·리뷰의 표현과 맥락을 분석한 뒤, 선택한 문장이 마을을 거치며 어떻게 달라지는지 비교합니다.</p>
+          <small>원문 분석과 가상 대화는 구분해서 표시합니다. 시뮬레이션은 실제 여론이나 사실 여부를 증명하지 않습니다.</small>
+        </div>
+        <ol className="research-journey-steps">
+          {[
+            ["01", "실제 데이터 가져오기", "YouTube · K-HATERS · 파일 · 직접 입력", Boolean(dataset || preview)],
+            ["02", "익명화 · 내용 분석", "개인정보 확인 후 저장하고 지표 살펴보기", Boolean(dataset)],
+            ["03", "가상 마을에 전달", "분석 결과의 문장 하나를 실험 시작점으로 선택", Boolean(dataset && linkedRun?.source_data?.dataset_id === dataset.dataset_id)],
+            ["04", "그래프 비교 · 다운로드", "실제 원문과 전달 결과의 수치 비교", Boolean(comparison)],
+          ].map(([number, title, description, ready]) => (
+            <li key={number} className={ready ? "ready" : ""}>
+              <span className="journey-number">{number}</span>
+              <div><strong>{title}</strong><p>{description}</p><small>{ready ? "진행됨" : "다음 단계"}</small></div>
+            </li>
+          ))}
+        </ol>
+      </section>
       {error && (
         <div className="alert error" role="alert">
           {error}
@@ -629,6 +657,13 @@ export default function RealDataLab({
                 Render에 API 키를 설정하면 활성화됩니다.
               </p>
             )}
+            <div className="research-village-handoff">
+              <span aria-hidden="true">◎</span>
+              <div><h3>분석한 문장을 마을로 보내세요</h3>
+                <p>아래 문장의 ‘이 문장으로 마을 실험’을 선택하세요. 마을 화면에서 전달 단계와 실행 모드를 정하고 실행한 뒤, 이곳으로 돌아와 그래프를 비교할 수 있습니다.</p>
+                <small>AI 의미 분석은 OpenAI 키가 필요합니다. 규칙 기반 실험은 AI 분석과 구분해 표시합니다.</small>
+              </div>
+            </div>
             <div className="research-row-results">
               {dataset.rows.map((row) => (
                 <article key={row.row_id}>

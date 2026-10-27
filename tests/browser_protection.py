@@ -20,6 +20,7 @@ async def check(server):
 
         await page.route("**/api/agents", delayed_agents)
         await page.goto(server.base, wait_until="domcontentloaded")
+        await page.get_by_role("button", name="대시보드", exact=False).click()
         await expect(
             page.get_by_text(
                 "첫 접속에는 무료 서버가 깨어나는 시간이 걸릴 수 있습니다.", exact=False

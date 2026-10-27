@@ -142,7 +142,7 @@ function SimulationLab() {
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [notice, setNotice] = useState(""),
-    [view, setView] = useState("dashboard");
+    [view, setView] = useState("real-data");
   const [sourceSeed, setSourceSeed] = useState(null);
   const [mode, setMode] = useState("topic"),
     [slow, setSlow] = useState(false),
@@ -390,6 +390,13 @@ function SimulationLab() {
           <span className="live-dot" />
         </div>
         <nav aria-label="메인 메뉴">
+          <p className="nav-label">REAL DATA</p>
+          <button
+            className={view === "real-data" ? "nav active" : "nav"}
+            onClick={() => nav("real-data")}
+          >
+            <span>▤</span>실제 데이터 비교
+          </button>
           <p className="nav-label">OVERVIEW</p>
           <button
             className={view === "dashboard" ? "nav active" : "nav"}
@@ -413,13 +420,6 @@ function SimulationLab() {
           >
             <span>▷</span>시뮬레이션 실행
           </button>
-          <p className="nav-label">REAL DATA</p>
-          <button
-            className={view === "real-data" ? "nav active" : "nav"}
-            onClick={() => nav("real-data")}
-          >
-            <span>▤</span>실제 데이터 비교
-          </button>
           <p className="nav-label">ARCHIVE</p>
           <button
             className={view === "history" ? "nav active" : "nav"}
@@ -438,7 +438,7 @@ function SimulationLab() {
           <div>
             <span className="muted">워크스페이스</span>
             <span className="slash">/</span>
-            <strong>소문 역학 연구실</strong>
+            <strong>{view === "real-data" ? "실제 데이터 → 가상 마을 분석" : "가상 마을 실험실"}</strong>
           </div>
           <span className="badge">SMALLVILLE</span>
         </header>
@@ -507,9 +507,14 @@ function SimulationLab() {
                         실험은 이 브라우저의 접근 키로만 조회합니다.
                       </p>
                     </div>
+                    <div className="source-seed-actions">
+                      <button className="primary" type="button" onClick={() => nav("real-data")}>
+                        실제 데이터 · 결과 비교로 돌아가기 →
+                      </button>
                     <button type="button" disabled={busy} onClick={clearSource}>
                       연결 해제 · 기본 주제로
                     </button>
+                    </div>
                   </section>
                 )}
                 <ControlPanel
@@ -677,6 +682,7 @@ function SimulationLab() {
           <div hidden={view !== "real-data"}>
             <RealDataLab
               active={view === "real-data"}
+              linkedRun={run}
               runs={history}
               engines={engines}
               onVillage={seedVillage}

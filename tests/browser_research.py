@@ -34,6 +34,8 @@ async def check(server):
             ),
         )
         await page.goto(server.base)
+        await expect(page.get_by_role("heading", name="실제 데이터 비교 연구실")).to_be_visible()
+        await page.get_by_role("button", name="대시보드", exact=False).click()
         await expect(
             page.get_by_role("heading", name="Smallville Live Environment")
         ).to_be_visible()
@@ -113,8 +115,8 @@ async def check(server):
             r"[0-9a-f]{8}-[0-9a-f-]{27,}", await page.locator(".run-id").inner_text()
         ).group(0)
         assert server.get("/api/runs/" + run_id).status_code == 404
-        await page.get_by_role("button", name="실제 데이터 비교", exact=False).click()
-        await page.get_by_label("비교할 가상 실행", exact=True).select_option(run_id)
+        await page.get_by_role("button", name="실제 데이터 · 결과 비교로 돌아가기", exact=False).click()
+        await expect(page.get_by_label("비교할 가상 실행", exact=True)).to_have_value(run_id)
         await page.get_by_role("button", name="그래프·숫자로 비교", exact=True).click()
         await expect(
             page.locator(".research-comparison .comparison-metric")
