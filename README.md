@@ -44,7 +44,7 @@
 
 
 **3. 토론·대화 흐름 분석** — 규칙 모드라서 AI 의미 분석은 비어 있고(0/4), 이를 0% 감정으로 꾸며 표시하지 않습니다.
-![토론 결과 분석 화면](docs/images/discussion.png)
+![토론 결과 분석 화면]<img width="928" height="638" alt="image" src="https://github.com/user-attachments/assets/f1ea96ca-633f-446d-bf61-4a436f89ef4f" />
 
 ---
 
