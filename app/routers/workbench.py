@@ -69,11 +69,13 @@ def agents():
 
 @router.get("/runs")
 def history(owner=Depends(optional_owner)):
+    datasets.connect().close()
     return runs.list_runs(owner)
 
 
 @router.get("/runs/{run_id}")
 def detail(run_id: str, owner=Depends(optional_owner)):
+    datasets.connect().close()
     run = runs.get_run(run_id, owner)
     if run is None:
         raise HTTPException(404, "실행 기록을 찾을 수 없습니다.")
@@ -108,6 +110,7 @@ def resolve_source(request, owner):
         "analysis": row.get("analysis"),
         "analysis_model": row.get("analysis_model"),
         "analysis_version": row.get("analysis_version"),
+        "origin": data.get("origin"),
     }
 
 

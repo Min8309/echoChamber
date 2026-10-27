@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { previewCSV, previewTexts } from "./csv.mjs";
 import { researchApi, dataHeaders, analyzeDataset } from "./dataApi.js";
 import { ComparisonResults } from "./Comparison.jsx";
+import SourceCollector from "./SourceCollector.jsx";
+import { previewResearchFile } from "./researchImport.mjs";
 
 export default function RealDataLab({
   active,
@@ -12,6 +14,9 @@ export default function RealDataLab({
   onDeleted,
 }) {
   const [manualText, setManualText] = useState("");
+  const [fileProvider, setFileProvider] = useState("csv"),
+    [collecting, setCollecting] = useState(false);
+  const sourceFile = useRef(null);
   const [preview, setPreview] = useState(null),
     [title, setTitle] = useState("실제 데이터 실험"),
     [source, setSource] = useState("comment"),
@@ -58,16 +63,28 @@ export default function RealDataLab({
     setPreview(null);
     const file = event.target.files?.[0];
     if (!file) return;
-    if (file.size > 1024 * 1024) {
-      setError("CSV는 1MB 이하로 준비해 주세요.");
+    if (
+      file.size > (/\.(json|jsonl)$/i.test(file.name) && fileProvider !== "csv" ? 100 * 1024 * 1024 : 1024 * 1024)
+    ) {
+      setError(
+        !/\.(json|jsonl)$/i.test(file.name) || fileProvider === "csv"
+          ? "CSV는 1MB 이하로 준비해 주세요."
+          : "연구 JSON 파일은 100MB 이하입니다. 처음 30건만 읽습니다.",
+      );
       return;
     }
     try {
-      const parsed = previewCSV(
-        new TextDecoder("utf-8", { fatal: true }).decode(
-          await file.arrayBuffer(),
-        ),
-      );
+      const parsed =
+        /\.(json|jsonl)$/i.test(file.name) && fileProvider !== "csv"
+          ? await previewResearchFile(file, fileProvider)
+          : {
+              ...previewCSV(
+                new TextDecoder("utf-8", { fatal: true }).decode(
+                  await file.arrayBuffer(),
+                ),
+              ),
+              file_provider: fileProvider === "csv" ? null : fileProvider,
+            };
       setPreview(parsed);
       setNotice(
         `${parsed.total}건 중 ${parsed.rows.length}건을 브라우저에서 미리 봅니다. 아직 서버로 업로드하지 않았습니다.`,
@@ -111,7 +128,7 @@ export default function RealDataLab({
       const rows = selected.map(({ selected, ...row }) => row);
       const saved = await researchApi("/datasets", {
         method: "POST",
-        body: JSON.stringify({ title, source, reviewed, rows }),
+        body: JSON.stringify({ title, source, reviewed, rows, collection_token: preview.collection_token || null, file_provider: preview.file_provider || null }),
       });
       setDataset(saved);
       setComparison(null);
@@ -243,7 +260,7 @@ export default function RealDataLab({
       setBusy(false);
     }
   }
-  const locked = busy || analysing;
+  const locked = busy || analysing || collecting;
   return (
     <div className="research-lab">
       <div className="page-heading">
@@ -264,6 +281,28 @@ export default function RealDataLab({
           {notice}
         </div>
       )}
+      <SourceCollector
+        active={active}
+        locked={locked}
+        onBusy={setCollecting}
+        onPreview={(result) => {
+          setPreview(result);
+          setReviewed(false);
+          setSource("comment");
+          setTitle(`${result.origin.name} · ${result.rows.length}건`);
+          setNotice(
+            "공식 자료를 가명화해 가져왔습니다. 아직 데이터셋으로 저장하지 않았습니다. 내용·출처를 확인해 주세요.",
+          );
+          setError("");
+        }}
+        onChooseFile={(provider) => {
+          setFileProvider(provider);
+          if (sourceFile.current) {
+            sourceFile.current.accept = ".json,.jsonl,.csv";
+            sourceFile.current.click();
+          }
+        }}
+      />
       <section className="panel research-upload">
         <div className="section-heading">
           <h2>1. 실제 댓글·리뷰 입력 · CSV 업로드</h2>
@@ -292,12 +331,28 @@ export default function RealDataLab({
               <option value="review">제품·서비스 리뷰</option>
             </select>
           </label>
+          <label>
+            파일 양식
+            <select
+              aria-label="연구 파일 양식"
+              value={fileProvider}
+              disabled={locked}
+              onChange={(event) => setFileProvider(event.target.value)}
+            >
+              <option value="csv">일반 CSV</option>
+              <option value="khaters">K-HATERS JSON/JSONL/CSV</option>
+              <option value="kold">KOLD JSON/CSV</option>
+            </select>
+          </label>
           <label className="research-file">
             CSV 파일
             <input
               aria-label="댓글·리뷰 CSV 파일"
+              ref={sourceFile}
               type="file"
-              accept=".csv,text/csv"
+              accept={
+                fileProvider === "csv" ? ".csv,text/csv" : ".json,.jsonl,.csv"
+              }
               disabled={locked}
               onChange={openFile}
             />
@@ -342,6 +397,14 @@ export default function RealDataLab({
         </div>
         {preview && (
           <>
+            {preview.origin && (
+              <div className="source-attribution">
+                <strong>출처: {preview.origin.name} · {preview.origin.license}</strong>
+                <p>{preview.origin.attribution}</p>
+                <p>{preview.origin.changes}</p>
+                {preview.origin.truncated && <p>수집 한도로 일부 댓글만 포함됩니다.</p>}
+              </div>
+            )}
             <div className="research-preview">
               {preview.rows.map((row, index) => (
                 <div className="research-preview-row" key={row.local_id}>
@@ -445,6 +508,31 @@ export default function RealDataLab({
               <h2>2. 분석 결과 · 이어서 분석 · 다운로드</h2>
               <span className="caption">{dataset.title}</span>
             </div>
+            {dataset.origin && (
+              <div className="source-attribution">
+                <strong>출처: {dataset.origin.name}</strong>
+                <p>{dataset.origin.attribution}</p>
+                <a
+                  href={dataset.origin.source_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  공식 출처 ↗
+                </a>{" "}
+                · {dataset.origin.license}
+                <p>{dataset.origin.changes}</p>
+                {dataset.origin.expires_at && (
+                  <p>
+                    만료 예정:{" "}
+                    {new Date(dataset.origin.expires_at * 1000).toLocaleString(
+                      "ko-KR",
+                      { timeZone: "Asia/Seoul" },
+                    )}
+                    . 만료 시 자료와 연결 실험을 함께 삭제합니다.
+                  </p>
+                )}
+              </div>
+            )}
             <div className="research-summary">
               <div>
                 <span>저장 문장</span>
@@ -560,6 +648,12 @@ export default function RealDataLab({
                     </span>
                   </div>
                   <p>{row.text}</p>
+                  {Object.keys(row.reference_labels || {}).length > 0 && (
+                    <p className="research-reference">
+                      입력 자료의 참고 라벨 (AI 가십 분석과 별도):{" "}
+                      {JSON.stringify(row.reference_labels)}
+                    </p>
+                  )}
                   {row.analysis && (
                     <>
                       <div className="analysis-tags">

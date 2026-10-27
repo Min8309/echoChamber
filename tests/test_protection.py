@@ -42,7 +42,7 @@ class LiveServer:
         self.start()
 
     def start(self):
-        script = f"import sys; sys.path.insert(0, 'tests'); from fake_provider import FakeOpenAI; import app.services.ai_client as ai; ai.OpenAI = FakeOpenAI; import uvicorn; uvicorn.run('app.main:app', host='127.0.0.1', port={self.port})"
+        script = f"import sys; sys.path.insert(0, 'tests'); from fake_provider import FakeOpenAI; import app.services.ai_client as ai; ai.OpenAI = FakeOpenAI; import os; import app.services.collection as collector; from fake_provider import FakeOfficialHTTP; collector.OfficialHTTP = FakeOfficialHTTP if os.getenv('FAKE_COLLECTION') == 'true' else collector.OfficialHTTP; import uvicorn; uvicorn.run('app.main:app', host='127.0.0.1', port={self.port})"
         self.process = subprocess.Popen(
             [str(ROOT / ".venv/bin/python"), "-c", script],
             cwd=ROOT,

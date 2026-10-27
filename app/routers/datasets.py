@@ -26,6 +26,7 @@ class DatasetRow(BaseModel):
     reply_to_id: str | None = Field(default=None, max_length=100)
     rating: float | None = Field(default=None, ge=0, le=5)
     date: CalendarDate | None = None
+    reference_labels: dict[str, str] = Field(default_factory=dict)
 
 
 class DatasetCreate(BaseModel):
@@ -33,6 +34,8 @@ class DatasetCreate(BaseModel):
     source: Literal["comment", "review"]
     reviewed: Literal[True]
     rows: list[DatasetRow] = Field(min_length=1, max_length=30)
+    collection_token: str | None = Field(default=None, max_length=8000)
+    file_provider: Literal["khaters", "kold"] | None = None
 
     @model_validator(mode="after")
     def valid_rows(self):
@@ -40,6 +43,15 @@ class DatasetCreate(BaseModel):
             raise ValueError("제목과 분석할 내용을 입력해 주세요.")
         if len({row.local_id for row in self.rows}) != len(self.rows):
             raise ValueError("중복된 행 식별자입니다.")
+        for row in self.rows:
+            if len(row.reference_labels) > 5 or any(
+                key not in {"label", "target_label", "OFF", "TGT", "GRP"}
+                or len(value) > 300
+                for key, value in row.reference_labels.items()
+            ):
+                raise ValueError(
+                    "원본 주석은 지원하는 5개 필드·각 300자 이내로 제한합니다."
+                )
         if any(row.local_id == row.reply_to_id for row in self.rows):
             raise ValueError("자신을 답글 대상으로 지정할 수 없습니다.")
         return self
@@ -47,7 +59,21 @@ class DatasetCreate(BaseModel):
 
 @router.post("", status_code=201)
 def create(request: DatasetCreate, owner=Depends(require_owner)):
-    return describe(datasets.create(request, owner))
+    origin = None
+    if request.collection_token:
+        from app.services.collection import verify_origin
+
+        origin = verify_origin(request.collection_token, owner)
+    elif request.file_provider:
+        from app.services.collection import CATALOG
+
+        origin = {
+            "provider": request.file_provider,
+            **CATALOG[request.file_provider],
+            "import_method": "user_file",
+            "changes": "사용자가 제공한 파일에서 최대 30건 선택·가명화·편집. 앱이 원본 일치 여부를 검증한 것은 아님.",
+        }
+    return describe(datasets.create(request, owner, origin))
 
 
 def describe(data):
@@ -256,6 +282,11 @@ def export(
     columns = [
         "number",
         "text",
+        "reference_labels",
+        "source_provider",
+        "source_url",
+        "source_attribution",
+        "source_license",
         "author",
         "rating",
         "date",
@@ -284,7 +315,18 @@ def export(
         return value
 
     for row in rows:
-        flat = {**row, **(row.get("analysis") or {})}
+        origin = data.get("origin") or {}
+        flat = {
+            **row,
+            **(row.get("analysis") or {}),
+            "reference_labels": json.dumps(
+                row.get("reference_labels", {}), ensure_ascii=False
+            ),
+            "source_provider": origin.get("provider", ""),
+            "source_url": origin.get("source_url", ""),
+            "source_attribution": origin.get("attribution", ""),
+            "source_license": origin.get("license", ""),
+        }
         writer.writerow([safe(flat.get(column, "")) for column in columns])
     return Response(
         output.getvalue().encode("utf-8-sig"),

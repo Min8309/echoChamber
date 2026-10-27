@@ -34,6 +34,19 @@ def connect():
     db.execute(
         "CREATE INDEX IF NOT EXISTS datasets_owner_created ON datasets(owner, created_at)"
     )
+    db.execute(
+        "CREATE TABLE IF NOT EXISTS dataset_expiry (dataset_id TEXT PRIMARY KEY REFERENCES datasets(id) ON DELETE CASCADE, expires_at REAL NOT NULL)"
+    )
+    # API-derived material and every linked snapshot expire together.
+    with db:
+        expired = db.execute(
+            "SELECT datasets.id, datasets.owner FROM datasets JOIN dataset_expiry ON datasets.id=dataset_expiry.dataset_id WHERE expires_at <= ?",
+            (time.time(),),
+        ).fetchall()
+        if expired:
+            db.execute("BEGIN IMMEDIATE")
+            for dataset_id, owner in expired:
+                _delete_owned(db, dataset_id, owner)
     return db
 
 
@@ -97,7 +110,7 @@ def listing(owner):
         db.close()
 
 
-def create(request, owner):
+def create(request, owner, origin=None):
     ids = {row.local_id: str(uuid4()) for row in request.rows}
     authors, threads = {}, {}
     rows = []
@@ -118,6 +131,7 @@ def create(request, owner):
                 "date": row.date.isoformat() if row.date else None,
                 "status": "pending",
                 "analysis": None,
+                "reference_labels": row.reference_labels,
                 "error": None,
             }
         )
@@ -127,6 +141,7 @@ def create(request, owner):
         "source": request.source,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "rows": rows,
+        "origin": origin,
     }
     db = connect()
     try:
@@ -151,6 +166,11 @@ def create(request, owner):
                     json.dumps(dataset, ensure_ascii=False),
                 ),
             )
+            if origin and origin.get("expires_at"):
+                db.execute(
+                    "INSERT INTO dataset_expiry VALUES (?, ?)",
+                    (dataset["dataset_id"], origin["expires_at"]),
+                )
     finally:
         db.close()
     return dataset
@@ -238,24 +258,28 @@ def finish(
         db.close()
 
 
+def _delete_owned(db, dataset_id, owner):
+    linked = db.execute(
+        "SELECT runs.id, runs.payload FROM runs JOIN run_access ON runs.id = run_access.run_id WHERE run_access.owner = ?",
+        (owner,),
+    ).fetchall()
+    for run_id, payload in linked:
+        if (json.loads(payload).get("source_data") or {}).get(
+            "dataset_id"
+        ) == dataset_id:
+            db.execute("DELETE FROM runs WHERE id = ?", (run_id,))
+    result = db.execute(
+        "DELETE FROM datasets WHERE id = ? AND owner = ?", (dataset_id, owner)
+    )
+    return result.rowcount
+
+
 def delete(dataset_id, owner):
     db = connect()
     try:
         with db:
             db.execute("BEGIN IMMEDIATE")
-            linked = db.execute(
-                "SELECT runs.id, runs.payload FROM runs JOIN run_access ON runs.id = run_access.run_id WHERE run_access.owner = ?",
-                (owner,),
-            ).fetchall()
-            for run_id, payload in linked:
-                if (json.loads(payload).get("source_data") or {}).get(
-                    "dataset_id"
-                ) == dataset_id:
-                    db.execute("DELETE FROM runs WHERE id = ?", (run_id,))
-            result = db.execute(
-                "DELETE FROM datasets WHERE id = ? AND owner = ?", (dataset_id, owner)
-            )
-            if not result.rowcount:
+            if not _delete_owned(db, dataset_id, owner):
                 raise HTTPException(404, "데이터가 없거나 접근할 수 없습니다.")
     finally:
         db.close()

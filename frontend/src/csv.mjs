@@ -120,8 +120,11 @@ export function previewCSV(text) {
       throw new Error(`${index + 2}행의 별점은 0~5 숫자여야 합니다.`);
     const created = pick(row, ["created_at", "date", "작성일"]),
       date = /^\d{4}-\d{2}-\d{2}/.test(created) ? created.slice(0, 10) : null;
+    const reference_labels = {};
+    for (const [column, name] of [["label","label"],["target_label","target_label"],["off","OFF"],["tgt","TGT"],["grp","GRP"]]) if(row[column]) reference_labels[name] = row[column].slice(0,300);
     return {
       local_id: ids.get(rawIds[index]),
+      reference_labels,
       text: redactText(content),
       author: authors.get(author) || "",
       thread: threads.get(thread) || null,

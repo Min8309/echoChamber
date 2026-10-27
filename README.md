@@ -214,3 +214,25 @@ EchoChamber는 대화 속에서 소문이 처음 시작된 지점을 추적하�
 
 <img width="1260" height="821" alt="image" src="https://github.com/user-attachments/assets/955d9cd7-bc07-4772-b789-1091082da555" />
 <img width="1252" height="730" alt="image" src="https://github.com/user-attachments/assets/14e87510-8ed4-422a-8581-14687577d201" />
+
+
+## 공식 댓글 수집 · 연구 데이터 가져오기
+
+좌측 **실제 데이터 비교 → 공식 API · 공개 연구 댓글 가져오기**에서 수집한 뒤,
+익명화 미리보기와 확인을 거쳐 저장합니다. 기존 AI 분석·마을 연결·CSV/JSON/HTML 다운로드를 그대로 사용합니다.
+
+- **YouTube**: Render Environment에 `YOUTUBE_API_KEY`를 추가합니다. Google Cloud에서 YouTube Data API v3를 활성화하고 키의 API 사용 범위를 제한하세요. 영상 주소/ID로 `commentThreads.list`와 `comments.list`를 호출하며 답글의 부모 관계를 유지합니다. 키를 브라우저나 GitHub에 넣지 않습니다. 키 미설정·댓글 차단·할당량 초과는 오류로 안내합니다.
+- **K-HATERS**: [공식 저장소](https://github.com/ssu-humane/K-HATERS)가 안내하는 `humane-lab/K-HATERS`의 Hugging Face 데이터 뷰어에서 최대 30건을 가져옵니다. CC BY 4.0 출처·저자 표시와 변경 내용을 다운로드에도 포함합니다. Park et al., 2023, *K-HATERS: A Hate Speech Detection Corpus in Korean with Target-Specific Ratings*.
+- **KOLD**: [공식 저장소](https://github.com/boychaboy/KOLD)의 JSON 파일을 사용자가 이용 조건을 확인한 후 선택합니다. 명시적인 재배포 라이선스를 확인하지 못해 서버 자동 수집은 제공하지 않습니다. Jeong et al., 2022, *KOLD: A Large-scale Korean Offensive Language Dataset*. 원 저장소의 악의적인 생성·게시용 학습 제한도 확인하세요.
+
+연구 JSON/JSONL은 파일 전체를 업로드하지 않고 브라우저에서 첫 30건만 읽습니다.
+공격성·표적 참고 라벨은 AI가 계산한 가십 지표와 구분하며, 원본 주석자 ID는 보내지 않습니다.
+공식 API라는 사실이 모든 재사용을 허용하는 것은 아닙니다. YouTube API 이용약관·개발자 정책과 댓글 이용 권한을 확인하세요.
+YouTube 수집 데이터는 29일 만료로 저장하며 만료 시 연결 실험까지 제거합니다(요청 시 및 매시간 정리).
+다운로드한 사본은 사용자가 관리합니다.
+
+`COLLECTION_REQUESTS_PER_HOUR`(기본 10)는 IP당 수집 요청 제한,
+`COLLECTION_DAILY_CALL_CAP`(기본 200)은 서버 전체 외부 HTTP 시도 제한입니다.
+수집당 HTTP 시도는 최대 10회이며 LLM 호출 한도와 별도로 관리합니다.
+외부 통신이 제한된 서버는 `www.googleapis.com`, `datasets-server.huggingface.co`를 허용해야 합니다.
+실제 Google API 호출은 서버 키가 있어야 검증할 수 있습니다.
