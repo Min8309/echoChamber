@@ -22,7 +22,7 @@ def generate_agent_plan(
             "계획 대상이 될 다른 에이전트가 없습니다."
         )
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ECHOCHAMBER_API_KEY") or os.getenv("OPENAI_API_KEY")
 
     if not api_key:
         raise ValueError(

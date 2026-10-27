@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from app.services.ai_client import get_ai_client
 
 from app.models.agent import Agent
 from app.models.memory import (
@@ -15,7 +15,6 @@ from app.models.reflection import (
 
 load_dotenv()
 
-client = OpenAI()
 
 
 def generate_reflections(
@@ -112,7 +111,7 @@ def generate_reflections(
         "gpt-6-astra",
     )
 
-    response = client.responses.parse(
+    response = get_ai_client().responses.parse(
         model=model,
         input=[
             {

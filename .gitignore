@@ -28,3 +28,7 @@ Thumbs.db
 
 # Streamlit 캐시
 .streamlit/
+
+# React dependencies and local run database
+node_modules/
+data/*.sqlite3*

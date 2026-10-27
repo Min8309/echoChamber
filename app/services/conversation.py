@@ -17,7 +17,7 @@ def generate_ai_utterance(
     topic: str,
     retrieved_memories: list[Memory],
 ) -> str:
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ECHOCHAMBER_API_KEY") or os.getenv("OPENAI_API_KEY")
 
     if not api_key:
         raise ValueError(

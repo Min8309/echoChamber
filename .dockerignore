@@ -10,3 +10,7 @@ __pycache__
 .idea
 .vscode
 *.md
+
+**/node_modules
+frontend/dist
+data/*.sqlite3*

@@ -1,5 +1,16 @@
-# 베이스 이미지: 경량화된 Python 3.11 Slim
-FROM python:3.11-slim
+# syntax=docker/dockerfile:1
+# Build the React workbench; the legacy GitHub Pages demo stays separate.
+FROM node:22-slim AS frontend
+WORKDIR /frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN --mount=type=secret,id=system_ca,required=false \
+    if [ -f /run/secrets/system_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/system_ca; fi; \
+    npm ci --no-audit --no-fund
+COPY frontend/ ./
+RUN npm run build
+
+# 베이스 이미지: 경량화된 Python 3.12 Slim
+FROM python:3.12-slim
 
 # 표준 출력 버퍼링 비활성화 및 바이트코드 생성 방지
 ENV PYTHONUNBUFFERED=1 \
@@ -16,11 +27,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # 패키지 의존성 파일 복사 및 설치
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
+RUN --mount=type=secret,id=system_ca,required=false \
+    if [ -f /run/secrets/system_ca ]; then export PIP_CERT=/run/secrets/system_ca; fi; \
+    pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # 애플리케이션 소스 코드 및 데이터 복사
 COPY . .
+COPY --from=frontend /frontend/dist ./frontend/dist
 
 # 데이터 디렉토리 권한 확보
 RUN mkdir -p data

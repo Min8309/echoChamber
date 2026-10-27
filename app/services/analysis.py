@@ -1,14 +1,13 @@
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from app.services.ai_client import get_ai_client
 
 from app.models.analysis import DialogueAnalysis
 
 
 load_dotenv()
 
-client = OpenAI()
 
 
 def analyze_dialogue(
@@ -21,7 +20,7 @@ def analyze_dialogue(
         "gpt-6-astra",
     )
 
-    response = client.responses.parse(
+    response = get_ai_client().responses.parse(
         model=model,
         input=[
             {

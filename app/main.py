@@ -2,6 +2,9 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from pathlib import Path
+from app.routers.workbench import router as workbench_router
 
 from app.routers.reflections import router as reflections_router
 from app.routers.agents import router as agents_router
@@ -25,6 +28,7 @@ app = FastAPI(
 )
 
 
+app.include_router(workbench_router)
 app.include_router(agents_router)
 app.include_router(memories_router)
 app.include_router(conversations_router)
@@ -43,6 +47,9 @@ if os.path.exists(stitch_dir):
 
 @app.get("/", response_class=HTMLResponse)
 def read_root():
+    react_index = Path(__file__).resolve().parents[1] / "frontend" / "dist" / "index.html"
+    if react_index.is_file():
+        return FileResponse(react_index)
     html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "stitch", "code.html")
     if os.path.exists(html_path):
         with open(html_path, "r", encoding="utf-8") as f:
@@ -114,3 +121,7 @@ def health_check():
     }
 
 
+# Vite builds assets with an absolute /assets/ base for same-origin API hosting.
+react_assets = Path(__file__).resolve().parents[1] / "frontend" / "dist" / "assets"
+if react_assets.is_dir():
+    app.mount("/assets", StaticFiles(directory=react_assets), name="react-assets")

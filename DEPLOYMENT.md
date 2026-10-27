@@ -1,3 +1,44 @@
+# React + FastAPI MVP 배포 (새 버전)
+
+새 버전은 `Dockerfile`로 React를 빌드한 뒤 FastAPI와 한 서비스에서 제공합니다.
+GitHub Pages는 아래 기존 HTML 데모용이며, 새 버전의 Python API를 실행하지 않습니다.
+
+## Render
+
+1. Render 계정에서 **New → Blueprint**로 `Min8309/echoChamber` 저장소의 `main`을 연결합니다.
+2. 저장소의 `render.yaml`을 사용합니다. Docker 런타임, 무료 플랜, `/health` 상태 확인이 설정돼 있습니다.
+3. 생성된 Render 서비스 주소로 접속합니다. React 화면과 `/api`가 같은 주소에서 작동합니다.
+4. 규칙 기반 모드는 키 없이 사용할 수 있습니다. AI 모드는 서버 환경 설정에
+   `ECHOCHAMBER_API_KEY` 또는 `OPENAI_API_KEY`를 안전하게 등록합니다. 키를 저장소나 프론트엔드에 넣지 마세요.
+
+기존 Render 서비스가 **Python 런타임**이라면 새 Docker 서비스를 생성해야 할 수 있습니다.
+`main` 푸시만으로 기존 서비스의 런타임이 Docker로 전환됐다고 가정하지 마세요.
+
+현재 프로토타입은 인증된 소수 사용자용입니다. 공개 AI 서비스로 운영하기 전에
+인증·호출 제한을 추가해야 서버 키를 통한 무제한 실행을 막을 수 있습니다.
+무료 플랜의 로컬 DB는 재배포 시 없어질 수 있으므로, 영속 기록이 필요하면
+영속 볼륨과 `ECHOCHAMBER_DB_PATH`를 설정하세요. 볼륨은 별도 유료 플랜이 필요할 수 있습니다.
+
+## Docker 직접 실행
+
+```bash
+docker build -t echochamber .
+docker run --name echochamber -p 8008:8008 -v echochamber-data:/var/data \
+  -e ECHOCHAMBER_DB_PATH=/var/data/echochamber.sqlite3 echochamber
+```
+
+환경의 HTTPS 프록시가 별도 CA를 요구하면 빌드에
+`--secret id=system_ca,src=/path/to/trusted-ca-bundle.pem`을 전달합니다.
+TLS 검증은 켜진 상태로 유지합니다.
+
+배포 확인: `/health`, `/api/agents` → 화면에서 3단계 실행 → 히스토리 재조회.
+Docker 이미지 빌드와 컨테이너에서 React·3명 조회·실행·관계망·저장 조회는 검증했습니다.
+외부 Render 서비스 생성·연결은 계정 접근 또는 기존 서비스 정보가 필요합니다.
+
+---
+
+# 기존 HTML / Streamlit 배포 안내
+
 # 🌐 EchoChamber 배포 가이드 (로컬 서버 없이 웹 접속)
 
 로컬 PC에서 서버를 켜두지 않고, 언제 어디서나 웹 브라우저 URL로 접속할 수 있도록 배포하는 가이드입니다.
