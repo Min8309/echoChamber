@@ -38,7 +38,7 @@ def check_browser(base_url):
             "브라우저 검증: 토요일 도서관 행사가 열립니다."
         )
         page.get_by_label("전달 단계").fill("3")
-        page.locator("button.primary").click()
+        page.locator("button.primary[type=submit]").click()
         expect(
             page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
         ).to_be_visible()
@@ -70,7 +70,7 @@ def check_browser(base_url):
             "두 번째 실험 <script>window.bad=true</script>"
         )
         page.get_by_label("전달 단계").fill("2")
-        page.locator("button.primary").click()
+        page.locator("button.primary[type=submit]").click()
         expect(
             page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
         ).to_be_visible()
@@ -90,7 +90,7 @@ def check_browser(base_url):
         assert page.evaluate(
             "document.documentElement.scrollWidth <= window.innerWidth"
         ), "mobile horizontal overflow"
-        expect(page.locator("button.primary")).to_be_visible()
+        expect(page.locator("button.primary[type=submit]")).to_be_visible()
         page.screenshot(path="/tmp/echo-react-mobile.png", full_page=True)
         # Real HTTP failure: do not show success or add archive records.
         count = page.locator("tbody tr").count()
@@ -102,7 +102,7 @@ def check_browser(base_url):
                 body=json.dumps({"detail": "테스트용 연결 실패"}),
             ),
         )
-        page.locator("button.primary").click()
+        page.locator("button.primary[type=submit]").click()
         expect(page.get_by_role("alert")).to_contain_text("테스트용 연결 실패")
         expect(
             page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")

@@ -31,7 +31,7 @@ async def check(server):
         await expect(page.get_by_label("소문의 시작점")).to_be_disabled()
         await page.get_by_label("실행 모드").select_option("openai")
         await page.get_by_label("전달 단계").fill("8")
-        await page.locator("button.primary").click()
+        await page.locator("button.primary[type=submit]").click()
         await expect(page.get_by_label("대화 방식")).to_be_disabled()
         await expect(page.get_by_text("분석 중…", exact=True)).to_be_visible()
         await expect(page.get_by_label("1단계 분석")).to_contain_text("가십")
@@ -53,7 +53,7 @@ async def check(server):
 
         # Abort during an in-flight analysis; no remaining turns or partial save.
         await page.get_by_label("전달 단계").fill("10")
-        await page.locator("button.primary").click()
+        await page.locator("button.primary[type=submit]").click()
         await expect(page.get_by_text("분석 중…", exact=True)).to_be_visible()
         await page.get_by_role("button", name="중단", exact=True).click()
         await expect(
@@ -74,7 +74,7 @@ async def check(server):
 
         await page.route("**/api/runs/stream", limited)
         await page.get_by_label("전달 단계").fill("1")
-        await page.locator("button.primary").click()
+        await page.locator("button.primary[type=submit]").click()
         await expect(page.get_by_role("alert")).to_contain_text("테스트 호출 한도")
         await expect(page.get_by_role("alert").get_by_role("button")).to_be_disabled()
         await expect(page.get_by_role("alert").get_by_role("button")).to_be_enabled(
