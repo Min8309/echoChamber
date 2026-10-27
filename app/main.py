@@ -183,3 +183,12 @@ def health_check():
 react_assets = Path(__file__).resolve().parents[1] / "frontend" / "dist" / "assets"
 if react_assets.is_dir():
     app.mount("/assets", StaticFiles(directory=react_assets), name="react-assets")
+
+# Reviewed project deck and downloadable PowerPoint files; no private research data.
+presentation_dir = Path(__file__).resolve().parents[1] / "docs" / "presentation"
+if presentation_dir.is_dir():
+    app.mount(
+        "/presentation",
+        StaticFiles(directory=presentation_dir, html=True),
+        name="project-presentation",
+    )

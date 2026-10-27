@@ -1,10 +1,25 @@
 # EchoChamber · React + FastAPI 실험 도구
 
-기존 파란색·흰색 대시보드 디자인을 유지한 최소 기능 버전입니다.
-**실제 픽셀 마을의 에이전트 3명 → 대화/분석 스트리밍 → 방향성 관계망 → 실행 히스토리**에 집중합니다.
-Pixel Agents의 프레임 루프·BFS·캐릭터 자산을 MIT 고지와 함께 이식했습니다.
-캐릭터가 카페·도서관·광장 사이를 이동하고 실제 실행 기록을 말풍선으로 표시합니다.
-캐릭터 선택, 재생 일시정지/재개, 처음부터 재생, 확대를 지원합니다.
+**실제 댓글·리뷰 수집 → 익명화·정렬·자료 선별 → 3~4인 가상 마을 토론 → 대화 흐름 분석·시각화**를 연결한 AI 실험 도구입니다.
+실제 텍스트와 가상 대화를 같은 기준으로 비교하고, 자료 출처·실험 설정·결과를 함께 확인합니다.
+파란색·흰색 대시보드와 Pixel Agents 기반 Canvas 마을을 유지하며, 단일 문장 전달 실험도 지원합니다.
+
+## 프로젝트 발표 자료
+
+**핵심 주제·기술 구조·주요 코드·검증 범위를 정리한 16장 자료입니다.** 검토 기준: `5b0ffce` (2026-10-27).
+
+[배포 사이트에서 HTML 발표 바로 열기](https://echochamber-y3r4.onrender.com/presentation/) · [PPTX 다운로드](https://echochamber-y3r4.onrender.com/presentation/EchoChamber.pptx) · [PPT 다운로드](https://echochamber-y3r4.onrender.com/presentation/EchoChamber.ppt)
+
+| 형식 | 자료 | 사용 방법 |
+| --- | --- | --- |
+| HTML | [발표 자료](docs/presentation/index.html) · [HTML 다운로드](https://raw.githubusercontent.com/Min8309/echoChamber/main/docs/presentation/index.html) | 저장 후 브라우저에서 열기. 이미지 포함 단일 파일, 방향키 이동·노트·인쇄 지원 |
+| PPTX | [PowerPoint 편집본](docs/presentation/EchoChamber.pptx) · [다운로드](https://raw.githubusercontent.com/Min8309/echoChamber/main/docs/presentation/EchoChamber.pptx) | 최신 PowerPoint / LibreOffice에서 열기 |
+| PPT | [PowerPoint 97–2003 호환본](docs/presentation/EchoChamber.ppt) · [다운로드](https://raw.githubusercontent.com/Min8309/echoChamber/main/docs/presentation/EchoChamber.ppt) | 구형 PowerPoint용 실제 `.ppt` 변환본 |
+| 상세 설명 | [발표 구성·코드 근거·재생성 방법](docs/presentation/README.md) | 발표자 노트, 데이터 출처와 해석 범위 |
+
+자료 구성: 문제 정의 → 사용자 흐름 → 시스템 구조 → 공식 수집 → 데이터 계약 → 토론 엔진 → SSE →
+픽셀 마을 → 시각화 → AI 분석 계약 → 사용량·접근 보호 → 코드 지도 → 검증 → 데모·확장.
+화면은 **합성 댓글·규칙 모드**로 촬영했습니다. 모델 성능이나 실제 여론 분석 결과를 주장하는 자료가 아닙니다.
 
 ## 실행
 
@@ -33,7 +48,7 @@ React 빌드가 없는 경우 `/`는 기존 HTML 화면을 제공합니다.
 4. 모든 단계가 성공하면 에이전트 스냅샷·대화·관계망을 한 트랜잭션으로 저장합니다.
 5. 새로고침하거나 서버를 재시작해도 히스토리에서 같은 결과를 다시 엽니다.
 
-콘텐츠 기능은 **실행 히스토리 하나**로 한정했습니다. 시나리오 편집·공유 링크·다중 그래프는 포함하지 않습니다.
+실행 히스토리와 실제 데이터 저장·내보내기를 지원합니다. 공개 공유 링크와 별도 시나리오 편집기는 포함하지 않습니다.
 
 - **규칙 기반**: API 키 없이 동작. 이전 수신자가 다음 전달자가 되고, 이전 발화에 전언·추측 표현을 덧붙입니다.
   전달자와 수신자는 성향에 따른 가중치로 선택합니다. AI 생성으로 표시하지 않습니다.
