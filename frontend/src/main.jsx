@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import VillageScene from "./VillageScene.jsx";
 
 async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, {
@@ -344,7 +345,7 @@ function App() {
           <div className="page-heading">
             <div>
               <div className="eyebrow">ECHOCHAMBER / LIVE WORKSPACE</div>
-              <h1>소문이 흐르는 마을</h1>
+              <h1>EchoChamber : 살아 움직이는 소문 연구실</h1>
               <p>한 사람의 이야기가 마을 전체로 퍼지는 과정을 관찰하세요.</p>
             </div>
             <span className="mode-tag">가상 마을 시뮬레이션</span>
@@ -468,20 +469,12 @@ function App() {
                 )}
               </form>
               <div className="workspace-grid">
-                <section className="panel network-panel">
-                  <div className="section-heading">
-                    <h2>소문 확산 네트워크</h2>
-                    <span className="badge">
-                      {run ? `${run.completed_steps} STEPS` : "READY"}
-                    </span>
-                  </div>
-                  <Network network={network} />
-                  <div className="legend">
-                    <span className="live-dot" /> 에이전트{" "}
-                    <span className="line-key" /> 전달 방향 · 선 위 숫자는 전달
-                    횟수
-                  </div>
-                </section>
+                <VillageScene
+                  agents={displayAgents}
+                  run={run}
+                  busy={busy}
+                  names={names}
+                />
                 <section className="panel conversation-panel">
                   <div className="section-heading">
                     <h2>마을 메신저</h2>
@@ -535,6 +528,20 @@ function App() {
                   )}
                 </section>
               </div>
+              <section className="panel network-panel restored-network">
+                <div className="section-heading">
+                  <h2>소문 확산 네트워크</h2>
+                  <span className="badge">
+                    {run ? `${run.completed_steps} STEPS` : "READY"}
+                  </span>
+                </div>
+                <Network network={network} />
+                <div className="legend">
+                  <span className="live-dot" /> 에이전트{" "}
+                  <span className="line-key" /> 전달 방향 · 선 위 숫자는 전달
+                  횟수
+                </div>
+              </section>
               <section className="panel" id="agents">
                 <div className="section-heading">
                   <h2>마을 에이전트</h2>

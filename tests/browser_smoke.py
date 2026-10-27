@@ -12,8 +12,17 @@ def check_browser(base_url):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(base_url)
-        expect(page.get_by_role("heading", name="소문이 흐르는 마을")).to_be_visible()
+        expect(page.get_by_role("heading", name="EchoChamber : 살아 움직이는 소문 연구실")).to_be_visible()
         expect(page.locator(".agent")).to_have_count(3)
+        expect(page.get_by_role("heading", name="Smallville Live Environment")).to_be_visible()
+        expect(page.locator(".village-stage .village-artwork")).to_be_visible()
+        asset = page.request.get(base_url + "/assets/smallville-reference.png")
+        assert asset.ok and asset.headers["content-type"].startswith("image/")
+        assert page.locator(".village-panel").bounding_box()["y"] < page.locator(".restored-network").bounding_box()["y"]
+        page.get_by_role("button", name="마을 공간 확대").click()
+        expect(page.get_by_role("dialog", name="Smallville 마을 확대 보기")).to_be_visible()
+        page.get_by_role("button", name="닫기").click()
+        expect(page.get_by_role("dialog")).not_to_be_visible()
         page.get_by_label("소문의 시작점").fill(
             "브라우저 검증: 토요일 도서관 행사가 열립니다."
         )
