@@ -36,7 +36,11 @@ export function ComparisonResults({ result }) {
     >
       <div className="comparison-legend">
         <span className="real-key" />
-        실제 데이터 <span className="virtual-key" />
+        실제 데이터
+        {result.scope === "selected_materials"
+          ? " (토론에 선택한 자료)"
+          : ""}{" "}
+        <span className="virtual-key" />
         가상 대화
       </div>
       <div className="comparison-grid">

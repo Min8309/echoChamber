@@ -42,6 +42,8 @@ export function ErrorBanner({ error, onRetry, disabled, cooldown }) {
 
 export function ControlPanel({
   topicLocked = false,
+  discussion = false,
+  minSteps = 1,
   mode,
   setMode,
   topic,
@@ -59,11 +61,15 @@ export function ControlPanel({
   return (
     <form className="panel controls" onSubmit={onStart} aria-busy={busy}>
       <div className="section-heading">
-        <h2>시뮬레이션 설정</h2>
+        <h2>
+          {discussion ? "실제 자료 토론 · 시뮬레이션 설정" : "시뮬레이션 설정"}
+        </h2>
         <span className="caption">
           {mode === "autonomous"
             ? "선택된 에이전트의 목표에서 대화를 시작합니다"
-            : "주제를 입력하고 전파를 시작하세요"}
+            : discussion
+              ? "선택한 자료를 검토하고 대화 흐름을 분석합니다"
+              : "주제를 입력하고 전파를 시작하세요"}
         </span>
       </div>
       <div className="control-row">
@@ -100,7 +106,7 @@ export function ControlPanel({
           <input
             aria-label="전달 단계"
             type="number"
-            min="1"
+            min={minSteps}
             max="20"
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
@@ -163,6 +169,11 @@ export function MessageBubble({ event, names, waiting, engine }) {
     <li>
       <div className="feed-step">{event.step}</div>
       <div className="bubble-body">
+        {event.discussion_stage && (
+          <div className="discussion-stage">
+            {event.discussion_stage} · 이번 참고 자료 {event.source_number}번
+          </div>
+        )}
         <div className="feed-meta">
           <strong>{names[event.speaker_id]}</strong>
           <span>→ {names[event.listener_id]}</span>

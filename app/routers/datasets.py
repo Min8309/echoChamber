@@ -198,15 +198,19 @@ def compare(dataset_id: str, run_id: str, owner=Depends(require_owner)):
     run = runs.get_run(run_id, owner)
     if run is None:
         raise HTTPException(404, "비교할 실행 기록이 없습니다.")
-    real = datasets.ai_stats(
-        [row.get("analysis") for row in data["rows"]], len(data["rows"])
-    )
+    real_rows = data["rows"]
+    if (run.get("source_data") or {}).get("discussion") and run["source_data"][
+        "dataset_id"
+    ] == dataset_id:
+        selected_ids = {row["row_id"] for row in run["source_data"]["rows"]}
+        real_rows = [row for row in data["rows"] if row["row_id"] in selected_ids]
+    real = datasets.ai_stats([row.get("analysis") for row in real_rows], len(real_rows))
     virtual = datasets.ai_stats(
         [event.get("analysis") for event in run["events"]], len(run["events"])
     )
     versions = {
         (row.get("analysis_version"), row.get("analysis_model"))
-        for row in data["rows"]
+        for row in real_rows
         if row.get("analysis")
     }
     comparable = (
@@ -218,15 +222,19 @@ def compare(dataset_id: str, run_id: str, owner=Depends(require_owner)):
         "dataset_id": dataset_id,
         "run_id": run_id,
         "title": data["title"],
+        "scope": "selected_materials"
+        if (run.get("source_data") or {}).get("discussion")
+        and run["source_data"]["dataset_id"] == dataset_id
+        else "dataset",
         "topic": run["topic"],
         "basic": {
-            "real": datasets.basic_stats([row["text"] for row in data["rows"]]),
+            "real": datasets.basic_stats([row["text"] for row in real_rows]),
             "virtual": datasets.basic_stats(
                 [event["utterance"] for event in run["events"]]
             ),
         },
         "ai": {"real": real, "virtual": virtual, "comparable": comparable},
-        "reply_pairs": sum(row.get("reply_to_id") is not None for row in data["rows"]),
+        "reply_pairs": sum(row.get("reply_to_id") is not None for row in real_rows),
         "note": "기초 지표는 동일한 문자열 규칙입니다. AI 수치 비교는 양쪽 분석이 완료되고 모델·분석 버전이 같을 때만 제공합니다. 독립 댓글의 실제 전달 경로나 왜곡·인과관계는 추정하지 않습니다.",
     }
 

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 import VillageScene from "./VillageScene.jsx";
 import RealDataLab from "./RealDataLab.jsx";
+import DiscussionResults from "./DiscussionResults.jsx";
 import { LinkedResults } from "./Comparison.jsx";
 import { dataHeaders } from "./dataApi.js";
 import {
@@ -211,14 +212,19 @@ function SimulationLab() {
         method: "POST",
         headers: { "Content-Type": "application/json", ...dataHeaders() },
         body: JSON.stringify({
-          topic,
+          topic: sourceSeed ? "" : topic,
           mode,
           steps: Number(steps),
           engine,
           ...(sourceSeed
             ? {
                 dataset_id: sourceSeed.dataset_id,
-                dataset_row_id: sourceSeed.dataset_row_id,
+                ...(sourceSeed.dataset_row_ids
+                  ? {
+                      dataset_row_ids: sourceSeed.dataset_row_ids,
+                      participant_count: sourceSeed.participant_count,
+                    }
+                  : { dataset_row_id: sourceSeed.dataset_row_id }),
               }
             : {}),
         }),
@@ -363,6 +369,10 @@ function SimulationLab() {
     setSourceSeed(source);
     setTopic(source.text);
     setMode("topic");
+    if (source.discussion) {
+      setSteps(Math.max(8, source.participant_count * 2, source.rows.length));
+      setEngine(engines.includes("openai") ? "openai" : "rules");
+    }
     setNotice(
       "실제 데이터가 연결됐습니다. 시뮬레이션 실행을 누르면 선택한 문장에서 시작하고 결과를 비공개로 저장합니다.",
     );
@@ -438,7 +448,11 @@ function SimulationLab() {
           <div>
             <span className="muted">워크스페이스</span>
             <span className="slash">/</span>
-            <strong>{view === "real-data" ? "실제 데이터 → 가상 마을 분석" : "가상 마을 실험실"}</strong>
+            <strong>
+              {view === "real-data"
+                ? "실제 데이터 → 가상 마을 분석"
+                : "가상 마을 실험실"}
+            </strong>
           </div>
           <span className="badge">SMALLVILLE</span>
         </header>
@@ -502,22 +516,50 @@ function SimulationLab() {
                   <section className="source-seed panel">
                     <div>
                       <strong>실제 데이터 연결 · {sourceSeed.title}</strong>
+                      {sourceSeed.discussion && (
+                        <p className="discussion-summary">
+                          <strong>
+                            {sourceSeed.rows.length}건의 자료 ·{" "}
+                            {sourceSeed.participant_count}인 토론
+                          </strong>
+                          <br />
+                          자료 요약 → 근거 점검 → 다른 관점 → 종합 정리. 선택
+                          자료 묶음을 제공하고 이전 발언에 반응합니다.
+                        </p>
+                      )}
                       <p>
                         선택한 익명화 문장에서 시작합니다. 원문·분석과 연결
                         실험은 이 브라우저의 접근 키로만 조회합니다.
                       </p>
                     </div>
                     <div className="source-seed-actions">
-                      <button className="primary" type="button" onClick={() => nav("real-data")}>
+                      <button
+                        className="primary"
+                        type="button"
+                        onClick={() => nav("real-data")}
+                      >
                         실제 데이터 · 결과 비교로 돌아가기 →
                       </button>
-                    <button type="button" disabled={busy} onClick={clearSource}>
-                      연결 해제 · 기본 주제로
-                    </button>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={clearSource}
+                      >
+                        연결 해제 · 기본 주제로
+                      </button>
                     </div>
                   </section>
                 )}
                 <ControlPanel
+                  minSteps={
+                    sourceSeed?.discussion
+                      ? Math.max(
+                          sourceSeed.participant_count,
+                          sourceSeed.rows.length,
+                        )
+                      : 1
+                  }
+                  discussion={Boolean(sourceSeed?.discussion)}
                   topicLocked={Boolean(sourceSeed)}
                   mode={mode}
                   setMode={setMode}
@@ -556,6 +598,7 @@ function SimulationLab() {
                     횟수
                   </div>
                 </section>
+                <DiscussionResults run={run} />
                 <LinkedResults run={run} active={view !== "real-data"} />
                 <section className="panel" id="agents">
                   <div className="section-heading">

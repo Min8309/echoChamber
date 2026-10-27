@@ -17,6 +17,10 @@ export default function RealDataLab({
   const [manualText, setManualText] = useState("");
   const [fileProvider, setFileProvider] = useState("csv"),
     [collecting, setCollecting] = useState(false);
+  const [sortOrder, setSortOrder] = useState("original"),
+    [query, setQuery] = useState(""),
+    [discussionRows, setDiscussionRows] = useState([]),
+    [participantCount, setParticipantCount] = useState(3);
   const sourceFile = useRef(null);
   const [preview, setPreview] = useState(null),
     [title, setTitle] = useState("실제 데이터 실험"),
@@ -36,6 +40,25 @@ export default function RealDataLab({
   const controller = useRef(null),
     version = useRef(0);
   const hasAI = engines.includes("openai");
+  const organisedRows = [...(dataset?.rows || [])].filter(
+    (row) => !query.trim() || row.text.includes(query.trim()),
+  );
+  organisedRows.sort((a, b) =>
+    sortOrder === "length"
+      ? b.text.length - a.text.length
+      : sortOrder === "negative"
+        ? Number(b.analysis?.sentiment === "negative") -
+          Number(a.analysis?.sentiment === "negative")
+        : sortOrder === "rating"
+          ? (b.rating ?? -1) - (a.rating ?? -1)
+          : a.number - b.number,
+  );
+  useEffect(() => {
+    setDiscussionRows(
+      (dataset?.rows || []).slice(0, 10).map((row) => row.row_id),
+    );
+    setQuery("");
+  }, [dataset?.dataset_id]);
   const selected = preview?.rows.filter((row) => row.selected) || [];
   useEffect(() => {
     setAvailableRuns(runs);
@@ -44,7 +67,11 @@ export default function RealDataLab({
     if (active) refresh();
   }, [active]);
   useEffect(() => {
-    if (active && dataset && linkedRun?.source_data?.dataset_id === dataset.dataset_id) {
+    if (
+      active &&
+      dataset &&
+      linkedRun?.source_data?.dataset_id === dataset.dataset_id
+    ) {
       setRunId(linkedRun.run_id);
       setComparison(null);
     }
@@ -71,7 +98,10 @@ export default function RealDataLab({
     const file = event.target.files?.[0];
     if (!file) return;
     if (
-      file.size > (/\.(json|jsonl)$/i.test(file.name) && fileProvider !== "csv" ? 100 * 1024 * 1024 : 1024 * 1024)
+      file.size >
+      (/\.(json|jsonl)$/i.test(file.name) && fileProvider !== "csv"
+        ? 100 * 1024 * 1024
+        : 1024 * 1024)
     ) {
       setError(
         !/\.(json|jsonl)$/i.test(file.name) || fileProvider === "csv"
@@ -135,7 +165,14 @@ export default function RealDataLab({
       const rows = selected.map(({ selected, ...row }) => row);
       const saved = await researchApi("/datasets", {
         method: "POST",
-        body: JSON.stringify({ title, source, reviewed, rows, collection_token: preview.collection_token || null, file_provider: preview.file_provider || null }),
+        body: JSON.stringify({
+          title,
+          source,
+          reviewed,
+          rows,
+          collection_token: preview.collection_token || null,
+          file_provider: preview.file_provider || null,
+        }),
       });
       setDataset(saved);
       setComparison(null);
@@ -274,27 +311,66 @@ export default function RealDataLab({
         <div>
           <div className="eyebrow">ECHOCHAMBER / REAL DATA LAB</div>
           <h1>실제 데이터 비교 연구실</h1>
-          <p>실제 댓글이 마을의 이야기가 됩니다. 데이터를 가져오고, AI 에이전트가 전달하는 과정을 관찰하세요.</p>
+          <p>
+            실제 댓글이 마을의 이야기가 됩니다. 데이터를 가져오고, AI 에이전트가
+            전달하는 과정을 관찰하세요.
+          </p>
         </div>
         <span className="mode-tag">REAL DATA → SMALLVILLE</span>
       </div>
-      <section className="research-journey panel" aria-label="실제 데이터에서 가상 마을까지">
+      <section
+        className="research-journey panel"
+        aria-label="실제 데이터에서 가상 마을까지"
+      >
         <div className="research-journey-intro">
           <div className="eyebrow">FROM COMMENTS TO CONVERSATIONS</div>
           <h2>실제 목소리를, 가상 마을에서 실험하세요.</h2>
-          <p>댓글·리뷰의 표현과 맥락을 분석한 뒤, 선택한 문장이 마을을 거치며 어떻게 달라지는지 비교합니다.</p>
-          <small>원문 분석과 가상 대화는 구분해서 표시합니다. 시뮬레이션은 실제 여론이나 사실 여부를 증명하지 않습니다.</small>
+          <p>
+            댓글·리뷰의 표현과 맥락을 분석한 뒤, 선택한 문장이 마을을 거치며
+            어떻게 달라지는지 비교합니다.
+          </p>
+          <small>
+            원문 분석과 가상 대화는 구분해서 표시합니다. 시뮬레이션은 실제
+            여론이나 사실 여부를 증명하지 않습니다.
+          </small>
         </div>
         <ol className="research-journey-steps">
           {[
-            ["01", "실제 데이터 가져오기", "YouTube · K-HATERS · 파일 · 직접 입력", Boolean(dataset || preview)],
-            ["02", "익명화 · 내용 분석", "개인정보 확인 후 저장하고 지표 살펴보기", Boolean(dataset)],
-            ["03", "가상 마을에 전달", "분석 결과의 문장 하나를 실험 시작점으로 선택", Boolean(dataset && linkedRun?.source_data?.dataset_id === dataset.dataset_id)],
-            ["04", "그래프 비교 · 다운로드", "실제 원문과 전달 결과의 수치 비교", Boolean(comparison)],
+            [
+              "01",
+              "실제 데이터 가져오기",
+              "YouTube · K-HATERS · 파일 · 직접 입력",
+              Boolean(dataset || preview),
+            ],
+            [
+              "02",
+              "익명화 · 내용 분석",
+              "개인정보 확인 후 저장하고 지표 살펴보기",
+              Boolean(dataset),
+            ],
+            [
+              "03",
+              "가상 마을에 전달",
+              "분석 결과의 문장 하나를 실험 시작점으로 선택",
+              Boolean(
+                dataset &&
+                  linkedRun?.source_data?.dataset_id === dataset.dataset_id,
+              ),
+            ],
+            [
+              "04",
+              "그래프 비교 · 다운로드",
+              "실제 원문과 전달 결과의 수치 비교",
+              Boolean(comparison),
+            ],
           ].map(([number, title, description, ready]) => (
             <li key={number} className={ready ? "ready" : ""}>
               <span className="journey-number">{number}</span>
-              <div><strong>{title}</strong><p>{description}</p><small>{ready ? "진행됨" : "다음 단계"}</small></div>
+              <div>
+                <strong>{title}</strong>
+                <p>{description}</p>
+                <small>{ready ? "진행됨" : "다음 단계"}</small>
+              </div>
             </li>
           ))}
         </ol>
@@ -427,10 +503,14 @@ export default function RealDataLab({
           <>
             {preview.origin && (
               <div className="source-attribution">
-                <strong>출처: {preview.origin.name} · {preview.origin.license}</strong>
+                <strong>
+                  출처: {preview.origin.name} · {preview.origin.license}
+                </strong>
                 <p>{preview.origin.attribution}</p>
                 <p>{preview.origin.changes}</p>
-                {preview.origin.truncated && <p>수집 한도로 일부 댓글만 포함됩니다.</p>}
+                {preview.origin.truncated && (
+                  <p>수집 한도로 일부 댓글만 포함됩니다.</p>
+                )}
               </div>
             )}
             <div className="research-preview">
@@ -659,14 +739,138 @@ export default function RealDataLab({
             )}
             <div className="research-village-handoff">
               <span aria-hidden="true">◎</span>
-              <div><h3>분석한 문장을 마을로 보내세요</h3>
-                <p>아래 문장의 ‘이 문장으로 마을 실험’을 선택하세요. 마을 화면에서 전달 단계와 실행 모드를 정하고 실행한 뒤, 이곳으로 돌아와 그래프를 비교할 수 있습니다.</p>
-                <small>AI 의미 분석은 OpenAI 키가 필요합니다. 규칙 기반 실험은 AI 분석과 구분해 표시합니다.</small>
+              <div>
+                <h3>분석한 문장을 마을로 보내세요</h3>
+                <p>
+                  아래에서 자료를 정렬·선별하고 ‘마을 토론 준비’를 선택하세요.
+                  한 문장 전달 실험도 가능합니다. 마을 화면에서 전달 단계와 실행
+                  모드를 정하고 실행한 뒤, 이곳으로 돌아와 그래프를 비교할 수
+                  있습니다.
+                </p>
+                <small>
+                  AI 의미 분석은 OpenAI 키가 필요합니다. 규칙 기반 실험은 AI
+                  분석과 구분해 표시합니다.
+                </small>
               </div>
             </div>
+            <section
+              className="discussion-preparation"
+              aria-label="자료 정렬과 토론 준비"
+            >
+              <h3>자료 정렬 · 선별 → 3~4인 마을 토론</h3>
+              <p>
+                정렬한 목록에서 최대 10건을 고르세요. 선택한 자료 전체를 토론에
+                제공하고, 인물이 돌아가며 요약·근거 점검·다른 관점·종합 정리를
+                진행합니다.
+              </p>
+              <div className="research-fields">
+                <label>
+                  정보 정렬
+                  <select
+                    aria-label="정보 정렬"
+                    value={sortOrder}
+                    onChange={(event) => setSortOrder(event.target.value)}
+                  >
+                    <option value="original">수집 순서</option>
+                    <option value="length">긴 문장 먼저</option>
+                    <option value="negative">AI 부정 감정 먼저</option>
+                    <option value="rating">별점 높은 순</option>
+                  </select>
+                </label>
+                <label>
+                  문장 검색
+                  <input
+                    aria-label="자료 문장 검색"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="검색어로 자료 찾기"
+                  />
+                </label>
+                <label>
+                  토론 인원
+                  <select
+                    aria-label="토론 인원"
+                    value={participantCount}
+                    disabled={locked || villageBusy}
+                    onChange={(event) =>
+                      setParticipantCount(Number(event.target.value))
+                    }
+                  >
+                    <option value="3">3명 · 마을 인물</option>
+                    <option value="4">4명 · 가상 자료 검토자 포함</option>
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  disabled={locked}
+                  onClick={() =>
+                    setDiscussionRows(
+                      organisedRows.slice(0, 10).map((row) => row.row_id),
+                    )
+                  }
+                >
+                  현재 목록 앞 10건 선택
+                </button>
+                <button
+                  type="button"
+                  className="primary"
+                  disabled={locked || villageBusy || !discussionRows.length}
+                  onClick={() => {
+                    const rows = organisedRows.filter((row) =>
+                      discussionRows.includes(row.row_id),
+                    );
+                    const hidden = dataset.rows.filter(
+                      (row) =>
+                        discussionRows.includes(row.row_id) &&
+                        !rows.some((item) => item.row_id === row.row_id),
+                    );
+                    const chosen = [...rows, ...hidden];
+                    onVillage({
+                      dataset_id: dataset.dataset_id,
+                      dataset_row_ids: chosen.map((row) => row.row_id),
+                      participant_count: participantCount,
+                      title: dataset.title,
+                      text: chosen[0].text,
+                      rows: chosen,
+                      discussion: true,
+                    });
+                  }}
+                >
+                  선택한 {discussionRows.length}건으로 마을 토론 준비 →
+                </button>
+              </div>
+              <small>
+                검색은 선택을 해제하지 않습니다. 선택 자료는 토론 시작 시
+                스냅샷으로 저장합니다.{" "}
+                {hasAI
+                  ? "OpenAI를 선택하면 실제 AI 대화 생성·분석을 수행합니다."
+                  : "현재 AI 키가 없어 규칙 템플릿으로 동선을 실험할 수 있습니다. AI 토론에는 OpenAI 키가 필요합니다."}
+              </small>
+            </section>
             <div className="research-row-results">
-              {dataset.rows.map((row) => (
+              {organisedRows.map((row) => (
                 <article key={row.row_id}>
+                  <label className="discussion-select">
+                    <input
+                      type="checkbox"
+                      aria-label={`${row.number}행 토론 자료 선택`}
+                      checked={discussionRows.includes(row.row_id)}
+                      disabled={
+                        locked ||
+                        villageBusy ||
+                        (!discussionRows.includes(row.row_id) &&
+                          discussionRows.length >= 10)
+                      }
+                      onChange={(event) =>
+                        setDiscussionRows((previous) =>
+                          event.target.checked
+                            ? [...previous, row.row_id]
+                            : previous.filter((id) => id !== row.row_id),
+                        )
+                      }
+                    />
+                    토론 자료 포함
+                  </label>
                   <div className="research-row-heading">
                     <strong>
                       {row.number}행 · {row.author}

@@ -226,7 +226,24 @@ export default function VillageScene({ agents, run, busy, names }) {
             실제 {run.source_data.source === "review" ? "리뷰" : "댓글"}에서
             시작 · {run.source_data.title}
           </strong>
-          <p>원문: {run.source_data.text}</p>
+          {run.source_data.discussion ? (
+            <>
+              <p>
+                자료 {run.source_data.rows.length}건 · {run.agents.length}인
+                토론 · 원문 묶음을 함께 검토합니다.
+              </p>
+              <details>
+                <summary>선택한 실제 자료 보기</summary>
+                {run.source_data.rows.map((row) => (
+                  <p key={row.row_id}>
+                    자료 {row.number}: {row.text}
+                  </p>
+                ))}
+              </details>
+            </>
+          ) : (
+            <p>원문: {run.source_data.text}</p>
+          )}
           {run.source_data.analysis ? (
             <small>
               실험 시작 당시 원문 AI 분석:{" "}
