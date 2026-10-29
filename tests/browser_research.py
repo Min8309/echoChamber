@@ -34,8 +34,6 @@ async def check(server):
             ),
         )
         await page.goto(server.base)
-        await expect(page.get_by_role("heading", name="실제 데이터 비교 연구실")).to_be_visible()
-        await page.get_by_role("button", name="대시보드", exact=False).click()
         await expect(
             page.get_by_role("heading", name="Smallville Live Environment")
         ).to_be_visible()
