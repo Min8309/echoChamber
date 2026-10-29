@@ -1835,3 +1835,8 @@ td {
     padding: 16px;
   }
 }
+.opinion-report textarea { display: block; width: 100%; box-sizing: border-box; margin: 8px 0; }
+.opinion-report .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.opinion-report article { border-top: 1px solid #dce3ed; margin-top: 20px; padding-top: 12px; overflow-wrap: anywhere; }
+.opinion-report dd { margin-left: 16px; margin-bottom: 8px; }
+.opinion-report blockquote { margin: 8px 0; padding: 8px 12px; border-left: 3px solid #0d9488; background: #f1f5f9; white-space: pre-wrap; }

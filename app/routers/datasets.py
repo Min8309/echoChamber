@@ -98,6 +98,35 @@ def detail(dataset_id: str, owner=Depends(require_owner)):
     return describe(datasets.load(dataset_id, owner))
 
 
+class OpinionReportRequest(BaseModel):
+    source_text: str = Field(default="", max_length=12000)
+    use_ai: bool = False
+
+
+@router.post("/{dataset_id}/opinion-report")
+def opinion_report(dataset_id: str, body: OpinionReportRequest, request: Request,
+                   owner=Depends(require_owner)):
+    from app.services.opinion_report import build_report, source_comparison
+    from app.services.datasets import redact
+
+    data = datasets.load(dataset_id, owner)
+    source_text = redact(body.source_text.strip())
+    semantic = None
+    if body.use_ai:
+        if not source_text:
+            raise HTTPException(422, "비교할 원문을 먼저 입력해 주세요.")
+        consume_request(request.client.host if request.client else "unknown", 1)
+        try:
+            semantic = source_comparison(data["rows"], source_text)
+        except HTTPException:
+            raise
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+        except Exception as error:
+            raise HTTPException(502, "AI 리포트 생성에 실패했습니다. 다시 시도해 주세요.") from error
+    return build_report(data, source_text, semantic)
+
+
 @router.delete("/{dataset_id}", status_code=204)
 def delete(dataset_id: str, owner=Depends(require_owner)):
     datasets.delete(dataset_id, owner)

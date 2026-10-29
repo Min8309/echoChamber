@@ -4,6 +4,7 @@ import { researchApi, dataHeaders, analyzeDataset } from "./dataApi.js";
 import { ComparisonResults } from "./Comparison.jsx";
 import SourceCollector from "./SourceCollector.jsx";
 import { previewResearchFile } from "./researchImport.mjs";
+import OpinionReport from "./OpinionReport.jsx";
 
 export default function RealDataLab({
   active,
@@ -611,6 +612,7 @@ export default function RealDataLab({
       </section>
       {dataset && (
         <>
+          <OpinionReport key={dataset.dataset_id} dataset={dataset} hasAI={hasAI} />
           <section className="panel research-analysis">
             <div className="section-heading">
               <h2>2. 분석 결과 · 이어서 분석 · 다운로드</h2>
