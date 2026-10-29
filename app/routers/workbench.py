@@ -17,7 +17,7 @@ from starlette.concurrency import run_in_threadpool
 from app.services.limits import guard_llm_request, enabled, setting
 
 from app.services import runs, datasets
-from app.services.data_access import optional_owner, PrivateDataRoute
+from app.services.data_access import require_owner, PrivateDataRoute
 from app.services.text_analysis import analyze_text, ANALYSIS_VERSION, analysis_model
 from app.services.ai_client import get_ai_client
 
@@ -88,13 +88,13 @@ def agents():
 
 
 @router.get("/runs")
-def history(owner=Depends(optional_owner)):
+def history(owner=Depends(require_owner)):
     datasets.connect().close()
     return runs.list_runs(owner)
 
 
 @router.get("/runs/{run_id}")
-def detail(run_id: str, owner=Depends(optional_owner)):
+def detail(run_id: str, owner=Depends(require_owner)):
     datasets.connect().close()
     run = runs.get_run(run_id, owner)
     if run is None:
@@ -103,7 +103,7 @@ def detail(run_id: str, owner=Depends(optional_owner)):
 
 
 @router.get("/runs/{run_id}/network")
-def network(run_id: str, owner=Depends(optional_owner)):
+def network(run_id: str, owner=Depends(require_owner)):
     return detail(run_id, owner)["network"]
 
 
@@ -375,12 +375,12 @@ def generate_run(request, roster, client, stop=None, source=None, owner=None):
     }
     if stop.is_set():
         return
-    runs.save_run(run, owner if source else None)
+    runs.save_run(run, owner)
     yield "complete", run
 
 
 @router.post("/runs", status_code=201, dependencies=[Depends(guard_llm_request)])
-def simulate(request: RunRequest, owner=Depends(optional_owner)):
+def simulate(request: RunRequest, owner=Depends(require_owner)):
     source = resolve_source(request, owner)
     roster, client = prepare(request)
     result = None
@@ -398,7 +398,7 @@ def simulate(request: RunRequest, owner=Depends(optional_owner)):
 
 @router.post("/runs/stream", dependencies=[Depends(guard_llm_request)])
 async def stream(
-    request: RunRequest, connection: Request, owner=Depends(optional_owner)
+    request: RunRequest, connection: Request, owner=Depends(require_owner)
 ):
     source = await run_in_threadpool(resolve_source, request, owner)
     roster, client = await run_in_threadpool(prepare, request)
