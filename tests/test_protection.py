@@ -16,6 +16,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 VALID_ANALYSIS = {"text": "도서관 행사 소식", "speaker_name": "A", "listener_name": "B"}
+RUN_KEY = {"X-Dataset-Key": "c" * 64}
 
 
 class LiveServer:
@@ -60,9 +61,12 @@ class LiveServer:
         raise RuntimeError("Test server did not start")
 
     def get(self, path):
-        return requests.get(self.base + path, timeout=10)
+        headers = RUN_KEY if path.startswith("/api/runs") else None
+        return requests.get(self.base + path, headers=headers, timeout=10)
 
     def post(self, path, body=None, **kwargs):
+        if path.startswith("/api/runs"):
+            kwargs.setdefault("headers", RUN_KEY)
         return requests.post(self.base + path, json=body or {}, timeout=10, **kwargs)
 
     def units(self):
