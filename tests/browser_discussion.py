@@ -14,6 +14,7 @@ async def check(server):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         await page.goto(server.base)
+        await page.get_by_role("button", name="실제 데이터 비교", exact=False).click()
         await page.get_by_label("실제 댓글·리뷰 직접 입력", exact=True).fill(
             "짧은 의견\n두 번째 자료는 조금 더 긴 의견입니다\n세 번째 정보가 맞는지 확인하고 싶어요"
         )
