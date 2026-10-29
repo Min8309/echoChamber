@@ -38,7 +38,7 @@
 
 **2. 발언 기록이 움직임이 되는 픽셀 마을** — 저장된 발언자·청자·단계에 맞춰 인물이 걷고 만납니다.
 
-[KingCapture_2026-10-27_17-09-18.webm](https://github.com/user-attachments/assets/bf9a19af-8303-40c1-8038-29863f48ccce)
+[프로젝트 시연 영상 보기](docs/assets/videos/demo.webm)
 
 
 
