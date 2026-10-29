@@ -5,7 +5,6 @@ import csv
 import io
 import json
 from pathlib import Path
-import re
 import tempfile
 
 from playwright.async_api import async_playwright, expect
@@ -35,11 +34,11 @@ async def check(server):
         )
         await page.goto(server.base)
         await expect(
-            page.get_by_role("heading", name="Smallville Live Environment")
+            page.get_by_role("heading", name="1. 실제 댓글 데이터 가져오기", exact=True)
         ).to_be_visible()
         await page.get_by_role("button", name="실제 데이터 비교", exact=False).click()
         await expect(
-            page.get_by_role("heading", name="실제 데이터 비교 연구실")
+            page.get_by_role("heading", name="1. 실제 댓글 데이터 가져오기", exact=True)
         ).to_be_visible()
         await page.get_by_label("데이터 이름", exact=True).fill("카페 리뷰 <연구>")
         await page.get_by_label("데이터 종류", exact=True).select_option("review")
@@ -52,14 +51,14 @@ async def check(server):
             not in await page.get_by_label("1행 익명화 내용").input_value()
         )
         assert uploads == []
-        save = page.get_by_role("button", name="선택한 3건 저장 · 기초 분석")
+        save = page.get_by_role("button", name="선택한 3건 저장 · 토론 설정으로 →")
         await expect(save).to_be_disabled()
         await page.get_by_label(
             "선택한 문장의 개인정보를 직접 확인했고", exact=False
         ).check()
         await save.click()
         await expect(
-            page.get_by_role("heading", name="2. 분석 결과 · 이어서 분석 · 다운로드")
+            page.get_by_role("heading", name="3. 실제 자료 토론 · 시뮬레이션 설정")
         ).to_be_visible()
         serialized = json.dumps(uploads, ensure_ascii=False)
         assert (
@@ -67,28 +66,6 @@ async def check(server):
             and "test@example.test" not in serialized
             and "010-1234-5678" not in serialized
         )
-        await page.get_by_role(
-            "button", name="AI 분석 / 이어서 분석", exact=False
-        ).click()
-        await expect(
-            page.locator(".research-row-heading span").filter(has_text="AI 완료").first
-        ).to_be_visible()
-        await page.get_by_role(
-            "button", name="실제 데이터 분석 중단", exact=True
-        ).click()
-        await expect(
-            page.get_by_role("status").filter(has_text="중단 요청을 보냈습니다")
-        ).to_be_visible()
-        await asyncio.sleep(0.8)
-        await page.get_by_role("button", name="결과 새로고침", exact=True).click()
-        await page.get_by_role(
-            "button", name="AI 분석 / 이어서 분석", exact=False
-        ).click()
-        await expect(
-            page.locator(".research-row-heading span").filter(has_text="AI 완료")
-        ).to_have_count(3, timeout=15000)
-        assert server.units() == 3
-        assert await page.evaluate("window.bad") is None
         await (
             page.locator(".research-row-results article")
             .first.get_by_role("button", name="이 문장으로 마을 실험", exact=False)
@@ -99,21 +76,11 @@ async def check(server):
         await page.get_by_label("전달 단계", exact=True).fill("2")
         await page.get_by_label("실행 모드", exact=True).select_option("openai")
         await page.locator("button.primary[type=submit]").click()
-        await expect(page.locator(".village-source")).to_contain_text(
-            "실제 리뷰에서 시작"
-        )
-        await expect(
-            page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
-        ).to_be_visible(timeout=15000)
-        await expect(page.locator(".linked-results .comparison-metric")).to_have_count(
-            7
-        )
+        await expect(page.get_by_role("heading", name="5. 댓글 분석 결과 리포트", exact=True)).to_be_visible(timeout=15000)
+        await expect(page.locator(".opinion-report article")).to_have_count(10)
         assert server.units() == 7
-        run_id = re.search(
-            r"[0-9a-f]{8}-[0-9a-f-]{27,}", await page.locator(".run-id").inner_text()
-        ).group(0)
+        run_id = await page.get_by_label("비교할 가상 실행", exact=True).input_value()
         assert server.get("/api/runs/" + run_id).status_code == 404
-        await page.get_by_role("button", name="실제 데이터 · 결과 비교로 돌아가기", exact=False).click()
         await expect(page.get_by_label("비교할 가상 실행", exact=True)).to_have_value(run_id)
         await page.get_by_role("button", name="그래프·숫자로 비교", exact=True).click()
         await expect(
@@ -168,7 +135,7 @@ async def check(server):
         await expect(page.locator(".run-id")).to_have_count(0)
         assert not errors, errors
         print(
-            "PASS: local redaction/review, interrupted/resumed AI without duplicate charge, private village, comparison graphs, CSV/JSON/HTML downloads, mobile and linked-data deletion"
+            "PASS: local redaction/review, automatic AI analysis, private village, comparison graphs, CSV/JSON/HTML downloads, mobile and linked-data deletion"
         )
         await browser.close()
 
@@ -187,7 +154,15 @@ async def check_no_ai(server):
         await page.get_by_label(
             "선택한 문장의 개인정보를 직접 확인했고", exact=False
         ).check()
-        await page.get_by_role("button", name="선택한 3건 저장 · 기초 분석").click()
+        await page.get_by_role("button", name="선택한 3건 저장 · 토론 설정으로 →").click()
+        await (
+            page.locator(".research-row-results article")
+            .first.get_by_role("button", name="이 문장으로 마을 실험", exact=False)
+            .click()
+        )
+        await page.get_by_label("전달 단계", exact=True).fill("1")
+        await page.locator("button.primary[type=submit]").click()
+        await expect(page.get_by_role("heading", name="5. 댓글 분석 결과 리포트", exact=True)).to_be_visible()
         await expect(
             page.get_by_role("button", name="AI 분석 / 이어서 분석", exact=False)
         ).to_be_disabled()
@@ -203,19 +178,8 @@ async def check_no_ai(server):
                     "button", name="분석 결과 다운로드", exact=True
                 ).click()
             assert (await result.value).suggested_filename.endswith("." + format)
-        await (
-            page.locator(".research-row-results article")
-            .first.get_by_role("button", name="이 문장으로 마을 실험", exact=False)
-            .click()
-        )
-        await page.get_by_label("전달 단계", exact=True).fill("1")
-        await page.locator("button.primary[type=submit]").click()
-        await expect(
-            page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
-        ).to_be_visible()
-        await expect(page.locator(".linked-results .comparison-metric")).to_have_count(
-            4
-        )
+        await page.get_by_role("button", name="그래프·숫자로 비교", exact=True).click()
+        await expect(page.locator(".research-comparison .comparison-metric")).to_have_count(4)
         assert server.units() == 0
         print(
             "PASS: no API key + read-only demo still supports owned CSV import, basic analysis, all downloads, private rules village and basic graph comparison"

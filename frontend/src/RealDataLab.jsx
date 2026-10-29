@@ -14,6 +14,10 @@ export default function RealDataLab({
   onVillage,
   villageBusy,
   onDeleted,
+  step = 1,
+  onStep,
+  onDatasetChange,
+  updatedDataset,
 }) {
   const [manualText, setManualText] = useState("");
   const [fileProvider, setFileProvider] = useState("csv"),
@@ -41,6 +45,11 @@ export default function RealDataLab({
   const controller = useRef(null),
     version = useRef(0);
   const hasAI = engines.includes("openai");
+  useEffect(() => {
+    if (updatedDataset && updatedDataset.dataset_id === dataset?.dataset_id) {
+      setDataset(updatedDataset);
+    }
+  }, [updatedDataset]);
   const organisedRows = [...(dataset?.rows || [])].filter(
     (row) => !query.trim() || row.text.includes(query.trim()),
   );
@@ -124,6 +133,7 @@ export default function RealDataLab({
               file_provider: fileProvider === "csv" ? null : fileProvider,
             };
       setPreview(parsed);
+      onStep?.(2);
       setNotice(
         `${parsed.total}건 중 ${parsed.rows.length}건을 브라우저에서 미리 봅니다. 아직 서버로 업로드하지 않았습니다.`,
       );
@@ -141,6 +151,7 @@ export default function RealDataLab({
     setReviewed(false);
     try {
       setPreview(previewTexts(manualText));
+      onStep?.(2);
       setManualText("");
       setNotice(
         "직접 입력한 문장을 브라우저에서 가림 처리했습니다. 아직 서버로 전송하지 않았습니다. 내용을 확인한 뒤 저장해 주세요.",
@@ -176,11 +187,13 @@ export default function RealDataLab({
         }),
       });
       setDataset(saved);
+      onDatasetChange?.(saved);
+      onStep?.(3);
       setComparison(null);
       setPreview(null);
       setReviewed(false);
       setNotice(
-        "익명화 확인된 데이터가 저장됐고 기초 지표가 계산됐습니다. AI 분석은 별도 실행합니다.",
+        "자료를 저장했습니다. 토론할 댓글과 참여 인원을 선택해 주세요.",
       );
       await refresh();
     } catch (err) {
@@ -196,7 +209,11 @@ export default function RealDataLab({
     setComparison(null);
     try {
       const data = await researchApi(`/datasets/${id}`);
-      if (request === version.current) setDataset(data);
+      if (request === version.current) {
+        setDataset(data);
+        onDatasetChange?.(data);
+        if (step !== 5) onStep?.(3);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -296,6 +313,8 @@ export default function RealDataLab({
       });
       onDeleted?.(dataset.dataset_id);
       setDataset(null);
+      onDatasetChange?.(null);
+      onStep?.(1);
       setComparison(null);
       setNotice("데이터와 연결 실험을 삭제했습니다.");
       await refresh();
@@ -305,21 +324,20 @@ export default function RealDataLab({
       setBusy(false);
     }
   }
-  const locked = busy || analysing || collecting;
+  const locked = busy || analysing || collecting || villageBusy;
   return (
     <div className="research-lab">
       <div className="page-heading">
         <div>
           <div className="eyebrow">ECHOCHAMBER / REAL DATA LAB</div>
-          <h1>실제 데이터 비교 연구실</h1>
+          <h1>{({1: "1. 실제 댓글 데이터 가져오기", 2: "2. 데이터 수집 · 내용 확인", 3: "3. 실제 자료 토론 · 시뮬레이션 설정", 5: "5. 댓글 분석 결과 리포트"})[step] || "실제 데이터 비교 연구실"}</h1>
           <p>
-            실제 댓글이 마을의 이야기가 됩니다. 데이터를 가져오고, AI 에이전트가
-            전달하는 과정을 관찰하세요.
+            {step === 5 ? "분석한 원본 댓글의 결과와 마을 토론을 확인하고 다운로드하세요." : "댓글 가져오기부터 마을 분석과 결과 확인까지, 순서대로 진행하세요."}
           </p>
         </div>
         <span className="mode-tag">REAL DATA → SMALLVILLE</span>
       </div>
-      <section
+      <section hidden={step !== 1}
         className="research-journey panel"
         aria-label="실제 데이터에서 가상 마을까지"
       >
@@ -327,54 +345,14 @@ export default function RealDataLab({
           <div className="eyebrow">FROM COMMENTS TO CONVERSATIONS</div>
           <h2>실제 목소리를, 가상 마을에서 실험하세요.</h2>
           <p>
-            댓글·리뷰의 표현과 맥락을 분석한 뒤, 선택한 문장이 마을을 거치며
-            어떻게 달라지는지 비교합니다.
+            실제 댓글을 가져와 확인하고, 토론할 자료를 골라 마을에서 분석합니다.
+            분석이 끝나면 결과 리포트가 자동으로 표시됩니다.
           </p>
           <small>
             원문 분석과 가상 대화는 구분해서 표시합니다. 시뮬레이션은 실제
             여론이나 사실 여부를 증명하지 않습니다.
           </small>
         </div>
-        <ol className="research-journey-steps">
-          {[
-            [
-              "01",
-              "실제 데이터 가져오기",
-              "YouTube · K-HATERS · 파일 · 직접 입력",
-              Boolean(dataset || preview),
-            ],
-            [
-              "02",
-              "익명화 · 내용 분석",
-              "개인정보 확인 후 저장하고 지표 살펴보기",
-              Boolean(dataset),
-            ],
-            [
-              "03",
-              "가상 마을에 전달",
-              "분석 결과의 문장 하나를 실험 시작점으로 선택",
-              Boolean(
-                dataset &&
-                  linkedRun?.source_data?.dataset_id === dataset.dataset_id,
-              ),
-            ],
-            [
-              "04",
-              "그래프 비교 · 다운로드",
-              "실제 원문과 전달 결과의 수치 비교",
-              Boolean(comparison),
-            ],
-          ].map(([number, title, description, ready]) => (
-            <li key={number} className={ready ? "ready" : ""}>
-              <span className="journey-number">{number}</span>
-              <div>
-                <strong>{title}</strong>
-                <p>{description}</p>
-                <small>{ready ? "진행됨" : "다음 단계"}</small>
-              </div>
-            </li>
-          ))}
-        </ol>
       </section>
       {error && (
         <div className="alert error" role="alert">
@@ -386,12 +364,13 @@ export default function RealDataLab({
           {notice}
         </div>
       )}
-      <SourceCollector
+      <div hidden={step !== 1}><SourceCollector
         active={active}
         locked={locked}
         onBusy={setCollecting}
         onPreview={(result) => {
           setPreview(result);
+          onStep?.(2);
           setReviewed(false);
           setSource("comment");
           setTitle(`${result.origin.name} · ${result.rows.length}건`);
@@ -407,12 +386,13 @@ export default function RealDataLab({
             sourceFile.current.click();
           }
         }}
-      />
-      <section className="panel research-upload">
+      /></div>
+      <section className="panel research-upload" hidden={step !== 1 && !(step === 2 && preview)}>
         <div className="section-heading">
-          <h2>1. 실제 댓글·리뷰 입력 · CSV 업로드</h2>
+          <h2>{step === 2 ? "수집한 댓글의 개인정보와 내용을 확인하세요" : "댓글·리뷰 직접 입력 · CSV 업로드"}</h2>
           <span className="caption">최대 1MB · 한 번에 30건</span>
         </div>
+        <div hidden={step !== 1}>
         <div className="research-fields">
           <label>
             데이터 이름
@@ -500,6 +480,8 @@ export default function RealDataLab({
             직접 입력 미리보기
           </button>
         </div>
+        </div>
+        <div hidden={step !== 2}>
         {preview && (
           <>
             {preview.origin && (
@@ -570,13 +552,19 @@ export default function RealDataLab({
                 }
                 onClick={save}
               >
-                선택한 {selected.length}건 저장 · 기초 분석
+                선택한 {selected.length}건 저장 · 토론 설정으로 →
               </button>
+              <button type="button" disabled={locked} onClick={() => onStep?.(1)}>가져오기 방법 다시 선택</button>
             </div>
           </>
         )}
+        </div>
       </section>
-      <section className="panel research-history">
+      {step === 2 && !preview && <section className="panel">
+        <h2>{dataset ? `${dataset.rows.length}건의 댓글이 저장돼 있습니다` : "먼저 실제 댓글을 가져오세요"}</h2>
+        <button type="button" onClick={() => onStep?.(dataset ? 3 : 1)}>{dataset ? "토론 설정으로 →" : "댓글 가져오기로 →"}</button>
+      </section>}
+      <section className="panel research-history" hidden={step !== 1}>
         <div className="section-heading">
           <h2>이 브라우저의 데이터</h2>
           <button className="text-button" disabled={locked} onClick={refresh}>
@@ -612,10 +600,16 @@ export default function RealDataLab({
       </section>
       {dataset && (
         <>
-          <OpinionReport key={dataset.dataset_id} dataset={dataset} hasAI={hasAI} />
-          <section className="panel research-analysis">
+          {step === 5 && <>
+            <section className="panel workflow-complete">
+              <h2>{linkedRun?.engine === "openai" ? "AI 분석과 마을 토론을 완료했습니다" : "규칙 모드 체험 결과입니다"}</h2>
+              <p>{linkedRun?.engine === "openai" ? `원본 댓글 AI 분석 ${dataset.ai.analysed}/${dataset.ai.total}건 · 마을 토론 ${linkedRun?.completed_steps || 0}단계` : "규칙 템플릿으로 진행했습니다. AI 미분석 항목은 자료 부족으로 표시합니다."}</p>
+            </section>
+            <OpinionReport key={dataset.dataset_id} dataset={dataset} hasAI={hasAI} autoGenerate />
+          </>}
+          <section className="panel research-analysis" hidden={step !== 3 && step !== 5}>
             <div className="section-heading">
-              <h2>2. 분석 결과 · 이어서 분석 · 다운로드</h2>
+              <h2>{step === 3 ? "토론할 댓글과 참여 인원을 선택하세요" : "상세 분석 결과 · 다운로드"}</h2>
               <span className="caption">{dataset.title}</span>
             </div>
             {dataset.origin && (
@@ -643,6 +637,7 @@ export default function RealDataLab({
                 )}
               </div>
             )}
+            <div hidden={step !== 5}>
             <div className="research-summary">
               <div>
                 <span>저장 문장</span>
@@ -739,15 +734,16 @@ export default function RealDataLab({
                 Render에 API 키를 설정하면 활성화됩니다.
               </p>
             )}
+            </div>
+            <div hidden={step !== 3}>
             <div className="research-village-handoff">
               <span aria-hidden="true">◎</span>
               <div>
-                <h3>분석한 문장을 마을로 보내세요</h3>
+                <h3>선택한 댓글로 마을 분석을 준비하세요</h3>
                 <p>
-                  아래에서 자료를 정렬·선별하고 ‘마을 토론 준비’를 선택하세요.
-                  한 문장 전달 실험도 가능합니다. 마을 화면에서 전달 단계와 실행
-                  모드를 정하고 실행한 뒤, 이곳으로 돌아와 그래프를 비교할 수
-                  있습니다.
+                  아래에서 토론할 댓글을 최대 10건 선택하세요. ‘마을 토론 준비’를
+                  누르면 단계 수와 분석 방식을 설정할 수 있습니다. 분석이 끝나면
+                  결과 리포트로 자동 이동합니다.
                 </p>
                 <small>
                   AI 의미 분석은 OpenAI 키가 필요합니다. 규칙 기반 실험은 AI
@@ -849,6 +845,7 @@ export default function RealDataLab({
                   : "현재 AI 키가 없어 규칙 템플릿으로 동선을 실험할 수 있습니다. AI 토론에는 OpenAI 키가 필요합니다."}
               </small>
             </section>
+            </div>
             <div className="research-row-results">
               {organisedRows.map((row) => (
                 <article key={row.row_id}>
@@ -946,9 +943,9 @@ export default function RealDataLab({
               ))}
             </div>
           </section>
-          <section className="panel research-comparison">
+          <section className="panel research-comparison" hidden={step !== 5}>
             <div className="section-heading">
-              <h2>3. 가상 마을 실행과 그래프·수치 비교</h2>
+              <h2>원본 댓글과 마을 토론 결과 비교</h2>
             </div>
             <div className="research-fields">
               <label className="research-run-picker">

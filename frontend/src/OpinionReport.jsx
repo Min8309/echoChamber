@@ -11,7 +11,7 @@ function Result({ value }) {
   return <span>{typeof value === "boolean" ? (value ? "있음" : "없음") : String(value)}</span>;
 }
 
-export default function OpinionReport({ dataset, hasAI }) {
+export default function OpinionReport({ dataset, hasAI, autoGenerate = false }) {
   const [source, setSource] = useState("");
   const [report, setReport] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -23,6 +23,10 @@ export default function OpinionReport({ dataset, hasAI }) {
     setError("");
     setBusy(false);
   }, [dataset, source]);
+  useEffect(() => {
+    if (autoGenerate) generate(false);
+    return () => { version.current++; };
+  }, [dataset, autoGenerate]);
   async function generate(useAI) {
     const current = ++version.current;
     setBusy(true);

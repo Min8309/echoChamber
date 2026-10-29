@@ -51,7 +51,7 @@ export default function SourceCollector({
   return (
     <section className="panel source-collector">
       <div className="section-heading">
-        <h2>0. 공식 API · 공개 연구 댓글 가져오기</h2>
+        <h2>공식 API · 공개 연구 댓글 가져오기</h2>
         <span className="caption">웹페이지 크롤링 없이 연결</span>
       </div>
       <div className="source-cards">

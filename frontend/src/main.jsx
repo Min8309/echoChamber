@@ -5,7 +5,7 @@ import VillageScene from "./VillageScene.jsx";
 import RealDataLab from "./RealDataLab.jsx";
 import DiscussionResults from "./DiscussionResults.jsx";
 import { LinkedResults } from "./Comparison.jsx";
-import { dataHeaders } from "./dataApi.js";
+import { dataHeaders, analyzeDataset } from "./dataApi.js";
 import {
   StatusBar,
   ErrorBanner,
@@ -143,7 +143,11 @@ function SimulationLab() {
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [notice, setNotice] = useState(""),
-    [view, setView] = useState("dashboard");
+    [view, setView] = useState("real-data");
+  const [workflowStep, setWorkflowStep] = useState(1);
+  const [hasCollectedData, setHasCollectedData] = useState(false);
+  const [workflowDataset, setWorkflowDataset] = useState(null);
+  const [analysisProgress, setAnalysisProgress] = useState("");
   const [sourceSeed, setSourceSeed] = useState(null);
   const [mode, setMode] = useState("topic"),
     [slow, setSlow] = useState(false),
@@ -169,6 +173,9 @@ function SimulationLab() {
     return () => clearTimeout(timer);
   }, [cooldown]);
   useEffect(() => () => abort.current?.abort(), []);
+  useEffect(() => {
+    document.getElementById("workspace")?.scrollIntoView({ behavior: "instant" });
+  }, [workflowStep, view]);
 
   async function load() {
     retryAction.current = load;
@@ -206,7 +213,24 @@ function SimulationLab() {
     setBusy(true);
     setError("");
     setNotice("");
+    if (sourceSeed) {
+      setWorkflowStep(4);
+      setRun(null);
+    }
     try {
+      if (sourceSeed && engine === "openai") {
+        setAnalysisProgress("원본 댓글을 AI로 분석하고 있습니다. 완료 후 마을 토론을 시작합니다.");
+        let analysedDataset;
+        await analyzeDataset(sourceSeed.dataset_id, controller.signal, (data) => {
+          analysedDataset = data;
+          setWorkflowDataset(data);
+          setAnalysisProgress(`원본 댓글 AI 분석 ${data.ai.analysed}/${data.ai.total}건 완료`);
+        });
+        if (!analysedDataset || analysedDataset.ai.analysed !== analysedDataset.ai.total) {
+          throw new Error("일부 댓글의 AI 분석을 완료하지 못했습니다. 설정으로 돌아가 다시 시작하면 미완료 댓글부터 이어서 분석합니다.");
+        }
+      }
+      setAnalysisProgress("");
       const response = await fetch("/api/runs/stream", {
         signal: controller.signal,
         method: "POST",
@@ -289,7 +313,10 @@ function SimulationLab() {
           "연결이 끊겼습니다. 실행 기록을 다시 불러와 저장 여부를 확인해 주세요.",
         );
       setRun(saved);
-      setView("dashboard");
+      if (sourceSeed) {
+        setWorkflowStep(5);
+        setView("real-data");
+      } else setView("dashboard");
       setNotice(
         "실행 결과가 저장되었습니다. 새로고침 후에도 조회할 수 있습니다.",
       );
@@ -320,6 +347,7 @@ function SimulationLab() {
     } finally {
       abort.current = null;
       setBusy(false);
+      setAnalysisProgress("");
       inFlight.current = false;
     }
   }
@@ -374,9 +402,15 @@ function SimulationLab() {
       setEngine(engines.includes("openai") ? "openai" : "rules");
     }
     setNotice(
-      "실제 데이터가 연결됐습니다. 시뮬레이션 실행을 누르면 선택한 문장에서 시작하고 결과를 비공개로 저장합니다.",
+      "토론 자료가 준비됐습니다. 설정을 확인하고 마을 분석을 시작하세요.",
     );
+    setWorkflowStep(3);
     nav("dashboard");
+  }
+  function goStep(step) {
+    if (busy) return;
+    setWorkflowStep(step);
+    nav(step === 4 ? "dashboard" : "real-data");
   }
   function clearSource() {
     setSourceSeed(null);
@@ -403,14 +437,17 @@ function SimulationLab() {
           <p className="nav-label">REAL DATA</p>
           <button
             className={view === "real-data" ? "nav active" : "nav"}
-            onClick={() => nav("real-data")}
+            onClick={() => goStep(1)}
           >
             <span>▤</span>실제 데이터 비교
           </button>
           <p className="nav-label">OVERVIEW</p>
           <button
             className={view === "dashboard" ? "nav active" : "nav"}
-            onClick={() => nav("dashboard")}
+            onClick={() => {
+              if (sourceSeed) setWorkflowStep(run?.source_data?.dataset_id === sourceSeed.dataset_id ? 4 : 3);
+              nav("dashboard");
+            }}
           >
             <span>▦</span>대시보드
           </button>
@@ -424,8 +461,9 @@ function SimulationLab() {
           <button
             className="nav"
             onClick={() => {
+              setWorkflowStep(3);
               nav("dashboard");
-              document.getElementById("topic").focus();
+              requestAnimationFrame(() => document.getElementById("topic")?.focus());
             }}
           >
             <span>▷</span>시뮬레이션 실행
@@ -457,12 +495,26 @@ function SimulationLab() {
           <span className="badge">SMALLVILLE</span>
         </header>
         <main id="workspace">
+          <nav className="workflow-steps panel" aria-label="댓글 분석 진행 단계">
+            {[
+              [1, "실제 댓글 가져오기", false],
+              [2, "데이터 수집 · 확인", !workflowDataset && !hasCollectedData],
+              [3, "토론 · 시뮬레이션 설정", !workflowDataset],
+              [4, "마을에서 분석", !sourceSeed || !run || run.source_data?.dataset_id !== sourceSeed.dataset_id],
+              [5, "분석 결과 리포트", !run || run.pending || run.interrupted || run.source_data?.dataset_id !== workflowDataset?.dataset_id],
+            ].map(([step, label, disabled]) => (
+              <button key={step} type="button" aria-current={workflowStep === step ? "step" : undefined}
+                disabled={busy || disabled} onClick={() => goStep(step)}>
+                <span>{step}</span>{label}
+              </button>
+            ))}
+          </nav>
           <div hidden={view === "real-data"}>
             <div className="page-heading">
               <div>
                 <div className="eyebrow">ECHOCHAMBER / LIVE WORKSPACE</div>
-                <h1>EchoChamber : 살아 움직이는 소문 연구실</h1>
-                <p>한 사람의 이야기가 마을 전체로 퍼지는 과정을 관찰하세요.</p>
+                <h1>{sourceSeed ? (workflowStep === 3 ? "3. 실제 자료 토론 · 시뮬레이션 설정" : "4. 마을에서 댓글 분석") : "EchoChamber : 살아 움직이는 소문 연구실"}</h1>
+                <p>{sourceSeed ? "원본 댓글과 가상 인물의 토론을 분석한 뒤 결과 리포트로 이어집니다." : "한 사람의 이야기가 마을 전체로 퍼지는 과정을 관찰하세요."}</p>
               </div>
               <span className="mode-tag">가상 마을 시뮬레이션</span>
             </div>
@@ -486,7 +538,7 @@ function SimulationLab() {
               </div>
             ) : (
               <>
-                <section className="metrics" aria-label="실행 통계">
+                <section className="metrics" aria-label="실행 통계" hidden={Boolean(sourceSeed) && workflowStep === 3}>
                   <Metric
                     label="마을 에이전트"
                     value={displayAgents.length}
@@ -540,7 +592,8 @@ function SimulationLab() {
                       <button
                         className="primary"
                         type="button"
-                        onClick={() => nav("real-data")}
+                        disabled={busy}
+                        onClick={() => goStep(run?.source_data?.dataset_id === sourceSeed.dataset_id && !run?.pending && !run?.interrupted ? 5 : 3)}
                       >
                         실제 데이터 · 결과 비교로 돌아가기 →
                       </button>
@@ -554,7 +607,7 @@ function SimulationLab() {
                     </div>
                   </section>
                 )}
-                <ControlPanel
+                {(workflowStep === 3 || !sourceSeed) && <ControlPanel
                   minSteps={
                     sourceSeed?.discussion
                       ? Math.max(
@@ -578,7 +631,14 @@ function SimulationLab() {
                   agents={agents}
                   onStart={start}
                   onStop={() => abort.current?.abort()}
-                />
+                />}
+                {sourceSeed && workflowStep === 4 && <section className="panel analysis-progress" aria-live="polite">
+                  <h2>{busy ? "마을 분석 진행 중" : run?.interrupted || error ? "분석을 완료하지 못했습니다" : "마을 분석 기록"}</h2>
+                  <p>{analysisProgress || (busy ? "인물들이 선택한 댓글을 검토하고 토론하고 있습니다. 완료되면 결과가 표시됩니다." : "저장된 토론 내용을 확인하거나 설정 단계에서 다시 시작하세요.")}</p>
+                  <p>{engine === "rules" ? "규칙 모드 체험 · AI 의미 분석은 수행하지 않습니다." : "원본 댓글 AI 분석 → 마을 토론 생성·분석 → 결과 리포트"}</p>
+                  {busy ? <button type="button" className="stop-button" onClick={() => abort.current?.abort()}>분석 중단</button> : <button type="button" onClick={() => goStep(3)}>설정으로 돌아가기</button>}
+                </section>}
+                <div hidden={Boolean(sourceSeed) && workflowStep === 3}>
                 <div className="workspace-grid">
                   <VillageScene
                     agents={displayAgents}
@@ -608,6 +668,8 @@ function SimulationLab() {
                 </section>
                 <DiscussionResults run={run} />
                 <LinkedResults run={run} active={view !== "real-data"} />
+                </div>
+                <div hidden={Boolean(sourceSeed) && view === "dashboard"}>
                 <section className="panel" id="agents">
                   <div className="section-heading">
                     <h2>마을 에이전트</h2>
@@ -727,6 +789,7 @@ function SimulationLab() {
                       : "서버 저장 완료"}
                   </p>
                 )}
+                </div>
               </>
             )}
           </div>
@@ -738,6 +801,16 @@ function SimulationLab() {
               engines={engines}
               onVillage={seedVillage}
               villageBusy={busy}
+              step={workflowStep}
+              onStep={(step) => {
+                setWorkflowStep(step);
+                if (step === 2) setHasCollectedData(true);
+              }}
+              onDatasetChange={(data) => {
+                setWorkflowDataset(data);
+                if (sourceSeed && sourceSeed.dataset_id !== data?.dataset_id) clearSource();
+              }}
+              updatedDataset={workflowDataset}
               onDeleted={(id) => {
                 if (run?.source_data?.dataset_id === id) setRun(null);
                 if (sourceSeed?.dataset_id === id) clearSource();

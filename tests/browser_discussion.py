@@ -22,7 +22,7 @@ async def check(server):
         await page.get_by_label(
             "선택한 문장의 개인정보를 직접 확인했고", exact=False
         ).check()
-        await page.get_by_role("button", name="선택한 3건 저장 · 기초 분석").click()
+        await page.get_by_role("button", name="선택한 3건 저장 · 토론 설정으로", exact=False).click()
         await page.get_by_label("정보 정렬", exact=True).select_option("length")
         await expect(
             page.locator(".research-row-results article").first
@@ -37,9 +37,9 @@ async def check(server):
         ).to_be_visible()
         await page.get_by_label("전달 단계", exact=True).fill("4")
         await page.locator("button.primary[type=submit]").click()
-        await expect(
-            page.get_by_role("status").filter(has_text="실행 결과가 저장되었습니다")
-        ).to_be_visible()
+        await expect(page.get_by_role("heading", name="5. 댓글 분석 결과 리포트", exact=True)).to_be_visible()
+        await expect(page.locator(".opinion-report article")).to_have_count(10)
+        await page.get_by_role("navigation", name="댓글 분석 진행 단계").get_by_role("button", name="마을에서 분석", exact=False).click()
         await expect(
             page.get_by_role("region", name="자료 토론 시각화")
         ).to_be_visible()

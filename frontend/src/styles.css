@@ -1840,3 +1840,14 @@ td {
 .opinion-report article { border-top: 1px solid #dce3ed; margin-top: 20px; padding-top: 12px; overflow-wrap: anywhere; }
 .opinion-report dd { margin-left: 16px; margin-bottom: 8px; }
 .opinion-report blockquote { margin: 8px 0; padding: 8px 12px; border-left: 3px solid #0d9488; background: #f1f5f9; white-space: pre-wrap; }
+[hidden] { display: none !important; }
+.workflow-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 16px; margin-bottom: 24px; }
+.workflow-steps button { display: flex; align-items: center; gap: 8px; text-align: left; font-size: 13px; line-height: 1.5; padding: 10px; min-width: 0; }
+.workflow-steps button span { display: grid; place-items: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #edf2f7; }
+.workflow-steps button:disabled { opacity: 1; color: #718096; background: #f8fafc; border-color: #e2e8f0; }
+.workflow-steps button[aria-current="step"] { border-color: #3366cc; background: #edf3ff; color: #204fa6; font-weight: 700; }
+.workflow-steps button[aria-current="step"] span { color: white; background: #3366cc; }
+.workflow-complete { border-left: 4px solid #0d9488; }
+.analysis-progress { margin-bottom: 20px; border-left: 4px solid #3366cc; }
+@media (max-width: 900px) { .workflow-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 550px) { .workflow-steps { grid-template-columns: 1fr; gap: 6px; padding: 12px; } }

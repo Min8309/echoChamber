@@ -137,7 +137,7 @@ export function ControlPanel({
             busy || agents.length < 2 || (mode === "topic" && !topic.trim())
           }
         >
-          {busy ? "전파·저장 중…" : "▷ 시뮬레이션 실행"}
+          {busy ? "전파·저장 중…" : discussion ? (engine === "openai" ? "마을에서 댓글 AI 분석 시작 →" : "마을에서 규칙 모드 체험 시작 →") : "▷ 시뮬레이션 실행"}
         </button>
         {busy && (
           <button className="stop-button" type="button" onClick={onStop}>
@@ -148,7 +148,7 @@ export function ControlPanel({
       <p className="help">
         {engine === "rules"
           ? "규칙 기반 모드: 서버에서 성향과 이전 발화로 전파를 계산합니다. AI 생성·의미 분석 결과가 아닙니다."
-          : "OpenAI 모드: 단계마다 대화 생성과 분석에 각각 1회, 총 2회 호출합니다. API 비용과 서버 한도가 적용됩니다."}{" "}
+          : `${discussion ? "미분석 원본 댓글을 먼저 분석한 뒤 마을 토론을 시작합니다. " : ""}OpenAI 모드: 단계마다 대화 생성과 분석에 각각 1회, 총 2회 호출합니다. API 비용과 서버 한도가 적용됩니다.`}{" "}
         전달 신뢰 가중치와 원문 문자열 차이율은 실험용 수치이며 사실 여부나
         의미 왜곡을 판정하지 않습니다. 실행 기록은 이 브라우저의 접근 키로만
         조회됩니다.
