@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class WorkbenchHTTPTests(unittest.TestCase):
+    key = {"X-Dataset-Key": "a" * 64}
+
     @classmethod
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory()
@@ -79,6 +81,7 @@ class WorkbenchHTTPTests(unittest.TestCase):
         response = requests.post(
             self.base + "/api/runs",
             json={"topic": "카페에서 주말 파티가 열린다", "steps": 6, "seed": 7},
+            headers=self.key,
         )
         self.assertEqual(response.status_code, 201)
         run = response.json()
@@ -93,10 +96,16 @@ class WorkbenchHTTPTests(unittest.TestCase):
         for event in run["events"]:
             self.assertNotEqual(event["speaker_id"], event["listener_id"])
         self.assertEqual(
-            requests.get(self.base + "/api/runs/" + run["run_id"]).json(), run
+            requests.get(
+                self.base + "/api/runs/" + run["run_id"], headers=self.key
+            ).json(),
+            run,
         )
         self.assertEqual(
-            requests.get(self.base + "/api/runs/" + run["run_id"] + "/network").json(),
+            requests.get(
+                self.base + "/api/runs/" + run["run_id"] + "/network",
+                headers=self.key,
+            ).json(),
             run["network"],
         )
         with sqlite3.connect(self.db) as db:
@@ -108,13 +117,19 @@ class WorkbenchHTTPTests(unittest.TestCase):
         self.assertEqual(saved, run)
         self.assertIn(
             run["run_id"],
-            [r["run_id"] for r in requests.get(self.base + "/api/runs").json()],
+            [
+                r["run_id"]
+                for r in requests.get(
+                    self.base + "/api/runs", headers=self.key
+                ).json()
+            ],
         )
 
     def test_live_stream_orders_steps_then_commits(self):
         response = requests.post(
             self.base + "/api/runs/stream",
             json={"topic": "도서관 행사 소식", "steps": 3},
+            headers=self.key,
             stream=True,
         )
         self.assertEqual(response.status_code, 200)
@@ -145,11 +160,14 @@ class WorkbenchHTTPTests(unittest.TestCase):
         )
         run = frames[-1][1]
         self.assertEqual(
-            requests.get(self.base + "/api/runs/" + run["run_id"]).json(), run
+            requests.get(
+                self.base + "/api/runs/" + run["run_id"], headers=self.key
+            ).json(),
+            run,
         )
 
     def test_invalid_input_and_missing_key_do_not_create_runs(self):
-        before = requests.get(self.base + "/api/runs").json()
+        before = requests.get(self.base + "/api/runs", headers=self.key).json()
         for payload in [
             {"topic": "   "},
             {"topic": "주제", "steps": 0},
@@ -157,23 +175,51 @@ class WorkbenchHTTPTests(unittest.TestCase):
             {"topic": "주제", "engine": "unknown"},
         ]:
             self.assertEqual(
-                requests.post(self.base + "/api/runs", json=payload).status_code, 422
+                requests.post(
+                    self.base + "/api/runs", json=payload, headers=self.key
+                ).status_code,
+                422,
             )
         for path in ["/api/runs", "/api/runs/stream"]:
             self.assertEqual(
                 requests.post(
-                    self.base + path, json={"topic": "주제", "engine": "openai"}
+                    self.base + path,
+                    json={"topic": "주제", "engine": "openai"},
+                    headers=self.key,
                 ).status_code,
                 409,
             )
         self.assertEqual(
-            requests.get(self.base + "/api/runs/no-such-run").status_code, 404
+            requests.get(
+                self.base + "/api/runs/no-such-run", headers=self.key
+            ).status_code,
+            404,
         )
-        self.assertEqual(requests.get(self.base + "/api/runs").json(), before)
+        self.assertEqual(
+            requests.get(self.base + "/api/runs", headers=self.key).json(), before
+        )
+
+    def test_run_history_is_isolated_by_browser_key(self):
+        other = {"X-Dataset-Key": "b" * 64}
+        response = requests.post(
+            self.base + "/api/runs",
+            json={"topic": "브라우저 A의 비공개 주제", "steps": 1},
+            headers=self.key,
+        )
+        self.assertEqual(response.status_code, 201)
+        run_id = response.json()["run_id"]
+        self.assertEqual(requests.get(self.base + "/api/runs").status_code, 401)
+        self.assertEqual(requests.get(self.base + "/api/runs", headers=other).json(), [])
+        self.assertEqual(
+            requests.get(self.base + "/api/runs/" + run_id, headers=other).status_code,
+            404,
+        )
 
     def test_z_history_survives_server_restart(self):
         run = requests.post(
-            self.base + "/api/runs", json={"topic": "재시작 보존 실험", "steps": 2}
+            self.base + "/api/runs",
+            json={"topic": "재시작 보존 실험", "steps": 2},
+            headers=self.key,
         ).json()
         cls = type(self)
         cls.process.terminate()
@@ -205,7 +251,10 @@ class WorkbenchHTTPTests(unittest.TestCase):
                 pass
             time.sleep(0.1)
         self.assertEqual(
-            requests.get(self.base + "/api/runs/" + run["run_id"]).json(), run
+            requests.get(
+                self.base + "/api/runs/" + run["run_id"], headers=self.key
+            ).json(),
+            run,
         )
 
 

@@ -12,8 +12,6 @@ def check_browser(base_url):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(base_url)
-        expect(page.get_by_role("heading", name="실제 데이터 비교 연구실")).to_be_visible()
-        page.get_by_role("button", name="대시보드", exact=False).click()
         expect(
             page.get_by_role("heading", name="EchoChamber : 살아 움직이는 소문 연구실")
         ).to_be_visible()

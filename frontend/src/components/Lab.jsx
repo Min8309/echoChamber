@@ -12,7 +12,9 @@ export function StatusBar({ busy, loading, slow, notice, error, readOnly }) {
             ? "연결 또는 실행에 실패했습니다."
             : notice || "실험 준비 완료"}
       {readOnly && (
-        <span className="badge">에이전트·기억·메시지 읽기 전용</span>
+        <span className="badge">
+          공개 체험 모드 · 에이전트 편집 제한 · 실험 실행 가능
+        </span>
       )}
       {slow && (
         <p>
@@ -147,7 +149,9 @@ export function ControlPanel({
         {engine === "rules"
           ? "규칙 기반 모드: 서버에서 성향과 이전 발화로 전파를 계산합니다. AI 생성·의미 분석 결과가 아닙니다."
           : "OpenAI 모드: 단계마다 대화 생성과 분석에 각각 1회, 총 2회 호출합니다. API 비용과 서버 한도가 적용됩니다."}{" "}
-        신뢰도·변화율은 실험용 지표이며 사실 여부를 판정하지 않습니다.
+        전달 신뢰 가중치와 원문 문자열 차이율은 실험용 수치이며 사실 여부나
+        의미 왜곡을 판정하지 않습니다. 실행 기록은 이 브라우저의 접근 키로만
+        조회됩니다.
       </p>
       {agents.length < 2 && (
         <p className="help warning">
@@ -179,7 +183,7 @@ export function MessageBubble({ event, names, waiting, engine }) {
           <span>→ {names[event.listener_id]}</span>
         </div>
         <p>{event.utterance}</p>
-        <small>전달 신뢰도 {(event.confidence * 100).toFixed(1)}%</small>
+        <small>전달 신뢰 가중치 {(event.confidence * 100).toFixed(1)}%</small>
         {analysis ? (
           <div className="analysis-tags" aria-label={`${event.step}단계 분석`}>
             <span>{analysis.is_gossip ? "가십" : "일반 대화"}</span>

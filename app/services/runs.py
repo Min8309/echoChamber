@@ -87,8 +87,8 @@ def get_run(run_id, owner=None):
     db = connect()
     try:
         row = db.execute(
-            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE runs.id = ? AND (run_access.owner IS NULL OR run_access.owner = ?)",
-            (run_id, owner),
+            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE runs.id = ? AND ((? IS NULL AND run_access.owner IS NULL) OR run_access.owner = ?)",
+            (run_id, owner, owner),
         ).fetchone()
         return json.loads(row[0]) if row else None
     finally:
@@ -99,8 +99,8 @@ def list_runs(owner=None):
     db = connect()
     try:
         rows = db.execute(
-            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE run_access.owner IS NULL OR run_access.owner = ? ORDER BY runs.created_at DESC, runs.id DESC LIMIT 100",
-            (owner,),
+            "SELECT runs.payload FROM runs LEFT JOIN run_access ON runs.id = run_access.run_id WHERE (? IS NULL AND run_access.owner IS NULL) OR run_access.owner = ? ORDER BY runs.created_at DESC, runs.id DESC LIMIT 100",
+            (owner, owner),
         )
         return [
             {

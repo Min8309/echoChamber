@@ -104,7 +104,7 @@ export default function DiscussionResults({ run }) {
           <svg
             viewBox="0 0 660 180"
             role="img"
-            aria-label="단계별 전달 신뢰도와 첫 자료 대비 문자열 변화율"
+            aria-label="단계별 전달 신뢰 가중치와 첫 자료 대비 원문 문자열 차이율"
           >
             <path d="M42 22V142H632" fill="none" stroke="#cbd5e1" />
             <text x="0" y="28">
@@ -132,7 +132,10 @@ export default function DiscussionResults({ run }) {
               {events.length}단계
             </text>
           </svg>
-          <p>파랑: 성향 기반 전달 신뢰도 · 초록: 첫 자료 대비 문자열 변화율</p>
+          <p>
+            파랑: 성향 기반 전달 신뢰 가중치 · 초록: 첫 자료 대비 원문 문자열
+            차이율
+          </p>
           <small>
             문자열 차이는 자료 간 주제 차이도 반영합니다. 사실성·정보 정확도
             점수가 아닙니다.

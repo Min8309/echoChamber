@@ -310,13 +310,14 @@ class DatasetHTTPTests(unittest.TestCase):
             self.assertFalse(result["ai"]["comparable"])
             self.assertEqual(result["ai"]["virtual"]["analysed"], 0)
             self.assertEqual(
-                server.post(
-                    "/api/runs",
-                    {
+                requests.post(
+                    server.base + "/api/runs",
+                    json={
                         "dataset_id": data["dataset_id"],
                         "dataset_row_id": data["rows"][0]["row_id"],
                         "steps": 1,
                     },
+                    timeout=10,
                 ).status_code,
                 401,
             )
