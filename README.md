@@ -38,7 +38,9 @@
 
 **2. 발언 기록이 움직임이 되는 픽셀 마을** — 저장된 발언자·청자·단계에 맞춰 인물이 걷고 만납니다.
 
-[시연 영상 보기](docs/presentation/assets/videos/demo.webm)
+https://github.com/user-attachments/assets/bf9a19af-8303-40c1-8038-29863f48ccce
+
+[영상 파일 다운로드](docs/presentation/assets/videos/demo.webm)
 
 
 
