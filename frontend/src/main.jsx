@@ -416,6 +416,14 @@ function SimulationLab() {
     setSourceSeed(null);
     setTopic("이번 주말 Hobbs Cafe에서 마을 파티가 열린대요.");
   }
+  const workflowActive = view === "real-data" || (view === "dashboard" && Boolean(sourceSeed));
+  const workflowSteps = [
+    [1, "실제 댓글 가져오기", false, ""],
+    [2, "데이터 수집 · 확인", !workflowDataset && !hasCollectedData, "먼저 댓글을 가져와 주세요."],
+    [3, "토론 · 시뮬레이션 설정", !workflowDataset, "수집한 댓글을 확인하고 저장해 주세요."],
+    [4, "마을에서 분석", !sourceSeed || !run || run.source_data?.dataset_id !== sourceSeed.dataset_id, "토론 설정에서 마을 분석을 시작해 주세요."],
+    [5, "분석 결과 리포트", !run || run.pending || run.interrupted || run.source_data?.dataset_id !== workflowDataset?.dataset_id, "마을 분석이 완료되면 결과를 확인할 수 있습니다."],
+  ];
 
   return (
     <div className="shell">
@@ -434,16 +442,22 @@ function SimulationLab() {
           <span className="live-dot" />
         </div>
         <nav aria-label="메인 메뉴">
-          <p className="nav-label">REAL DATA</p>
+          <p className="nav-label">댓글 분석 순서</p>
+          {workflowSteps.map(([step, label, disabled, hint]) => (
+            <button key={step} type="button"
+              className={workflowActive && workflowStep === step ? "nav workflow-nav active" : "nav workflow-nav"}
+              aria-current={workflowActive && workflowStep === step ? "step" : undefined}
+              disabled={busy || disabled}
+              title={busy ? "진행 중인 분석이 끝난 뒤 이동할 수 있습니다." : disabled ? hint : label}
+              onClick={() => goStep(step)}>
+              <span className="nav-step-number" aria-hidden="true">{step}</span>
+              <span className="nav-step-label">{label}</span>
+            </button>
+          ))}
+          <p className="nav-label">보조 메뉴</p>
           <button
-            className={view === "real-data" ? "nav active" : "nav"}
-            onClick={() => goStep(1)}
-          >
-            <span>▤</span>실제 데이터 비교
-          </button>
-          <p className="nav-label">OVERVIEW</p>
-          <button
-            className={view === "dashboard" ? "nav active" : "nav"}
+            className={view === "dashboard" && !workflowActive ? "nav active" : "nav"}
+            aria-current={view === "dashboard" && !workflowActive ? "page" : undefined}
             onClick={() => {
               if (sourceSeed) setWorkflowStep(run?.source_data?.dataset_id === sourceSeed.dataset_id ? 4 : 3);
               nav("dashboard");
@@ -451,26 +465,16 @@ function SimulationLab() {
           >
             <span>▦</span>대시보드
           </button>
-          <p className="nav-label">SIMULATION</p>
           <button
             className={view === "agents" ? "nav active" : "nav"}
+            aria-current={view === "agents" ? "page" : undefined}
             onClick={() => nav("agents")}
           >
             <span>♙</span>마을 에이전트
           </button>
           <button
-            className="nav"
-            onClick={() => {
-              setWorkflowStep(3);
-              nav("dashboard");
-              requestAnimationFrame(() => document.getElementById("topic")?.focus());
-            }}
-          >
-            <span>▷</span>시뮬레이션 실행
-          </button>
-          <p className="nav-label">ARCHIVE</p>
-          <button
             className={view === "history" ? "nav active" : "nav"}
+            aria-current={view === "history" ? "page" : undefined}
             onClick={() => nav("history")}
           >
             <span>◷</span>실행 기록
@@ -496,14 +500,8 @@ function SimulationLab() {
         </header>
         <main id="workspace">
           <nav className="workflow-steps panel" aria-label="댓글 분석 진행 단계">
-            {[
-              [1, "실제 댓글 가져오기", false],
-              [2, "데이터 수집 · 확인", !workflowDataset && !hasCollectedData],
-              [3, "토론 · 시뮬레이션 설정", !workflowDataset],
-              [4, "마을에서 분석", !sourceSeed || !run || run.source_data?.dataset_id !== sourceSeed.dataset_id],
-              [5, "분석 결과 리포트", !run || run.pending || run.interrupted || run.source_data?.dataset_id !== workflowDataset?.dataset_id],
-            ].map(([step, label, disabled]) => (
-              <button key={step} type="button" aria-current={workflowStep === step ? "step" : undefined}
+            {workflowSteps.map(([step, label, disabled]) => (
+              <button key={step} type="button" aria-current={workflowActive && workflowStep === step ? "step" : undefined}
                 disabled={busy || disabled} onClick={() => goStep(step)}>
                 <span>{step}</span>{label}
               </button>

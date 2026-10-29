@@ -8,7 +8,7 @@ async def check(server):
         browser = await p.chromium.launch(executable_path='/usr/bin/chromium', args=['--no-sandbox'])
         page = await browser.new_page()
         await page.goto(server.base)
-        await page.get_by_role('button', name='실제 데이터 비교', exact=False).click()
+        await page.get_by_role('navigation', name='메인 메뉴').get_by_role('button', name='실제 댓글 가져오기', exact=False).click()
         await page.get_by_role('button', name='공식 자료 수집 · 미리보기').click()
         await expect(page.get_by_label('1행 익명화 내용')).to_be_visible()
         await expect(page.locator('.source-attribution').first).to_contain_text('CC BY 4.0')

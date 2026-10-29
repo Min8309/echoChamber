@@ -36,7 +36,7 @@ async def check(server):
         await expect(
             page.get_by_role("heading", name="1. 실제 댓글 데이터 가져오기", exact=True)
         ).to_be_visible()
-        await page.get_by_role("button", name="실제 데이터 비교", exact=False).click()
+        await page.get_by_role("navigation", name="메인 메뉴").get_by_role("button", name="실제 댓글 가져오기", exact=False).click()
         await expect(
             page.get_by_role("heading", name="1. 실제 댓글 데이터 가져오기", exact=True)
         ).to_be_visible()
@@ -147,7 +147,7 @@ async def check_no_ai(server):
         )
         page = await browser.new_page(accept_downloads=True)
         await page.goto(server.base)
-        await page.get_by_role("button", name="실제 데이터 비교", exact=False).click()
+        await page.get_by_role("navigation", name="메인 메뉴").get_by_role("button", name="실제 댓글 가져오기", exact=False).click()
         await page.get_by_label("실제 댓글·리뷰 직접 입력", exact=True).fill("카페가 좋아요. test@example.test\n서비스가 좋나요?\n아마 다시 방문할 것 같아요")
         await page.get_by_role("button", name="직접 입력 미리보기", exact=True).click()
         await expect(page.get_by_label("1행 익명화 내용")).to_contain_text("[이메일]")
