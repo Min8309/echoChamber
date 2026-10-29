@@ -18,7 +18,7 @@ async function api(path, options = {}) {
     ...options,
     headers: {
       "Content-Type": "application/json",
-      ...dataHeaders(),
+      ...dataHeaders(true),
       ...options.headers,
     },
   });
@@ -143,7 +143,7 @@ function SimulationLab() {
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [notice, setNotice] = useState(""),
-    [view, setView] = useState("real-data");
+    [view, setView] = useState("dashboard");
   const [sourceSeed, setSourceSeed] = useState(null);
   const [mode, setMode] = useState("topic"),
     [slow, setSlow] = useState(false),
@@ -210,7 +210,7 @@ function SimulationLab() {
       const response = await fetch("/api/runs/stream", {
         signal: controller.signal,
         method: "POST",
-        headers: { "Content-Type": "application/json", ...dataHeaders() },
+        headers: { "Content-Type": "application/json", ...dataHeaders(true) },
         body: JSON.stringify({
           topic: sourceSeed ? "" : topic,
           mode,
@@ -504,16 +504,16 @@ function SimulationLab() {
                     note="선택한 실행의 대화 단계"
                   />
                   <Metric
-                    label="전달 신뢰도"
+                    label="전달 신뢰 가중치"
                     value={last ? (last.confidence * 100).toFixed(1) : "—"}
                     unit={last ? "%" : ""}
-                    note="성향 기반 감쇠 지표"
+                    note="사실 판정이 아닌 성향 기반 감쇠값"
                   />
                   <Metric
-                    label="문자열 변화율"
+                    label="원문 문자열 차이율"
                     value={last ? (last.distortion * 100).toFixed(1) : "—"}
                     unit={last ? "%" : ""}
-                    note="원문 대비 마지막 발화 차이"
+                    note="의미 왜곡이 아닌 문자 배열 차이"
                   />
                 </section>
                 {sourceSeed && (
@@ -658,7 +658,7 @@ function SimulationLab() {
                   <div className="section-heading">
                     <h2>실행 아카이브</h2>
                     <span className="caption">
-                      최근 100개 · 저장된 기록을 다시 열어보세요
+                      이 브라우저의 최근 100개 실행 기록
                     </span>
                   </div>
                   {history.length ? (
