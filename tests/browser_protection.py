@@ -2,7 +2,7 @@
 
 import asyncio
 from playwright.async_api import async_playwright, expect
-from test_protection import LiveServer
+from test_protection import LiveServer, RUN_KEY
 
 
 async def check(server):
@@ -11,6 +11,10 @@ async def check(server):
             executable_path="/usr/bin/chromium", headless=True, args=["--no-sandbox"]
         )
         page = await browser.new_page(viewport={"width": 1440, "height": 1050})
+        await page.add_init_script(
+            "key => localStorage.setItem('echochamber.research.access.v1', key)",
+            RUN_KEY["X-Dataset-Key"],
+        )
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
 
